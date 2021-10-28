@@ -1,0 +1,26 @@
+# This file may be used to create an environment using:
+# $ conda create --name <env> --file <this file>
+# platform: win-64
+@EXPLICIT
+https://repo.anaconda.com/pkgs/main/win-64/ca-certificates-2021.9.30-haa95532_1.conda
+https://repo.anaconda.com/pkgs/main/noarch/tzdata-2021e-hda174b7_0.conda
+https://repo.anaconda.com/pkgs/main/win-64/vs2015_runtime-14.27.29016-h5e58377_2.conda
+https://repo.anaconda.com/pkgs/main/win-64/vc-14.2-h21ff451_1.conda
+https://repo.anaconda.com/pkgs/main/win-64/bzip2-1.0.8-he774522_0.conda
+https://repo.anaconda.com/pkgs/main/win-64/libffi-3.4.2-hd77b12b_0.conda
+https://repo.anaconda.com/pkgs/main/win-64/openssl-1.1.1l-h2bbff1b_0.conda
+https://repo.anaconda.com/pkgs/main/win-64/sqlite-3.36.0-h2bbff1b_0.conda
+https://repo.anaconda.com/pkgs/main/win-64/tk-8.6.11-h2bbff1b_0.conda
+https://repo.anaconda.com/pkgs/main/win-64/xz-5.2.5-h62dcd97_0.conda
+https://repo.anaconda.com/pkgs/main/win-64/zlib-1.2.11-h62dcd97_4.conda
+https://repo.anaconda.com/pkgs/main/win-64/python-3.10.0-hbb2ffb3_1.conda
+https://repo.anaconda.com/pkgs/main/noarch/appdirs-1.4.4-pyhd3eb1b0_0.conda
+https://repo.anaconda.com/pkgs/main/noarch/attrs-21.2.0-pyhd3eb1b0_0.conda
+https://repo.anaconda.com/pkgs/main/win-64/certifi-2021.5.30-py310haa95532_0.conda
+https://repo.anaconda.com/pkgs/main/noarch/click-8.0.0-pyhd3eb1b0_0.conda
+https://repo.anaconda.com/pkgs/main/noarch/toml-0.10.2-pyhd3eb1b0_0.conda
+https://repo.anaconda.com/pkgs/main/noarch/wheel-0.37.0-pyhd3eb1b0_1.conda
+https://repo.anaconda.com/pkgs/main/win-64/wincertstore-0.2-py310haa95532_2.conda
+https://repo.anaconda.com/pkgs/main/noarch/black-19.3b0-py_0.conda
+https://repo.anaconda.com/pkgs/main/win-64/setuptools-58.0.4-py310haa95532_0.conda
+https://repo.anaconda.com/pkgs/main/win-64/pip-21.2.4-py310haa95532_0.conda
