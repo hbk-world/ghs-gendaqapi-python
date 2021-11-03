@@ -1,72 +1,141 @@
-from .ghsapi_states import GHSReturnValue, returnKey
-import socket
+"""Implementaion of Connection module."""
+
 import errno
-from . import jsonrpc
+import socket
 from struct import pack, unpack
+
+from . import json_rpc
+from .ghsapi_states import RETURN_KEY, GHSReturnValue
 
 MAX_CONNECTIONS = 30
 
 
 class ConnectionHandler:
+    """A unique identifier per mainframe connection.
 
-    connectionNumber = 0
+    It is used by all API calls to distinguish between mainframes.
+
+    Attributes:
+        connection_count: An integer count of all connections.
+        api_version_header: Client API header version.
+        request_id: Client request id
+        sock: Socket object
+        ip_address: Mainframe ip address
+    """
+
+    connection_count = 0
     api_version_header = 1195638785
 
     def __init__(self):
-        self.requestId = 0
+        self.request_id = 0
         self.sock = 0
-        self.ipAddress = 0
+        self.ip_address = 0
 
-    def getNumOfConnections(self):
-        return self.connectionNumber
+    def get_num_of_connections(self):
+        """Get count of all connections."""
 
-    def getIpAddress(self):
-        return self.ipAddress
+        return self.connection_count
 
-    def ConnectionEstablish(self, ipAdress, portNum):
-        self.ipAddress = ipAdress
-        if self.getNumOfConnections() > MAX_CONNECTIONS:
+    def get_ip_address(self):
+        """Get ip address of mainframe."""
+
+        return self.ip_address
+
+    def connection_establish(self, ip_address, port_num):
+        """Establishes connection to the mainframe.
+
+        Args:
+            ip_address: IP address of the mainframe.
+            port_num: Mainframe port number.
+
+        Returns:
+            An integer value representing connection status code.
+        """
+
+        if not ip_address or not port_num:
+            return GHSReturnValue["NullPtrArgument"]
+        if self.get_num_of_connections() > MAX_CONNECTIONS:
             return GHSReturnValue["ConnectionFailed"]
+
         try:
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        except socket.error as e:
+        except socket.error:
             return GHSReturnValue["ConnectionFailed"]
+        except RuntimeError:
+            return GHSReturnValue["NOK"]
+
         try:
-            self.sock.connect((ipAdress, portNum))
-        except socket.gaierror as e:
+            self.sock.connect((ip_address, port_num))
+        except socket.gaierror:
             return GHSReturnValue["ConnectionFailed"]
-        except ConnectionRefusedError:
+        except socket.error:
             return GHSReturnValue["NoConnection"]
-        self.connectionNumber += 1
+        except RuntimeError:
+            return GHSReturnValue["NOK"]
+
+        self.ip_address = ip_address
+        self.connection_count += 1
         return GHSReturnValue["OK"]
 
-    def SendRequestAndWaitResponse(self, methodName, methodParam):
-        self.requestId += 1
-        requestJSON = jsonrpc.createJSONrpc(self.requestId, methodName, methodParam)
-        writeLen = len(requestJSON)
-        headerSx = pack("!I", writeLen) + pack("!I", self.api_version_header)
+    def send_request_wait_response(self, method_name, method_param):
+        """Sends request to the mainframe.
+
+        Args:
+            method_name: Request method name .
+            method_param: Request method parameter.
+
+        Returns:
+            A dict representing response from the mainframe.
+        """
+
+        if not method_name:
+            return {RETURN_KEY: GHSReturnValue["NullPtrArgument"]}
+
+        self.request_id += 1
+        request_json = json_rpc.json_rpc_create_request(
+            self.request_id, method_name, method_param
+        )
+        write_len = len(request_json)
+        header_sx = pack("!I", write_len) + pack("!I", self.api_version_header)
+
         try:
-            self.ConnectionWrite(headerSx, len(headerSx))
-            self.ConnectionWrite(requestJSON, writeLen)
-        except:
-            return {returnKey: GHSReturnValue["NoConnection"]}
+            if self.connection_write(header_sx, len(header_sx)) != len(header_sx):
+                return {RETURN_KEY: GHSReturnValue["NOK"]}
+            if self.connection_write(request_json, write_len) != write_len:
+                return {RETURN_KEY: GHSReturnValue["NOK"]}
+        except OSError:
+            return {RETURN_KEY: GHSReturnValue["NoConnection"]}
+        except RuntimeError:
+            return {RETURN_KEY: GHSReturnValue["NOK"]}
+        except Exception:
+            return {RETURN_KEY: GHSReturnValue["NoConnection"]}
 
-        # self.ConnectionWrite(headerSx, len(headerSx))
-        # self.ConnectionWrite(requestJSON, writeLen)
+        header_rx_size = 8
+        header_rx = self.connection_read(header_rx_size)
+        if header_rx_size != len(header_rx):
+            return {RETURN_KEY: GHSReturnValue["NOK"]}
 
-        headerRxSize = 8
-        headerRx = self.ConnectionRead(headerRxSize)
-        if headerRxSize != len(headerRx):
-            return {returnKey: GHSReturnValue["NOK"]}
+        header_rx_packet_header = unpack(">II", header_rx)
+        if header_rx_packet_header[1] != self.api_version_header:
+            return {RETURN_KEY: GHSReturnValue["NOK"]}
 
-        headerRxPacketHeader = unpack(">II", headerRx)
-        if headerRxPacketHeader[1] != self.api_version_header:
-            return {returnKey: GHSReturnValue["NOK"]}
+        response_json = self.connection_read(header_rx_packet_header[0])
+        return json_rpc.json_rpc_parse_response(self.request_id, response_json)
 
-        responseJSON = self.ConnectionRead(headerRxPacketHeader[0])
-        return jsonrpc.parseJSONrpc(self.requestId, responseJSON)
+    def connection_read(self, length):
+        """Read message in bytes.
 
-    def ConnectionRead(self, length):
+        Args:
+            length: Message length.
+
+        Returns:
+            Bytes of message read.
+
+        Raises:
+            OSError: When socket not connected
+            RuntimeError: When socket connection broken
+        """
+
         message = b""
         while len(message) < length:
             try:
@@ -74,20 +143,47 @@ class ConnectionHandler:
                 if not packet:
                     return None
                 message += packet
-            except socket.error as e:
-                err = e.args[0]
-                if err == errno.EAGAIN or err == errno.EWOULDBLOCK:
-                    print("No data available")
+            except socket.error as socket_error:
+                err = socket_error.args[0]
+                if err in (errno.EAGAIN, errno.EWOULDBLOCK):
+                    print("connection_read: No data available")
+                # return None
+                # print("connection_read: No data available")
+                # return None
         return message
 
-    def ConnectionWrite(self, message, length):
-        totalsentBytes = 0
-        sentBytes = 0
-        while totalsentBytes < length:
+    def connection_write(self, message, length):
+        """Writes message in bytes.
+
+        Args:
+            message: Message to write.
+            length: Message length.
+
+        Returns:
+            An integer representing bytes written.
+
+        Raises:
+            OSError: When socket not connected
+            RuntimeError: When socket connection broken
+        """
+
+        written_bytes = 0
+        sent_bytes = 0
+
+        while written_bytes < length:
             try:
-                sentBytes = self.sock.send(message[totalsentBytes:])
-            except socket.gaierror as e:
-                raise OSError("Socket not Connected")
-            if sentBytes == 0:
+                sent_bytes = self.sock.send(message[written_bytes:])
+            except AttributeError as no_socket:
+                raise OSError("Socket not Connected") from no_socket
+            except socket.gaierror as no_socket:
+                raise OSError("Socket not Connected") from no_socket
+            except RuntimeError as un_specific_error:
+                raise RuntimeError from un_specific_error
+            except Exception as any_exception:
+                raise Exception from any_exception
+            if sent_bytes == 0:
                 raise RuntimeError("Socket Connection Broken")
-            totalsentBytes = totalsentBytes + sentBytes
+            written_bytes = written_bytes + sent_bytes
+            sent_bytes = 0
+
+        return written_bytes

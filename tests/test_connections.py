@@ -1,4 +1,5 @@
-"""Docstring"""
+"""Connections API unit test."""
+
 import os
 import sys
 import unittest
@@ -9,38 +10,45 @@ currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 
 sys.path.append(parentdir)
-# sys.tracebacklimit = 0
 
 from src import ghsapi
 
 
 class TestConnections(unittest.TestCase):
+    """Connections API unit test."""
 
-    Gen7i = ghsapi.GHS()
+    gen = ghsapi.GHS()
 
     def test_connect(self):
-        returnVar = self.Gen7i.GHSConnect("localhost", 8006)
+        """Test connect."""
+
+        return_var = self.gen.ghs_connect("localhost", 8006)
         self.assertEqual(
-            returnVar, "OK", "Failed to establishes a connection to the mainframe."
+            return_var,
+            "OK",
+            "Failed to establishes a connection to the mainframe.",
         )
 
     def test_get_client_api(self):
-        returnVar = self.Gen7i.GHSGetClientAPIVersion()
+        """Test get api."""
+
+        return_var = self.gen.ghs_get_client_api_version()
         self.assertEqual(
-            returnVar, 4, "Failed to get API version number of the client."
+            return_var, 4, "Failed to get API version number of the client."
         )
 
     def test_disconnect(self):
-        returnVar = self.Gen7i.GHSDisconnect()
+        """Test disconnect."""
+
+        return_var = self.gen.ghs_disconnect()
         self.assertEqual(
-            returnVar,
+            return_var,
             "OK",
             "Failed to Disconnects from a connected mainframe.",
         )
 
 
 if __name__ == "__main__":
-    # unittest.main()
     unittest.main(
         testRunner=HtmlTestRunner.HTMLTestRunner(
             open_in_browser=True,
