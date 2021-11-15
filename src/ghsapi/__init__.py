@@ -51,7 +51,7 @@ class GHS:
         return _connection.disconnect(self._con_handle)
 
     def ghs_get_client_api_version(self):
-        """Get client's API version.
+        """Client's API version.
 
         Returns:
             Integer the API version number of this client.
@@ -60,7 +60,7 @@ class GHS:
         return CLIENT_API_VERSION
 
     def ghs_get_current_access(self):
-        """Get current access permission.
+        """Current access permission to the mainframe.
 
         Returns:
             String value representing access permissions.

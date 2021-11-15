@@ -33,9 +33,7 @@ class TestConnections(unittest.TestCase):
         """Test get api."""
 
         return_var = self.gen.ghs_get_client_api_version()
-        self.assertEqual(
-            return_var, 4, "Failed to get API version number of the client."
-        )
+        self.assertEqual(return_var, 4, "Client API version number mismatch.")
 
     def test_disconnect(self):
         """Test disconnect."""

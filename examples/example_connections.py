@@ -19,12 +19,28 @@ def main():
     gen = ghsapi.GHS()
 
     return_var = gen.ghs_connect("localhost", 8006)
+
+    if return_var == "APIMismatch":
+        print("Failed on GHSConnect: Client API version mismatch")
+        sys.exit()
+    if return_var != "OK":
+        print(f"Failed on GHSConnect: return status is {return_var}")
+        sys.exit()
+
     print("GHSConnect: ", return_var)
+
+    return_var = gen.ghs_get_client_api_version()
+    print("Client API version: ", return_var)
 
     return_var = gen.ghs_get_current_access()
     print("Client access: ", return_var)
 
     return_var = gen.ghs_disconnect()
+
+    if return_var != "OK":
+        print(f"Failed on GHSDisconnect: return status is {return_var}")
+        sys.exit()
+
     print("GHSDisconnect: ", return_var)
 
 
