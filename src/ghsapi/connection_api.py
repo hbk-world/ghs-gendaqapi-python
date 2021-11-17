@@ -19,12 +19,7 @@ def connect(con_handle, ip_address, port_num, client_api_version):
         An String value representing connect request status.
     """
 
-    if (
-        not con_handle
-        or not ip_address
-        or not port_num
-        or not client_api_version
-    ):
+    if not con_handle or not ip_address or not port_num or not client_api_version:
         return "NullPtrArgument"
 
     return_var = con_handle.connection_establish(ip_address, port_num)
@@ -32,14 +27,16 @@ def connect(con_handle, ip_address, port_num, client_api_version):
         return to_string(return_var, GHSReturnValue)
 
     connect_param_dict = {"ClientAPIVersion": client_api_version}
-    response_json = con_handle.send_request_wait_response(
-        "Connect", connect_param_dict
-    )
+    response_json = con_handle.send_request_wait_response("Connect", connect_param_dict)
     if response_json[RETURN_KEY] != GHSReturnValue["OK"]:
-        if response_json["ServerAPIVersion"] != client_api_version:
-            print(
-                f"ServerAPIVersion: {response_json['ServerAPIVersion']} ClientAPIVersion: {client_api_version}"
-            )
+        try:
+            if response_json["ServerAPIVersion"] != client_api_version:
+                print(
+                    f"ServerAPIVersion: {response_json['ServerAPIVersion']} \
+                        ClientAPIVersion: {client_api_version}"
+                )
+        except KeyError:
+            pass
         return to_string(response_json[RETURN_KEY], GHSReturnValue)
 
     return to_string(response_json[RETURN_KEY], GHSReturnValue)
@@ -55,9 +52,7 @@ def get_current_access(con_handle):
         An String representing current access permissions for client.
     """
 
-    response_json = con_handle.send_request_wait_response(
-        "GetCurrentAccess", 0
-    )
+    response_json = con_handle.send_request_wait_response("GetCurrentAccess", 0)
 
     try:
         return to_string(response_json["Access"], GHSAccess)

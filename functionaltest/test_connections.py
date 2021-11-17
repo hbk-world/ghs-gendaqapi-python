@@ -1,4 +1,4 @@
-"""Connections API unit test."""
+"""Connections API fucntional test."""
 
 import os
 import sys
@@ -15,7 +15,7 @@ from src import ghsapi
 
 
 class TestConnections(unittest.TestCase):
-    """Connections API unit test."""
+    """Connections API functional test."""
 
     gen = ghsapi.GHS()
 
@@ -50,7 +50,7 @@ if __name__ == "__main__":
     unittest.main(
         testRunner=HtmlTestRunner.HTMLTestRunner(
             open_in_browser=True,
-            report_name="Connections Unittest Report",
-            report_title="Connections Unittest Report",
+            report_name="Connections APIFunctional Test Report",
+            report_title="Connections API Functional Test Report",
         )
     )
