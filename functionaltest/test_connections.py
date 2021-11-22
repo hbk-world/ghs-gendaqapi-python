@@ -50,7 +50,7 @@ if __name__ == "__main__":
     unittest.main(
         testRunner=HtmlTestRunner.HTMLTestRunner(
             open_in_browser=True,
-            report_name="Connections APIFunctional Test Report",
+            report_name="Connections API Functional Test Report",
             report_title="Connections API Functional Test Report",
         )
     )

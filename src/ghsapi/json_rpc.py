@@ -10,10 +10,12 @@ from collections import OrderedDict
 from .ghsapi_states import GHSReturnValue, RETURN_KEY
 
 
-def json_rpc_create_request(request_id, method_name, method_param):
+def json_rpc_create_request(
+    request_id: int, method_name: str, method_param: dict | None
+) -> bytes:
     """``Create`` ``JSON-RPC`` client request"""
 
-    if method_param != 0:
+    if method_param:
         json_obj = OrderedDict(
             [
                 ("jsonrpc", "2.0"),
@@ -34,7 +36,7 @@ def json_rpc_create_request(request_id, method_name, method_param):
     return request_json.encode("utf-8")
 
 
-def json_rpc_check_errors(request_id, response_dict):
+def json_rpc_check_errors(request_id: int, response_dict: dict) -> int:
     """Check for errors in JSON-RPC response"""
 
     if int(response_dict["id"]) != request_id:
@@ -63,7 +65,9 @@ def json_rpc_check_errors(request_id, response_dict):
         return GHSReturnValue["OK"]
 
 
-def json_rpc_parse_response(request_id, response_json):
+def json_rpc_parse_response(
+    request_id: int, response_json: bytes | None
+) -> dict:
     """``Parse`` ``JSON-RPC`` response"""
 
     parsed_json = json.loads(response_json[:-1])

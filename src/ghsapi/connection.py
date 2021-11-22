@@ -31,17 +31,17 @@ class ConnectionHandler:
         self.sock = 0
         self.ip_address = 0
 
-    def get_num_of_connections(self):
+    def get_num_of_connections(self) -> int:
         """Get count of all connections."""
 
         return self.connection_count
 
-    def get_ip_address(self):
+    def get_ip_address(self) -> int:
         """Get ip address of mainframe."""
 
         return self.ip_address
 
-    def connection_establish(self, ip_address, port_num):
+    def connection_establish(self, ip_address: int, port_num: int) -> int:
         """Establishes connection to the mainframe.
 
         Args:
@@ -77,7 +77,9 @@ class ConnectionHandler:
         self.connection_count += 1
         return GHSReturnValue["OK"]
 
-    def send_request_wait_response(self, method_name, method_param):
+    def send_request_wait_response(
+        self, method_name: str, method_param: dict | None
+    ) -> dict:
         """Sends request to the mainframe.
 
         Args:
@@ -99,7 +101,9 @@ class ConnectionHandler:
         header_sx = pack("!I", write_len) + pack("!I", self.api_version_header)
 
         try:
-            if self.connection_write(header_sx, len(header_sx)) != len(header_sx):
+            if self.connection_write(header_sx, len(header_sx)) != len(
+                header_sx
+            ):
                 return {RETURN_KEY: GHSReturnValue["NOK"]}
             if self.connection_write(request_json, write_len) != write_len:
                 return {RETURN_KEY: GHSReturnValue["NOK"]}
@@ -122,7 +126,7 @@ class ConnectionHandler:
         response_json = self.connection_read(header_rx_packet_header[0])
         return json_rpc.json_rpc_parse_response(self.request_id, response_json)
 
-    def connection_read(self, length):
+    def connection_read(self, length: int) -> bytes:
         """Read message in bytes.
 
         Args:
@@ -152,7 +156,7 @@ class ConnectionHandler:
                 # return None
         return message
 
-    def connection_write(self, message, length):
+    def connection_write(self, message: bytes, length: int) -> int:
         """Writes message in bytes.
 
         Args:

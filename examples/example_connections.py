@@ -1,6 +1,6 @@
-"""The GEN DAQ API code examples.
+"""The GEN DAQ Connections API example.
 
-This is to help you get started"""
+This is to help you get started with Connections API"""
 
 import os
 import sys

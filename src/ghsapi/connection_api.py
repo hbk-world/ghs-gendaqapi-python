@@ -6,7 +6,9 @@ It is used to connect disconnect to the mainframe.
 from .ghsapi_states import GHSReturnValue, GHSAccess, RETURN_KEY, to_string
 
 
-def connect(con_handle, ip_address, port_num, client_api_version):
+def connect(
+    con_handle, ip_address: int, port_num: int, client_api_version: int
+) -> str:
     """Interface to connect to the mainframe.
 
     Args:
@@ -19,7 +21,12 @@ def connect(con_handle, ip_address, port_num, client_api_version):
         An String value representing connect request status.
     """
 
-    if not con_handle or not ip_address or not port_num or not client_api_version:
+    if (
+        not con_handle
+        or not ip_address
+        or not port_num
+        or not client_api_version
+    ):
         return "NullPtrArgument"
 
     return_var = con_handle.connection_establish(ip_address, port_num)
@@ -27,7 +34,9 @@ def connect(con_handle, ip_address, port_num, client_api_version):
         return to_string(return_var, GHSReturnValue)
 
     connect_param_dict = {"ClientAPIVersion": client_api_version}
-    response_json = con_handle.send_request_wait_response("Connect", connect_param_dict)
+    response_json = con_handle.send_request_wait_response(
+        "Connect", connect_param_dict
+    )
     if response_json[RETURN_KEY] != GHSReturnValue["OK"]:
         try:
             if response_json["ServerAPIVersion"] != client_api_version:
@@ -42,7 +51,7 @@ def connect(con_handle, ip_address, port_num, client_api_version):
     return to_string(response_json[RETURN_KEY], GHSReturnValue)
 
 
-def get_current_access(con_handle):
+def get_current_access(con_handle) -> str:
     """Interface to get current access permission.
 
     Args:
@@ -52,7 +61,9 @@ def get_current_access(con_handle):
         An String representing current access permissions for client.
     """
 
-    response_json = con_handle.send_request_wait_response("GetCurrentAccess", 0)
+    response_json = con_handle.send_request_wait_response(
+        "GetCurrentAccess", None
+    )
 
     try:
         return to_string(response_json["Access"], GHSAccess)
@@ -60,7 +71,7 @@ def get_current_access(con_handle):
         return to_string(response_json[RETURN_KEY], GHSReturnValue)
 
 
-def disconnect(con_handle):
+def disconnect(con_handle) -> str:
     """Interface to disconnect to the mainframe.
 
     Args:
@@ -70,5 +81,5 @@ def disconnect(con_handle):
         An String value representing disconnect request status.
     """
 
-    response_json = con_handle.send_request_wait_response("Disconnect", 0)
+    response_json = con_handle.send_request_wait_response("Disconnect", None)
     return to_string(response_json[RETURN_KEY], GHSReturnValue)
