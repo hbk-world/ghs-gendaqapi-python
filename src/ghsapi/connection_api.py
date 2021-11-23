@@ -3,11 +3,16 @@
 It is used to connect disconnect to the mainframe.
 """
 
-from .ghsapi_states import GHSReturnValue, GHSAccess, RETURN_KEY, to_string
+from .connection import ConnectionHandler
+
+from .ghsapi_states import RETURN_KEY, GHSAccess, GHSReturnValue, to_string
 
 
 def connect(
-    con_handle, ip_address: int, port_num: int, client_api_version: int
+    con_handle: ConnectionHandler,
+    ip_address: int,
+    port_num: int,
+    client_api_version: int,
 ) -> str:
     """Interface to connect to the mainframe.
 
@@ -51,7 +56,7 @@ def connect(
     return to_string(response_json[RETURN_KEY], GHSReturnValue)
 
 
-def get_current_access(con_handle) -> str:
+def get_current_access(con_handle: ConnectionHandler) -> str:
     """Interface to get current access permission.
 
     Args:
@@ -71,7 +76,7 @@ def get_current_access(con_handle) -> str:
         return to_string(response_json[RETURN_KEY], GHSReturnValue)
 
 
-def disconnect(con_handle) -> str:
+def disconnect(con_handle: ConnectionHandler) -> str:
     """Interface to disconnect to the mainframe.
 
     Args:

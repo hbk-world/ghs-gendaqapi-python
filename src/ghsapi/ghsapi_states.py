@@ -179,7 +179,7 @@ GHSTimerCounterMode = {
 }
 
 
-def to_string(value, ghs_dict):
+def to_string(value: int, ghs_dict: dict) -> str:
     """Get status key by value in GHS return dictionary."""
 
     for string_val, return_val in ghs_dict.items():

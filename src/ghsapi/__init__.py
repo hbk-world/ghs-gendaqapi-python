@@ -8,9 +8,9 @@ Package Contents:
     Acquisition control: Acquisition control related API functions.
 """
 
-from .connection import ConnectionHandler
-from . import connection_api as _connection
 from . import acquisition_api as _acquisition
+from . import connection_api as _connection
+from .connection import ConnectionHandler
 from .ghsapi_states import RETURN_KEY, GHSReturnValue
 
 CLIENT_API_VERSION = 4
@@ -27,7 +27,7 @@ class GHS:
         self._con_handle = ConnectionHandler()
 
     # Connection related API functions.
-    def ghs_connect(self, ip_address, port_num):
+    def ghs_connect(self, ip_address: int, port_num: int) -> str:
         """Establishes a connection to the mainframe.
 
         Args:
@@ -43,7 +43,7 @@ class GHS:
             self._con_handle, ip_address, port_num, CLIENT_API_VERSION
         )
 
-    def ghs_disconnect(self):
+    def ghs_disconnect(self) -> str:
         """Disconnects from a connected mainframe.
 
         Results in error when the handle is not valid and / or
@@ -55,7 +55,7 @@ class GHS:
 
         return _connection.disconnect(self._con_handle)
 
-    def ghs_get_client_api_version(self):
+    def ghs_get_client_api_version(self) -> int:
         """Client's API version.
 
         This function can be useful when ghs_connect() returns
@@ -67,7 +67,7 @@ class GHS:
 
         return CLIENT_API_VERSION
 
-    def ghs_get_current_access(self):
+    def ghs_get_current_access(self) -> str:
         """Current access permission to the mainframe.
 
         The current access permissions might change at any time.
@@ -86,7 +86,7 @@ class GHS:
         return _connection.get_current_access(self._con_handle)
 
     # Acquisition control related API functions.
-    def ghs_start_preview(self):
+    def ghs_start_preview(self) -> str:
         """Starts preview mode.
 
         The system needs to be idle before calling this function.
@@ -97,7 +97,7 @@ class GHS:
 
         return _acquisition.start_preview(self._con_handle)
 
-    def ghs_stop_preview(self):
+    def ghs_stop_preview(self) -> str:
         """Stops preview mode.
 
         The system needs to be in preview mode before calling this
@@ -109,7 +109,7 @@ class GHS:
 
         return _acquisition.stop_preview(self._con_handle)
 
-    def ghs_start_recording(self):
+    def ghs_start_recording(self) -> str:
         """Stops preview mode.
 
         The system needs to be in preview mode before calling this
@@ -121,7 +121,7 @@ class GHS:
 
         return _acquisition.start_recording(self._con_handle)
 
-    def ghs_pause_recording(self):
+    def ghs_pause_recording(self) -> str:
         """Pauses a started recording.
 
         The system needs to be recording before calling this function.
@@ -132,7 +132,7 @@ class GHS:
 
         return _acquisition.pause_recording(self._con_handle)
 
-    def ghs_resume_recording(self):
+    def ghs_resume_recording(self) -> str:
         """Resumes a paused recording.
 
         The system needs to be paused before calling this function.
@@ -143,7 +143,7 @@ class GHS:
 
         return _acquisition.resume_recording(self._con_handle)
 
-    def ghs_stop_recording(self):
+    def ghs_stop_recording(self) -> str:
         """Stops preview mode.
 
         The system needs to be in preview mode before calling this
@@ -155,7 +155,7 @@ class GHS:
 
         return _acquisition.stop_recording(self._con_handle)
 
-    def ghs_trigger(self):
+    def ghs_trigger(self) -> str:
         """Issues a trigger.
 
         Results in error when the trigger cannot be issued.
@@ -166,7 +166,7 @@ class GHS:
 
         return _acquisition.trigger(self._con_handle)
 
-    def ghs_get_acquisition_state(self):
+    def ghs_get_acquisition_state(self) -> tuple[str, str | None]:
         """Returns the Acquisition State of the Mainframe.
 
         Returns:
@@ -175,7 +175,9 @@ class GHS:
 
         return _acquisition.get_acquisition_state(self._con_handle)
 
-    def ghs_get_acquisition_start_time(self):
+    def ghs_get_acquisition_start_time(
+        self,
+    ) -> tuple[str, int | None, int | None, float | None]:
         """Retrieves the absolute time of the start of acquisition.
 
         Returns:
@@ -184,7 +186,7 @@ class GHS:
 
         return _acquisition.get_acquisition_start_time(self._con_handle)
 
-    def ghs_get_acquisition_time(self):
+    def ghs_get_acquisition_time(self) -> tuple[str, float | None]:
         """Retrieves the current acquisition time relative to the start
         of acquistion.
 

@@ -7,7 +7,7 @@ client APIs.
 import json
 from collections import OrderedDict
 
-from .ghsapi_states import GHSReturnValue, RETURN_KEY
+from .ghsapi_states import RETURN_KEY, GHSReturnValue
 
 
 def json_rpc_create_request(

@@ -3,15 +3,17 @@
 It is used to control acquisition state of the mainframe.
 """
 
+from .connection import ConnectionHandler
+
 from .ghsapi_states import (
-    GHSReturnValue,
-    GHSAcquisitionState,
     RETURN_KEY,
+    GHSAcquisitionState,
+    GHSReturnValue,
     to_string,
 )
 
 
-def start_preview(con_handle) -> str:
+def start_preview(con_handle: ConnectionHandler) -> str:
     """Interface to start preview mode.
 
     Args:
@@ -25,7 +27,7 @@ def start_preview(con_handle) -> str:
     return to_string(response_json[RETURN_KEY], GHSReturnValue)
 
 
-def stop_preview(con_handle) -> str:
+def stop_preview(con_handle: ConnectionHandler) -> str:
     """Interface to stop preview mode.
 
     Args:
@@ -39,7 +41,7 @@ def stop_preview(con_handle) -> str:
     return to_string(response_json[RETURN_KEY], GHSReturnValue)
 
 
-def start_recording(con_handle) -> str:
+def start_recording(con_handle: ConnectionHandler) -> str:
     """Interface to start recording on local storage.
 
     Args:
@@ -55,7 +57,7 @@ def start_recording(con_handle) -> str:
     return to_string(response_json[RETURN_KEY], GHSReturnValue)
 
 
-def pause_recording(con_handle) -> str:
+def pause_recording(con_handle: ConnectionHandler) -> str:
     """Interface to pause a started recording.
 
     Args:
@@ -71,7 +73,7 @@ def pause_recording(con_handle) -> str:
     return to_string(response_json[RETURN_KEY], GHSReturnValue)
 
 
-def resume_recording(con_handle) -> str:
+def resume_recording(con_handle: ConnectionHandler) -> str:
     """Interface to resume a paused recording.
 
     Args:
@@ -87,7 +89,7 @@ def resume_recording(con_handle) -> str:
     return to_string(response_json[RETURN_KEY], GHSReturnValue)
 
 
-def stop_recording(con_handle) -> str:
+def stop_recording(con_handle: ConnectionHandler) -> str:
     """Interface to stop a started recording.
 
     Args:
@@ -103,7 +105,7 @@ def stop_recording(con_handle) -> str:
     return to_string(response_json[RETURN_KEY], GHSReturnValue)
 
 
-def trigger(con_handle) -> str:
+def trigger(con_handle: ConnectionHandler) -> str:
     """Interface to issue a trigger.
 
     Args:
@@ -117,7 +119,9 @@ def trigger(con_handle) -> str:
     return to_string(response_json[RETURN_KEY], GHSReturnValue)
 
 
-def get_acquisition_state(con_handle) -> tuple[str, str | None]:
+def get_acquisition_state(
+    con_handle: ConnectionHandler,
+) -> tuple[str, str | None]:
     """Interface to get acquisition state of mainframe.
 
     Args:
@@ -140,7 +144,7 @@ def get_acquisition_state(con_handle) -> tuple[str, str | None]:
 
 
 def get_acquisition_start_time(
-    con_handle,
+    con_handle: ConnectionHandler,
 ) -> tuple[str, int | None, int | None, float | None]:
     """Interface to get absolute time of the start of acquisition.
 
@@ -179,7 +183,9 @@ def get_acquisition_start_time(
     )
 
 
-def get_acquisition_time(con_handle) -> tuple[str, float | None]:
+def get_acquisition_time(
+    con_handle: ConnectionHandler,
+) -> tuple[str, float | None]:
     """Interface to get current acquisition time relative to the start
     of acquistion.
 

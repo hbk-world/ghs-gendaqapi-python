@@ -7,6 +7,7 @@ from HtmlTestRunner import HTMLTestRunner
 import test_connection_handler
 import test_json
 import test_connection_api
+import test_acquisition_api
 
 sys.tracebacklimit = 0
 # initialize the test suite
@@ -15,8 +16,10 @@ suite = unittest.TestSuite()
 
 # add tests to the test suite
 suite.addTests(loader.loadTestsFromModule(test_json))
-suite.addTests(loader.loadTestsFromModule(test_connection_api))
 suite.addTests(loader.loadTestsFromModule(test_connection_handler))
+suite.addTests(loader.loadTestsFromModule(test_connection_api))
+suite.addTests(loader.loadTestsFromModule(test_acquisition_api))
+
 
 # initialize a runner, pass it your suite and run it
 runner = HTMLTestRunner(
