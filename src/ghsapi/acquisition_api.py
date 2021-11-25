@@ -4,7 +4,6 @@ It is used to control acquisition state of the mainframe.
 """
 
 from .connection import ConnectionHandler
-
 from .ghsapi_states import (
     RETURN_KEY,
     GHSAcquisitionState,
@@ -128,7 +127,7 @@ def get_acquisition_state(
         con_handle: A unique identifier per mainframe connection.
 
     Returns:
-        An String value representing request status.
+        Tuple with status and acquisition state of the mainframe.
     """
 
     response_json = con_handle.send_request_wait_response(
@@ -152,7 +151,8 @@ def get_acquisition_start_time(
         con_handle: A unique identifier per mainframe connection.
 
     Returns:
-        An String value representing request status.
+        Tuple with status and the absolute time of the start of
+        acquisition.
     """
 
     response_json = con_handle.send_request_wait_response(
@@ -193,7 +193,8 @@ def get_acquisition_time(
         con_handle: A unique identifier per mainframe connection.
 
     Returns:
-        An String value representing request status.
+       Tuple with status and current acquisition time relative to
+       the start of acquistion.
     """
 
     response_json = con_handle.send_request_wait_response(

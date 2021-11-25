@@ -110,10 +110,12 @@ class GHS:
         return _acquisition.stop_preview(self._con_handle)
 
     def ghs_start_recording(self) -> str:
-        """Stops preview mode.
+        """Start recording on local storage.
 
-        The system needs to be in preview mode before calling this
-        function.
+        The system needs to be idle before calling this function. Note
+        that the connected mainframe will generate a recording name.
+        This command can be executed only successfully when the local
+        storage is set.
 
         Returns:
             String value representing API status.
@@ -144,10 +146,9 @@ class GHS:
         return _acquisition.resume_recording(self._con_handle)
 
     def ghs_stop_recording(self) -> str:
-        """Stops preview mode.
+        """Stops a started recording.
 
-        The system needs to be in preview mode before calling this
-        function.
+        The system needs to be recording before calling this function.
 
         Returns:
             String value representing API status.
@@ -170,7 +171,7 @@ class GHS:
         """Returns the Acquisition State of the Mainframe.
 
         Returns:
-            String value representing API status.
+            Tuple with status and acquisition state of the mainframe.
         """
 
         return _acquisition.get_acquisition_state(self._con_handle)
@@ -181,7 +182,8 @@ class GHS:
         """Retrieves the absolute time of the start of acquisition.
 
         Returns:
-            String value representing API status.
+            Tuple with status and the absolute time of the start of
+            acquisition.
         """
 
         return _acquisition.get_acquisition_start_time(self._con_handle)
@@ -191,7 +193,8 @@ class GHS:
         of acquistion.
 
         Returns:
-            String value representing API status.
+            Tuple with status and current acquisition time relative to
+            the start of acquistion.
         """
 
         return _acquisition.get_acquisition_time(self._con_handle)
