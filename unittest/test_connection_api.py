@@ -12,7 +12,11 @@ parentdir = os.path.dirname(currentdir)
 
 sys.path.append(os.path.join(parentdir, "src"))
 
-from ghsapi import connection, ghsapi_states, connection_api
+from ghsapi import connection, connection_api, ghsapi_states
+
+IP_ADDRESS = "localhost"
+PORT_NO = 8006
+CLIENT_API_VERSION = 4
 
 
 class TestConnectionAPI(unittest.TestCase):
@@ -21,7 +25,6 @@ class TestConnectionAPI(unittest.TestCase):
     con_handle = connection.ConnectionHandler()
     GHSReturnValue = ghsapi_states.GHSReturnValue
     RETURN_KEY = ghsapi_states.RETURN_KEY
-    CLIENT_API_VERSION = 4
 
     def setUp(self):
         # run at start of test file
@@ -36,7 +39,7 @@ class TestConnectionAPI(unittest.TestCase):
             mock_con_est.return_value = self.GHSReturnValue["NOK"]
             self.assertEqual(
                 connection_api.connect(
-                    self.con_handle, "localhost", 8006, self.CLIENT_API_VERSION
+                    self.con_handle, IP_ADDRESS, PORT_NO, CLIENT_API_VERSION
                 ),
                 "NOK",
                 "Connect with not ok return check failed.",
@@ -59,9 +62,9 @@ class TestConnectionAPI(unittest.TestCase):
                 self.assertEqual(
                     connection_api.connect(
                         self.con_handle,
-                        "localhost",
-                        8006,
-                        self.CLIENT_API_VERSION,
+                        IP_ADDRESS,
+                        PORT_NO,
+                        CLIENT_API_VERSION,
                     ),
                     "NOK",
                     "Connect with not ok return check failed.",

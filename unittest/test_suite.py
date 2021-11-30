@@ -1,13 +1,14 @@
 """Gen Daq Python API unit test suite."""
-import unittest
 import sys
+import unittest
 
 from HtmlTestRunner import HTMLTestRunner
 
+import test_acquisition_api
+import test_connection_api
 import test_connection_handler
 import test_json
-import test_connection_api
-import test_acquisition_api
+import test_mainframe_api
 
 sys.tracebacklimit = 0
 # initialize the test suite
@@ -19,6 +20,7 @@ suite.addTests(loader.loadTestsFromModule(test_json))
 suite.addTests(loader.loadTestsFromModule(test_connection_handler))
 suite.addTests(loader.loadTestsFromModule(test_connection_api))
 suite.addTests(loader.loadTestsFromModule(test_acquisition_api))
+suite.addTests(loader.loadTestsFromModule(test_mainframe_api))
 
 
 # initialize a runner, pass it your suite and run it

@@ -13,6 +13,9 @@ sys.path.append(parentdir)
 
 from src import ghsapi
 
+IP_ADDRESS = "localhost"
+PORT_NO = 8006
+
 
 def main():
     """Code example to use Acquisition API."""
@@ -20,7 +23,7 @@ def main():
     gen = ghsapi.GHS()
 
     # Connect to the mainframe "localhost" is also possible.
-    return_var = gen.ghs_connect("localhost", 8006)
+    return_var = gen.ghs_connect(IP_ADDRESS, PORT_NO)
     if return_var == "APIMismatch":
         print("Failed on GHSConnect. Client API version mismatch")
         sys.exit()

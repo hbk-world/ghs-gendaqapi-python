@@ -1,9 +1,9 @@
 """Connection Handler unit test."""
 
 import os
-from struct import pack
 import sys
 import unittest
+from struct import pack
 from unittest.mock import patch
 
 import HtmlTestRunner
@@ -14,6 +14,9 @@ parentdir = os.path.dirname(currentdir)
 sys.path.append(os.path.join(parentdir, "src"))
 
 from ghsapi import connection, ghsapi_states, json_rpc
+
+IP_ADDRESS = "localhost"
+PORT_NO = 8006
 
 
 class TestConnectionHandler(unittest.TestCase):
@@ -67,7 +70,7 @@ class TestConnectionHandler(unittest.TestCase):
                 0,
                 "Invalid initial connection count.",
             )
-            self.con_handle.connection_establish("localhost", 8006)
+            self.con_handle.connection_establish(IP_ADDRESS, PORT_NO)
             self.assertEqual(
                 self.con_handle.connection_count,
                 1,
@@ -79,7 +82,7 @@ class TestConnectionHandler(unittest.TestCase):
 
         self.con_handle.connection_count = 31
         self.assertEqual(
-            self.con_handle.connection_establish("localhost", 8006),
+            self.con_handle.connection_establish(IP_ADDRESS, PORT_NO),
             self.GHSReturnValue["ConnectionFailed"],
             "Max number of connection check failed.",
         )
@@ -88,14 +91,14 @@ class TestConnectionHandler(unittest.TestCase):
         """Test senarios of socket connect call mocking socket"""
 
         self.assertEqual(
-            self.con_handle.connection_establish("localhost", 8006),
+            self.con_handle.connection_establish(IP_ADDRESS, PORT_NO),
             self.GHSReturnValue["NoConnection"],
             "Socket connect with NoConnection senario failed.",
         )
 
         with patch("test_connection_handler.connection.socket.socket"):
             self.assertEqual(
-                self.con_handle.connection_establish("localhost", 8006),
+                self.con_handle.connection_establish(IP_ADDRESS, PORT_NO),
                 self.GHSReturnValue["OK"],
                 "Socket connect failed.",
             )
@@ -122,7 +125,7 @@ class TestConnectionHandler(unittest.TestCase):
         with patch(
             "test_connection_handler.connection.socket.socket.send"
         ) as mock_send:
-            self.con_handle.connection_establish("localhost", 8006)
+            self.con_handle.connection_establish(IP_ADDRESS, PORT_NO)
 
             mock_send.return_value = len(header_sx)
             self.assertEqual(
@@ -146,7 +149,7 @@ class TestConnectionHandler(unittest.TestCase):
         with patch(
             "test_connection_handler.connection.socket.socket.recv"
         ) as mock_recv:
-            self.con_handle.connection_establish("localhost", 8006)
+            self.con_handle.connection_establish(IP_ADDRESS, PORT_NO)
 
             mock_recv.return_value = b"testdata"
             size = 8

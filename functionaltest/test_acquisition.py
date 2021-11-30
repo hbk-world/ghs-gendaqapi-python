@@ -14,6 +14,9 @@ sys.path.append(parentdir)
 
 from src import ghsapi
 
+IP_ADDRESS = "localhost"
+PORT_NO = 8006
+
 
 class TestAcquisition(unittest.TestCase):
     """Acquisition Control API functional test."""
@@ -23,7 +26,7 @@ class TestAcquisition(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # run connect api at start of test file
-        cls.gen.ghs_connect("localhost", 8006)
+        cls.gen.ghs_connect(IP_ADDRESS, PORT_NO)
 
     @classmethod
     def tearDownClass(cls):

@@ -13,6 +13,10 @@ sys.path.append(parentdir)
 
 from src import ghsapi
 
+IP_ADDRESS = "localhost"
+PORT_NO = 8006
+CLIENT_API_VERSION = 4
+
 
 class TestConnections(unittest.TestCase):
     """Connections API functional test."""
@@ -22,7 +26,7 @@ class TestConnections(unittest.TestCase):
     def test_connect(self):
         """Test connect."""
 
-        return_var = self.gen.ghs_connect("localhost", 8006)
+        return_var = self.gen.ghs_connect(IP_ADDRESS, PORT_NO)
         self.assertEqual(
             return_var,
             "OK",
@@ -33,7 +37,11 @@ class TestConnections(unittest.TestCase):
         """Test get api."""
 
         return_var = self.gen.ghs_get_client_api_version()
-        self.assertEqual(return_var, 4, "Client API version number mismatch.")
+        self.assertEqual(
+            return_var,
+            CLIENT_API_VERSION,
+            "Client API version number mismatch.",
+        )
 
     def test_disconnect(self):
         """Test disconnect."""
