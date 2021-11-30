@@ -203,21 +203,24 @@ GHSTimerCounterMode = {
 
 
 def to_string(value: int, ghs_dict: dict) -> str:
-    """Get status key by value in GHS return dictionary."""
+    """Get status key by value from dictionary."""
 
     for string_val, return_val in ghs_dict.items():
         if value == return_val:
             return string_val
-    return "UnkownErrorMessage"
+    return "Reserved"
+
+
+def from_string(key: str, ghs_dict: dict) -> int:
+    """Get status value by key from dictionary."""
+
+    for string_val, return_val in ghs_dict.items():
+        if key == string_val:
+            return return_val
+    return 0
 
 
 # TODO: Formating down from here
-def fromString(key, ghsDict):
-    for stringReturnVal, returnVal in ghsDict.items():
-        if key == stringReturnVal:
-            return returnVal
-
-
 def getDictEntryFromValue(value, ghsDict):
     for stringReturnVal, returnVal in ghsDict.items():
         if value == returnVal:
