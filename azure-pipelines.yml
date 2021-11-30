@@ -1,0 +1,71 @@
+#------------------------------------------------------------------------------
+#-- Copyright (C) 2009 HBM Netherlands B.V.
+#-- Schutweg 15a
+#-- 5145 NP Waalwijk
+#-- The Netherlands
+#-- http://www.hbm.com
+#-- All rights reserved
+#--
+#-- The copyright to the computer program(s) herein is the property of
+#-- HBM Netherlands B.V. (HBM), Netherlands. The code/program(s)
+#-- may be used and/or copied only with the written permission of HBM
+#-- or in accordance with the terms and conditions stipulated in the
+#-- agreement/contract under which the program(s) have been supplied.
+#-- This copyright notice must not be removed.
+#--
+#-- This Source Code is subject to the
+#-- "General supply and license conditions for software"
+#-- which is part of the standard terms and conditions of sale from HBM.
+#------------------------------------------------------------------------------
+#-- Project  :  
+#-- Filename :  
+#-- Author   :  
+#------------------------------------------------------------------------------
+#-- File Description:
+#--
+#--
+#--
+#--
+#------------------------------------------------------------------------------
+#-- ChangeLog:
+#--
+#--
+#--
+#--
+#------------------------------------------------------------------------------
+
+name: GenDaqAPI Python $(Build.SourceBranchName) Inc $(Year:yy)$(DayOfYear)$(Rev:.2rr)
+
+#------------------------------------------------------------------------------
+#-- Setup Environment
+#------------------------------------------------------------------------------
+
+#------------------------------------------------------------------------------
+#-- Trigger Definition
+#------------------------------------------------------------------------------
+
+trigger:
+  batch: true
+  branches:
+    include:
+    - 'main'
+
+#------------------------------------------------------------------------------
+#-- Stages Definition
+#------------------------------------------------------------------------------
+jobs:
+- job: GenDaqAPIPythonUnitTests
+  displayName: Build GenDaqAPI Python Unit Tests
+  timeoutInMinutes: 120
+  pool:
+    name: DevOps-Linux
+  steps:
+  - checkout: self
+    clean: false
+    lfs : true
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: |
+        echo 'Hello world'
+    displayName: Running Unit Tests
