@@ -1,4 +1,4 @@
-"""Acquisition Control API fucntional test."""
+"""Acquisition Control API functional test."""
 
 import os
 import sys

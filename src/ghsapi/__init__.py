@@ -12,7 +12,12 @@ from . import acquisition_api as _acquisition
 from . import connection_api as _connection
 from . import mainframe_api as _mainframe
 from .connection import ConnectionHandler
-from .ghsapi_states import RETURN_KEY, GHSReturnValue
+from .ghsapi_states import (
+    RETURN_KEY,
+    GHSReturnValue,
+    GHSSyncStatus,
+    GHSUserMode,
+)
 
 CLIENT_API_VERSION = 4
 

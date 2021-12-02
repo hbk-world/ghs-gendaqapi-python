@@ -1,4 +1,4 @@
-"""Connections API fucntional test."""
+"""Connections API functional test."""
 
 import os
 import sys

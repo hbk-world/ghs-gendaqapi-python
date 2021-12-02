@@ -1,6 +1,6 @@
-"""The GEN DAQ Acquisition API code examples.
+"""The GEN DAQ Mainframe API code examples.
 
-This is to help you get started with Acquisition API"""
+This is to help you get started with Mainframe API"""
 
 import os
 import sys
@@ -18,7 +18,7 @@ PORT_NO = 8006
 
 
 def main():
-    """Code example to use Acquisition API."""
+    """Code example to use Mainframe API."""
 
     gen = ghsapi.GHS()
 
@@ -95,18 +95,18 @@ def main():
         Firmware version: {version}"
     )
 
-    # Enable & diable identify - To Check
-    # return_var = gen.ghs_identify(True)
-    # if return_var != "OK":
-    #     print(f"Failed on GHSIdentify Enable. Return Status: {return_var}")
-    #     sys.exit()
-    # print(f"GHSIdentify Enable - Return Status: {return_var}")
-    # time.sleep(2)
-    # return_var = gen.ghs_identify(False)
-    # if return_var != "OK":
-    #     print(f"Failed on GHSIdentify Disable. Return Status: {return_var}")
-    #     sys.exit()
-    # print(f"GHSIdentify Disable - Return Status: {return_var}")
+    # Enable & diable identify
+    return_var = gen.ghs_identify(True)
+    if return_var != "OK":
+        print(f"Failed on GHSIdentify Enable. Return Status: {return_var}")
+        sys.exit()
+    print(f"GHSIdentify Enable - Return Status: {return_var}")
+    time.sleep(2)
+    return_var = gen.ghs_identify(False)
+    if return_var != "OK":
+        print(f"Failed on GHSIdentify Disable. Return Status: {return_var}")
+        sys.exit()
+    print(f"GHSIdentify Disable - Return Status: {return_var}")
 
     return_var = gen.ghs_disconnect()
     if return_var != "OK":
