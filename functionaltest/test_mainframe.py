@@ -92,7 +92,7 @@ class TestMainframe(unittest.TestCase):
 
         return_var = self.gen.ghs_get_disk_space()
         self.assertEqual(
-            return_var[1] >= return_var[2],
+            return_var[1] >= return_var[2] and return_var[0] == "OK",
             True,
             "Failed available disk space more than total.",
         )
@@ -101,14 +101,34 @@ class TestMainframe(unittest.TestCase):
         """Test if available disk space decreases."""
 
         return_var = self.gen.ghs_get_disk_space()
+        self.assertEqual(
+            return_var[0],
+            "OK",
+            "Failed on get disk space.",
+        )
         available_1 = return_var[2]
 
-        self.gen.ghs_start_recording()
+        return_var = self.gen.ghs_start_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
         time.sleep(3)
-        self.gen.ghs_stop_recording()
+        return_var = self.gen.ghs_stop_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
         time.sleep(2)
 
         return_var = self.gen.ghs_get_disk_space()
+        self.assertEqual(
+            return_var[0],
+            "OK",
+            "Failed on get disk space.",
+        )
         available_2 = return_var[2]
 
         self.assertEqual(
@@ -120,9 +140,9 @@ class TestMainframe(unittest.TestCase):
     def test_sync_status(self):
         """Test mainframe sync status."""
 
-        _, sync_status = self.gen.ghs_get_sync_status()
+        return_var, sync_status = self.gen.ghs_get_sync_status()
         self.assertEqual(
-            sync_status in ghsapi.GHSSyncStatus,
+            sync_status in ghsapi.GHSSyncStatus and return_var == "OK",
             True,
             "Failed on mainframe sync status.",
         )
@@ -132,7 +152,7 @@ class TestMainframe(unittest.TestCase):
 
         return_var = self.gen.ghs_get_slot_count()
         self.assertEqual(
-            isinstance(return_var[1], int),
+            isinstance(return_var[1], int) and return_var[0] == "OK",
             True,
             "Failed to get slot count.",
         )
@@ -140,9 +160,9 @@ class TestMainframe(unittest.TestCase):
     def test_get_user_mode(self):
         """Test get user mode."""
 
-        _, user_mode = self.gen.ghs_get_user_mode()
+        return_var, user_mode = self.gen.ghs_get_user_mode()
         self.assertEqual(
-            user_mode in ghsapi.GHSUserMode,
+            user_mode in ghsapi.GHSUserMode and return_var == "OK",
             True,
             "Failed on get user mode.",
         )
@@ -150,14 +170,24 @@ class TestMainframe(unittest.TestCase):
     def test_set_user_mode(self):
         """Test set user mode."""
 
-        self.gen.ghs_set_user_mode("Dual")
+        return_var = self.gen.ghs_set_user_mode("Dual")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
         time.sleep(1)
 
-        _, user_mode = self.gen.ghs_get_user_mode()
+        return_var, user_mode = self.gen.ghs_get_user_mode()
         self.assertEqual(
             user_mode,
             "Dual",
-            "Failed on set user mode.",
+            "Failed on get user mode.",
+        )
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get user mode.",
         )
 
 

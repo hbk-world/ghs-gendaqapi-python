@@ -63,7 +63,12 @@ class TestAcquisition(unittest.TestCase):
     def test_preview_not_idle(self):
         """Test start preview when system not idle."""
 
-        self.gen.ghs_start_preview()
+        return_var = self.gen.ghs_start_preview()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
 
         return_var = self.gen.ghs_start_preview()
         self.assertEqual(
@@ -118,7 +123,12 @@ class TestAcquisition(unittest.TestCase):
     def test_recording_not_idle(self):
         """Test start recording when system not idle."""
 
-        self.gen.ghs_start_recording()
+        return_var = self.gen.ghs_start_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
 
         return_var = self.gen.ghs_start_recording()
         self.assertEqual(
@@ -130,8 +140,20 @@ class TestAcquisition(unittest.TestCase):
     def test_double_pause(self):
         """Test pause recording when already paused."""
 
-        self.gen.ghs_start_recording()
-        self.gen.ghs_pause_recording()
+        return_var = self.gen.ghs_start_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
+
+        return_var = self.gen.ghs_pause_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
+
         time.sleep(1)
 
         return_var = self.gen.ghs_pause_recording()
@@ -144,10 +166,28 @@ class TestAcquisition(unittest.TestCase):
     def test_double_resume(self):
         """Test resume recording when already resumed."""
 
-        self.gen.ghs_start_recording()
-        self.gen.ghs_pause_recording()
+        return_var = self.gen.ghs_start_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
+
+        return_var = self.gen.ghs_pause_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
+
         time.sleep(1)
-        self.gen.ghs_resume_recording()
+
+        return_var = self.gen.ghs_resume_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
 
         return_var = self.gen.ghs_resume_recording()
         self.assertEqual(
@@ -180,7 +220,12 @@ class TestAcquisition(unittest.TestCase):
     def test_preview_recording(self):
         """Test to start recording when in preview."""
 
-        self.gen.ghs_start_preview()
+        return_var = self.gen.ghs_start_preview()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
 
         return_var = self.gen.ghs_start_recording()
         self.assertEqual(
@@ -192,7 +237,12 @@ class TestAcquisition(unittest.TestCase):
     def test_recording_preview(self):
         """Test to start recording when in preview."""
 
-        self.gen.ghs_start_recording()
+        return_var = self.gen.ghs_start_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
 
         return_var = self.gen.ghs_start_preview()
         self.assertEqual(
@@ -214,7 +264,12 @@ class TestAcquisition(unittest.TestCase):
     def test_get_state_preview(self):
         """Test get state when in preview."""
 
-        self.gen.ghs_start_preview()
+        return_var = self.gen.ghs_start_preview()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
 
         return_var = self.gen.ghs_get_acquisition_state()
         self.assertEqual(
@@ -226,7 +281,12 @@ class TestAcquisition(unittest.TestCase):
     def test_get_state_recording(self):
         """Test get state when in recording."""
 
-        self.gen.ghs_start_recording()
+        return_var = self.gen.ghs_start_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
 
         return_var = self.gen.ghs_get_acquisition_state()
         self.assertEqual(
@@ -238,8 +298,18 @@ class TestAcquisition(unittest.TestCase):
     def test_get_state_paused(self):
         """Test get state when in recording paused."""
 
-        self.gen.ghs_start_recording()
-        self.gen.ghs_pause_recording()
+        return_var = self.gen.ghs_start_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
+        return_var = self.gen.ghs_pause_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
 
         return_var = self.gen.ghs_get_acquisition_state()
         self.assertEqual(
@@ -261,7 +331,12 @@ class TestAcquisition(unittest.TestCase):
     def test_get_time_preview(self):
         """Test get time when in preview."""
 
-        self.gen.ghs_start_preview()
+        return_var = self.gen.ghs_start_preview()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
         time.sleep(1)
         return_var = self.gen.ghs_get_acquisition_time()
         self.assertEqual(
@@ -273,7 +348,12 @@ class TestAcquisition(unittest.TestCase):
     def test_get_time_recording(self):
         """Test get time when recording."""
 
-        self.gen.ghs_start_recording()
+        return_var = self.gen.ghs_start_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
         time.sleep(1)
         return_var = self.gen.ghs_get_acquisition_time()
         self.assertEqual(
@@ -285,10 +365,20 @@ class TestAcquisition(unittest.TestCase):
     def test_get_time_pause(self):
         """Test get time when recording pause."""
 
-        self.gen.ghs_start_recording()
+        return_var = self.gen.ghs_start_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
         time.sleep(1)
         time_1 = self.gen.ghs_get_acquisition_time()[1]
-        self.gen.ghs_pause_recording()
+        return_var = self.gen.ghs_pause_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
         time.sleep(2)
         time_2 = self.gen.ghs_get_acquisition_time()[1]
         self.assertEqual(
@@ -311,7 +401,12 @@ class TestAcquisition(unittest.TestCase):
     def test_get_start_time_preview(self):
         """Test get start time in preview."""
 
-        self.gen.ghs_start_preview()
+        return_var = self.gen.ghs_start_preview()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
         time.sleep(1)
         return_var = self.gen.ghs_get_acquisition_start_time()
         result_type = (
@@ -328,7 +423,12 @@ class TestAcquisition(unittest.TestCase):
     def test_get_start_time_recording(self):
         """Test get start time when recording."""
 
-        self.gen.ghs_start_recording()
+        return_var = self.gen.ghs_start_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
         time.sleep(1)
         return_var = self.gen.ghs_get_acquisition_start_time()
         result_type = (
@@ -345,11 +445,26 @@ class TestAcquisition(unittest.TestCase):
     def test_get_start_time_pause(self):
         """Test get start time when recording paused."""
 
-        self.gen.ghs_start_recording()
+        return_var = self.gen.ghs_start_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
         time.sleep(1)
         time_1 = self.gen.ghs_get_acquisition_start_time()[1:]
-        self.gen.ghs_pause_recording()
-        self.gen.ghs_resume_recording()
+        return_var = self.gen.ghs_pause_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
+        return_var = self.gen.ghs_resume_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
         time.sleep(1)
         time.sleep(2)
         time_2 = self.gen.ghs_get_acquisition_start_time()[1:]
@@ -375,7 +490,12 @@ class TestAcquisition(unittest.TestCase):
     def test_trigger_preview(self):
         """Test trigger when in preview."""
 
-        self.gen.ghs_start_preview()
+        return_var = self.gen.ghs_start_preview()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
         time.sleep(1)
 
         return_var = self.gen.ghs_trigger()
@@ -388,7 +508,12 @@ class TestAcquisition(unittest.TestCase):
     def test_trigger_recording(self):
         """Test trigger when recording."""
 
-        self.gen.ghs_start_recording()
+        return_var = self.gen.ghs_start_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config.",
+        )
         time.sleep(1)
 
         return_var = self.gen.ghs_trigger()
