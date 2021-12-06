@@ -67,7 +67,7 @@ class TestAcquisition(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config preview.",
         )
 
         return_var = self.gen.ghs_start_preview()
@@ -127,7 +127,7 @@ class TestAcquisition(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config recording.",
         )
 
         return_var = self.gen.ghs_start_recording()
@@ -144,14 +144,14 @@ class TestAcquisition(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config recording.",
         )
 
         return_var = self.gen.ghs_pause_recording()
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config recording.",
         )
 
         time.sleep(1)
@@ -170,14 +170,14 @@ class TestAcquisition(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config recording.",
         )
 
         return_var = self.gen.ghs_pause_recording()
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config recording.",
         )
 
         time.sleep(1)
@@ -186,7 +186,7 @@ class TestAcquisition(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config recording.",
         )
 
         return_var = self.gen.ghs_resume_recording()
@@ -224,7 +224,7 @@ class TestAcquisition(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config preview.",
         )
 
         return_var = self.gen.ghs_start_recording()
@@ -241,7 +241,7 @@ class TestAcquisition(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config recording.",
         )
 
         return_var = self.gen.ghs_start_preview()
@@ -268,7 +268,7 @@ class TestAcquisition(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config preview.",
         )
 
         return_var = self.gen.ghs_get_acquisition_state()
@@ -285,7 +285,7 @@ class TestAcquisition(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config recording.",
         )
 
         return_var = self.gen.ghs_get_acquisition_state()
@@ -302,13 +302,13 @@ class TestAcquisition(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config recording.",
         )
         return_var = self.gen.ghs_pause_recording()
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config recording.",
         )
 
         return_var = self.gen.ghs_get_acquisition_state()
@@ -335,7 +335,7 @@ class TestAcquisition(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config preview.",
         )
         time.sleep(1)
         return_var = self.gen.ghs_get_acquisition_time()
@@ -352,7 +352,7 @@ class TestAcquisition(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config recording.",
         )
         time.sleep(1)
         return_var = self.gen.ghs_get_acquisition_time()
@@ -369,7 +369,7 @@ class TestAcquisition(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config recording.",
         )
         time.sleep(1)
         time_1 = self.gen.ghs_get_acquisition_time()[1]
@@ -377,7 +377,7 @@ class TestAcquisition(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config recording.",
         )
         time.sleep(2)
         time_2 = self.gen.ghs_get_acquisition_time()[1]
@@ -405,7 +405,7 @@ class TestAcquisition(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config preview.",
         )
         time.sleep(1)
         return_var = self.gen.ghs_get_acquisition_start_time()
@@ -427,7 +427,7 @@ class TestAcquisition(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config recording.",
         )
         time.sleep(1)
         return_var = self.gen.ghs_get_acquisition_start_time()
@@ -449,7 +449,7 @@ class TestAcquisition(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config recording.",
         )
         time.sleep(1)
         time_1 = self.gen.ghs_get_acquisition_start_time()[1:]
@@ -457,13 +457,13 @@ class TestAcquisition(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config start time.",
         )
         return_var = self.gen.ghs_resume_recording()
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config recording.",
         )
         time.sleep(1)
         time.sleep(2)
@@ -494,7 +494,7 @@ class TestAcquisition(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config preview.",
         )
         time.sleep(1)
 
@@ -512,7 +512,7 @@ class TestAcquisition(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config recording.",
         )
         time.sleep(1)
 

@@ -39,7 +39,9 @@ class TestMainframe(unittest.TestCase):
 
     def tearDown(self):
         # runs after each test
-        pass
+        self.gen.ghs_stop_preview()
+        self.gen.ghs_stop_recording()
+        time.sleep(2)
 
     def test_identify(self):
         """Test to enable or disable the identification sound."""
@@ -112,14 +114,14 @@ class TestMainframe(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config recording.",
         )
         time.sleep(3)
         return_var = self.gen.ghs_stop_recording()
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on config recording.",
         )
         time.sleep(2)
 
@@ -136,6 +138,10 @@ class TestMainframe(unittest.TestCase):
             True,
             "Failed available disk space change.",
         )
+
+    # TODO: One possible functional test for get_disk_space is to see
+    # if an error is returned when Remote Storage is selected (will be
+    # possible when set_storage_location is done)
 
     def test_sync_status(self):
         """Test mainframe sync status."""
@@ -157,6 +163,10 @@ class TestMainframe(unittest.TestCase):
             "Failed to get slot count.",
         )
 
+    # TODO: One possible test when set_recorder_enabled is implemented
+    # is to see if get_slot_count returns a different number if some
+    # recorders are disabled
+
     def test_get_user_mode(self):
         """Test get user mode."""
 
@@ -174,7 +184,7 @@ class TestMainframe(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on config.",
+            "Failed on set user mode.",
         )
         time.sleep(1)
 
@@ -188,6 +198,40 @@ class TestMainframe(unittest.TestCase):
             return_var,
             "OK",
             "Failed on get user mode.",
+        )
+
+    def test_set_user_mode_recording(self):
+        """Test set user mode when recording."""
+
+        return_var = self.gen.ghs_start_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config recording.",
+        )
+
+        return_var = self.gen.ghs_set_user_mode("Dual")
+        self.assertEqual(
+            return_var,
+            "SystemNotIdle",
+            "Failed set user mode when recording.",
+        )
+
+    def test_set_user_mode_preview(self):
+        """Test set user mode when in preview."""
+
+        return_var = self.gen.ghs_start_preview()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on config preview.",
+        )
+
+        return_var = self.gen.ghs_set_user_mode("Dual")
+        self.assertEqual(
+            return_var,
+            "SystemNotIdle",
+            "Failed set user mode when in preview.",
         )
 
 
