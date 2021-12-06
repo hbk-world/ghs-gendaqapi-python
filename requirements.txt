@@ -4,6 +4,7 @@ black==21.9b0
 certifi==2021.5.30
 colorama==0.4.4
 html-testRunner==1.2.1
+xmlrunner==1.7.7
 isort==5.9.3
 Jinja2==3.0.2
 lazy-object-proxy==1.6.0
