@@ -10,8 +10,14 @@ Package Contents:
 
 from . import acquisition_api as _acquisition
 from . import connection_api as _connection
+from . import mainframe_api as _mainframe
 from .connection import ConnectionHandler
-from .ghsapi_states import RETURN_KEY, GHSReturnValue
+from .ghsapi_states import (
+    RETURN_KEY,
+    GHSReturnValue,
+    GHSSyncStatus,
+    GHSUserMode,
+)
 
 CLIENT_API_VERSION = 4
 
@@ -198,3 +204,84 @@ class GHS:
         """
 
         return _acquisition.get_acquisition_time(self._con_handle)
+
+    # Mainframe APIs
+
+    def ghs_identify(self, identity_flag: bool) -> str:
+        """Enable or disable the identification sound of the connected
+        mainframe.
+
+        Args:
+            identity_flag: Enable or disable flag.
+
+        Returns:
+            String value representing API status.
+        """
+
+        return _mainframe.identity(self._con_handle, identity_flag)
+
+    def ghs_get_disk_space(self) -> tuple[str, float | None, float | None]:
+        """Get total and available mainframe internal disk space.
+
+        Returns:
+            Tuple with status, total mainframe internal disk space in
+            GB, available internal disk space in GB.
+        """
+
+        return _mainframe.get_disk_space(self._con_handle)
+
+    def ghs_get_sync_status(self) -> tuple[str, str | None]:
+        """Determine the mainframe sync status.
+
+        Returns:
+            Tuple with API status and Sync status.
+        """
+
+        return _mainframe.get_sync_status(self._con_handle)
+
+    def ghs_get_slot_count(self) -> tuple[str, int | None]:
+        """Retrieve the number of slots in the mainframe.
+
+        Returns:
+            Tuple with API status and number of slots in the mainframe.
+        """
+
+        return _mainframe.get_slot_count(self._con_handle)
+
+    def ghs_get_user_mode(self) -> tuple[str, str | None]:
+        """Retrieve the user mode.
+
+        Returns:
+            Tuple with API status and user mode.
+        """
+
+        return _mainframe.get_user_mode(self._con_handle)
+
+    def ghs_set_user_mode(self, user_mode: str | int) -> str:
+        """Set the user mode.
+
+        The system needs to be idle before calling this function.
+
+        Args:
+            user_mode: The desired user mode.
+
+        Returns:
+            String value representing API status.
+        """
+
+        return _mainframe.set_user_mode(self._con_handle, user_mode)
+
+    def ghs_get_mainframe_info(
+        self,
+    ) -> tuple[str, str | None, str | None, str | None, str | None]:
+        """Determine type, name, serial number and firmware version
+        information for the connected mainframe.
+
+        The mainframeType, mainframeName, serialNumber and
+        firmwareVersion parameters are UTF-8 encoded.
+
+        Returns:
+            Tuple with API status and user mode.
+        """
+
+        return _mainframe.get_mainframe_info(self._con_handle)

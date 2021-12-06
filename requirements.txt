@@ -1,9 +1,7 @@
 appdirs==1.4.4
 astroid==2.8.4
-attrs @ file:///tmp/build/80754af9/attrs_1620827162558/work
 black==21.9b0
 certifi==2021.5.30
-click @ file:///tmp/build/80754af9/click_1620867881259/work
 colorama==0.4.4
 html-testRunner==1.2.1
 isort==5.9.3
@@ -16,7 +14,6 @@ pathspec==0.9.0
 platformdirs==2.4.0
 pylint==2.11.1
 regex==2021.10.23
-toml @ file:///tmp/build/80754af9/toml_1616166611790/work
 tomli==1.2.2
 typing-extensions==3.10.0.2
 wincertstore==0.2

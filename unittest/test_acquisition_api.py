@@ -12,7 +12,12 @@ parentdir = os.path.dirname(currentdir)
 
 sys.path.append(os.path.join(parentdir, "src"))
 
-from ghsapi import connection, ghsapi_states, acquisition_api
+from ghsapi import acquisition_api, connection, ghsapi_states
+
+ACQ_TIME = 3000.23
+ABS_TIME_Y = 2021
+ABS_TIME_D = 326
+ABS_TIME_S = 3000.23
 
 
 class TestAcquisitionAPI(unittest.TestCase):
@@ -22,7 +27,6 @@ class TestAcquisitionAPI(unittest.TestCase):
     GHSReturnValue = ghsapi_states.GHSReturnValue
     GHSAcquisitionState = ghsapi_states.GHSAcquisitionState
     RETURN_KEY = ghsapi_states.RETURN_KEY
-    CLIENT_API_VERSION = 4
 
     def setUp(self):
         # run at start of test file
@@ -40,12 +44,12 @@ class TestAcquisitionAPI(unittest.TestCase):
                 "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
             ) as mock_req_ros:
                 mock_req_ros.return_value = {
-                    "AcquisitionTime": 3000.23,
+                    "AcquisitionTime": ACQ_TIME,
                     self.RETURN_KEY: self.GHSReturnValue["OK"],
                 }
                 self.assertEqual(
                     acquisition_api.get_acquisition_time(self.con_handle),
-                    ("OK", 3000.23),
+                    ("OK", ACQ_TIME),
                     "get_acquisition_time success response test failed.",
                 )
 
@@ -61,7 +65,7 @@ class TestAcquisitionAPI(unittest.TestCase):
                 "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
             ) as mock_req_ros:
                 mock_req_ros.return_value = {
-                    "AcquisitionTime": 3000.23,
+                    "AcquisitionTime": ACQ_TIME,
                     self.RETURN_KEY: self.GHSReturnValue["NOK"],
                 }
                 self.assertEqual(
@@ -99,16 +103,16 @@ class TestAcquisitionAPI(unittest.TestCase):
                 "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
             ) as mock_req_ros:
                 mock_req_ros.return_value = {
-                    "AbsoluteTimeYear": 2021,
-                    "AbsoluteTimeDay": 326,
-                    "AbsoluteTimeSeconds": 3000.23,
+                    "AbsoluteTimeYear": ABS_TIME_Y,
+                    "AbsoluteTimeDay": ABS_TIME_D,
+                    "AbsoluteTimeSeconds": ABS_TIME_S,
                     self.RETURN_KEY: self.GHSReturnValue["OK"],
                 }
                 self.assertEqual(
                     acquisition_api.get_acquisition_start_time(
                         self.con_handle
                     ),
-                    ("OK", 2021, 326, 3000.23),
+                    ("OK", ABS_TIME_Y, ABS_TIME_D, ABS_TIME_S),
                     "get_acquisition_start_time success response test failed.",
                 )
 
@@ -124,9 +128,9 @@ class TestAcquisitionAPI(unittest.TestCase):
                 "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
             ) as mock_req_ros:
                 mock_req_ros.return_value = {
-                    "AbsoluteTimeYear": 2021,
-                    "AbsoluteTimeDay": 326,
-                    "AbsoluteTimeSeconds": 3000.23,
+                    "AbsoluteTimeYear": ABS_TIME_Y,
+                    "AbsoluteTimeDay": ABS_TIME_D,
+                    "AbsoluteTimeSeconds": ABS_TIME_S,
                     self.RETURN_KEY: self.GHSReturnValue["NOK"],
                 }
                 self.assertEqual(
