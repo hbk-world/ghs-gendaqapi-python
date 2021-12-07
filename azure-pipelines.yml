@@ -94,6 +94,7 @@ jobs:
       script: |
         call activate ghsapi
         coverage run -m unittest discover
+        coverage xml
       workingDirectory: './unittest'
     displayName: Executing coverage for the unit tests
   - task: PublishTestResults@2
