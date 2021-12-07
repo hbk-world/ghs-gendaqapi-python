@@ -86,8 +86,8 @@ jobs:
     inputs:
       script: |
         call activate ghsapi
-        python test_suite.py
-      workingDirectory: './unittest'
+        python unittest/test_suite.py
+      workingDirectory: './'
     displayName: Executing Unit Tests
   - task: CmdLine@2
     inputs:
