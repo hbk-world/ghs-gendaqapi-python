@@ -5,6 +5,8 @@ certifi==2021.5.30
 colorama==0.4.4
 html-testRunner==1.2.1
 xmlrunner==1.7.7
+pycobertura==2.1.0
+coverage==6.2.0
 isort==5.9.3
 Jinja2==3.0.2
 lazy-object-proxy==1.6.0

@@ -86,9 +86,16 @@ jobs:
     inputs:
       script: |
         call activate ghsapi
-        python $(Build.SourcesDirectory)\unittest\test_suite.py
-      workingDirectory: './'
+        python test_suite.py
+      workingDirectory: './unittest'
     displayName: Executing Unit Tests
+  - task: CmdLine@2
+    inputs:
+      script: |
+        call activate ghsapi
+        coverage run -m unittest discover
+      workingDirectory: './unittest'
+    displayName: Executing coverage for the unit tests
   - task: PublishTestResults@2
     inputs:
       testResultsFormat: 'JUnit'
@@ -97,3 +104,9 @@ jobs:
       failTaskOnFailedTests: true
     condition: always()
     displayName: Publishing Test Results
+  - task: PublishCodeCoverageResults@1
+    inputs:
+      codeCoverageTool: 'Cobertura'
+      summaryFileLocation: '$(Build.SourcesDirectory)\unittest\coverage.xml'
+    condition: always()
+    displayName: Publishing Code Coverage
