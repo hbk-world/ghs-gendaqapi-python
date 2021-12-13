@@ -224,7 +224,7 @@ def get_high_low_rate_storage_enabled(
         source_slot_dict = {"Source": source, "SlotId": slot_id}
 
     else:
-        source_slot_dict = {"Source": source, "SlotId": slot_id}
+        return "InvalidDataType"
 
     response_json = con_handle.send_request_wait_response(
         "GetHighLowRateStorageEnabled", source_slot_dict
@@ -292,7 +292,7 @@ def set_high_low_rate_storage_enabled(
         pass
 
     else:
-        pass
+        return "InvalidDataType"
 
     if (
         isinstance(high_rate_enabled, str)
@@ -307,7 +307,7 @@ def set_high_low_rate_storage_enabled(
         pass
 
     else:
-        pass
+        return "InvalidDataType"
 
     if (
         isinstance(low_rate_enabled, str)
@@ -322,7 +322,7 @@ def set_high_low_rate_storage_enabled(
         pass
 
     else:
-        pass
+        return "InvalidDataType"
 
     source_slot_dict = {
         "Source": source,
