@@ -201,6 +201,16 @@ GHSTimerCounterMode = {
     "AngleBiDirectionalWithRefPos": 14,
 }
 
+GHSEnableDisable = {
+    "Disable": 0,
+    "Enable": 1,
+}
+
+GHSRecordingDataSource = {
+    "SyncChannels": 0,
+    "SyncRealTimeFormulas": 1,
+}
+
 
 def to_string(value: int, ghs_dict: dict) -> str:
     """Get status key by value from dictionary."""

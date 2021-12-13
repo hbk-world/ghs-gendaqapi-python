@@ -176,9 +176,10 @@ def set_user_mode(con_handle: ConnectionHandler, user_mode: str | int) -> str:
 
     Args:
         con_handle: A unique identifier per mainframe connection.
+        user_mode: The desired user mode.
 
     Returns:
-       An String value representing request status.
+       String value representing request status.
     """
 
     if isinstance(user_mode, str) and user_mode in GHSUserMode:
@@ -203,9 +204,10 @@ def identity(con_handle: ConnectionHandler, identity_flag: bool) -> str:
 
     Args:
         con_handle: A unique identifier per mainframe connection.
+        identity_flag: Enable or disable flag.
 
     Returns:
-       An String value representing request status.
+       String value representing request status.
     """
 
     identity_dict = {"Identify": 1} if identity_flag else {"Identify": 0}

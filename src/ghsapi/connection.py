@@ -49,7 +49,7 @@ class ConnectionHandler:
             port_num: Mainframe port number.
 
         Returns:
-            An integer value representing connection status code.
+            Integer value representing connection status code.
         """
 
         if not ip_address or not port_num:
@@ -87,7 +87,7 @@ class ConnectionHandler:
             method_param: Request method parameter.
 
         Returns:
-            A dict representing response from the mainframe.
+            Dict representing response from the mainframe.
         """
 
         if not method_name:
@@ -164,7 +164,7 @@ class ConnectionHandler:
             length: Message length.
 
         Returns:
-            An integer representing bytes written.
+            Integer representing bytes written.
 
         Raises:
             OSError: When socket not connected

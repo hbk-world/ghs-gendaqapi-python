@@ -19,7 +19,7 @@ def start_preview(con_handle: ConnectionHandler) -> str:
         con_handle: A unique identifier per mainframe connection.
 
     Returns:
-        An String value representing request status.
+        String value representing request status.
     """
 
     response_json = con_handle.send_request_wait_response("StartPreview", None)
@@ -47,7 +47,7 @@ def start_recording(con_handle: ConnectionHandler) -> str:
         con_handle: A unique identifier per mainframe connection.
 
     Returns:
-        An String value representing request status.
+        String value representing request status.
     """
 
     response_json = con_handle.send_request_wait_response(
@@ -63,7 +63,7 @@ def pause_recording(con_handle: ConnectionHandler) -> str:
         con_handle: A unique identifier per mainframe connection.
 
     Returns:
-        An String value representing request status.
+        String value representing request status.
     """
 
     response_json = con_handle.send_request_wait_response(
@@ -79,7 +79,7 @@ def resume_recording(con_handle: ConnectionHandler) -> str:
         con_handle: A unique identifier per mainframe connection.
 
     Returns:
-        An String value representing request status.
+        String value representing request status.
     """
 
     response_json = con_handle.send_request_wait_response(
@@ -95,7 +95,7 @@ def stop_recording(con_handle: ConnectionHandler) -> str:
         con_handle: A unique identifier per mainframe connection.
 
     Returns:
-        An String value representing request status.
+        String value representing request status.
     """
 
     response_json = con_handle.send_request_wait_response(
@@ -111,7 +111,7 @@ def trigger(con_handle: ConnectionHandler) -> str:
         con_handle: A unique identifier per mainframe connection.
 
     Returns:
-        An String value representing request status.
+        String value representing request status.
     """
 
     response_json = con_handle.send_request_wait_response("Trigger", None)
