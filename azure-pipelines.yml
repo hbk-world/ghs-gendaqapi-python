@@ -17,9 +17,9 @@
 #-- "General supply and license conditions for software"
 #-- which is part of the standard terms and conditions of sale from HBM.
 #------------------------------------------------------------------------------
-#-- Project  :  
-#-- Filename :  
-#-- Author   :  
+#-- Project  :
+#-- Filename :
+#-- Author   :
 #------------------------------------------------------------------------------
 #-- File Description:
 #--
@@ -50,22 +50,64 @@ trigger:
     include:
     - 'main'
 
+pr:
+  branches:
+    include:
+      - 'main'
+
 #------------------------------------------------------------------------------
 #-- Stages Definition
 #------------------------------------------------------------------------------
 jobs:
 - job: GenDaqAPIPythonUnitTests
   displayName: Build GenDaqAPI Python Unit Tests
-  timeoutInMinutes: 120
+  timeoutInMinutes: 10
   pool:
-    name: DevOps-Linux
+    name: DevOps-Windows-ESW
+    demands:
+    - hasConda -equals true
   steps:
   - checkout: self
-    clean: false
-    lfs : true
-  - task: Bash@3
+    clean: true
+  - task: CondaEnvironment@0
     inputs:
-      targetType: 'inline'
+      environmentName: 'ghsapi'
+      packageSpecs:
+      createOptions: '--file $(Build.SourcesDirectory)\spec-file.txt'
+    displayName: Setting up conda environment
+  - task: CmdLine@2
+    inputs:
       script: |
-        echo 'Hello world'
-    displayName: Running Unit Tests
+        call activate ghsapi
+        pip install -r $(Build.SourcesDirectory)\requirements.txt
+      workingDirectory: './'
+    displayName: Installing requirements
+  - task: CmdLine@2
+    inputs:
+      script: |
+        call activate ghsapi
+        python unittest/test_suite.py
+      workingDirectory: './'
+    displayName: Executing Unit Tests
+  - task: CmdLine@2
+    inputs:
+      script: |
+        call activate ghsapi
+        coverage run -m unittest discover
+        coverage xml
+      workingDirectory: './unittest'
+    displayName: Executing coverage for the unit tests
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '$(Build.SourcesDirectory)\reports\TEST-*.xml'
+      mergeTestResults: true
+      failTaskOnFailedTests: true
+    condition: always()
+    displayName: Publishing Test Results
+  - task: PublishCodeCoverageResults@1
+    inputs:
+      codeCoverageTool: 'Cobertura'
+      summaryFileLocation: '$(Build.SourcesDirectory)\unittest\coverage.xml'
+    condition: always()
+    displayName: Publishing Code Coverage
