@@ -4,7 +4,6 @@ It is used to connect disconnect to the mainframe.
 """
 
 from .connection import ConnectionHandler
-
 from .ghsapi_states import RETURN_KEY, GHSAccess, GHSReturnValue, to_string
 
 
@@ -23,7 +22,7 @@ def connect(
         client_api_version: Client supported API version.
 
     Returns:
-        An String value representing connect request status.
+        String value representing connect request status.
     """
 
     if (
@@ -63,7 +62,7 @@ def get_current_access(con_handle: ConnectionHandler) -> str:
         con_handle: A unique identifier per mainframe connection.
 
     Returns:
-        An String representing current access permissions for client.
+        String representing current access permissions for client.
     """
 
     response_json = con_handle.send_request_wait_response(
@@ -83,7 +82,7 @@ def disconnect(con_handle: ConnectionHandler) -> str:
         con_handle: A unique identifier per mainframe connection.
 
     Returns:
-        An String value representing disconnect request status.
+        String value representing disconnect request status.
     """
 
     response_json = con_handle.send_request_wait_response("Disconnect", None)

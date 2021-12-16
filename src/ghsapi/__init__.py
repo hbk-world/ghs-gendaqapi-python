@@ -11,6 +11,7 @@ Package Contents:
 from . import acquisition_api as _acquisition
 from . import connection_api as _connection
 from . import mainframe_api as _mainframe
+from . import manage_recordings_api as _manage_recordings
 from .connection import ConnectionHandler
 from .ghsapi_states import (
     RETURN_KEY,
@@ -285,3 +286,135 @@ class GHS:
         """
 
         return _mainframe.get_mainframe_info(self._con_handle)
+
+    # Manage recordings APIs
+
+    def ghs_delete_all_recordings(self) -> str:
+        """Deletes all recordings from local mainframe storage.
+
+        Recordings are deleted asynchronously.
+
+        Returns:
+            String value representing request status.
+        """
+
+        return _manage_recordings.delete_all_recordings(self._con_handle)
+
+    def ghs_delete_last_recording(self) -> str:
+        """Deletes the most recent recording from local mainframe
+        storage.
+
+        Recordings are deleted asynchronously.
+
+        Returns:
+            String value representing request status.
+        """
+
+        return _manage_recordings.delete_last_recording(self._con_handle)
+
+    def ghs_get_recording_name(self) -> tuple[str, str | None, int | None]:
+        """Retrieve the recording base name and recording index of the
+        last recording file.
+
+        The recording base name parameter is UTF-8 encoded.
+
+        Returns:
+            Tuple with status, base name and index of the recording
+            file.
+        """
+
+        return _manage_recordings.get_recording_name(self._con_handle)
+
+    def ghs_get_storage_location(self) -> tuple[str, str | None]:
+        """Retrieve the storage location.
+
+        Returns:
+            Tuple with status and storage location.
+        """
+
+        return _manage_recordings.get_storage_location(self._con_handle)
+
+    def ghs_get_high_low_rate_storage_enabled(
+        self, source: str | int, slot_id: str
+    ) -> tuple[str, str | None, str | None]:
+        """Retrieve storage enabled status of high and low rate data
+        for the specified recording data source.
+
+        Args:
+            source: The recording data source to retrieve the storage
+            enabled status for.
+            slot_id: The slot containing the recorder to retrieve the
+            storage enabled status for (e.g. 'A' for the first slot).
+            This argument is only evaluated for recorder based data
+            sources.
+
+        Returns:
+            Tuple with status, flag to indicate if high and low rate
+            data is stored.
+        """
+
+        return _manage_recordings.get_high_low_rate_storage_enabled(
+            self._con_handle, source, slot_id
+        )
+
+    def ghs_set_high_low_rate_storage_enabled(
+        self,
+        source: str | int,
+        slot_id: str,
+        high_rate_enabled: str | int,
+        low_rate_enabled: str | int,
+    ) -> str:
+        """Enable/disable storage of high and low rate data for the
+        specified recording data source.
+
+        Args:
+            source: The recording data source to retrieve the storage
+            enabled status for.
+            slot_id: The slot containing the recorder to retrieve the
+            storage enabled status for (e.g. 'A' for the first slot).
+            This argument is only evaluated for recorder based data
+            sources.
+            high_rate_enabled: Enable/disable storage of high rate data
+            low_rate_enabled: Enable/disable storage of low rate data.
+
+        Returns:
+            String value representing request status.
+        """
+
+        return _manage_recordings.set_high_low_rate_storage_enabled(
+            self._con_handle,
+            source,
+            slot_id,
+            high_rate_enabled,
+            low_rate_enabled,
+        )
+
+    def ghs_set_recording_name(
+        self, recording_name: str, recording_index: int
+    ) -> str:
+        """Set the recording base name and recording index for the next
+         recording file.
+
+        The system needs to be idle before calling this function.
+        The recording base name parameter must be UTF-8 encoded.
+
+        Returns:
+            String value representing request status.
+        """
+
+        return _manage_recordings.set_recording_name(
+            self._con_handle, recording_name, recording_index
+        )
+
+    def ghs_set_storage_location(self, storage_location: str | int) -> str:
+        """Set the storage location.
+
+        The system needs to be idle before calling this function.
+
+        Returns:
+            String value representing request status.
+        """
+
+        return _manage_recordings.set_storage_location(
+            self._con_handle, storage_location
+        )
