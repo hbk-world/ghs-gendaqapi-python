@@ -72,8 +72,8 @@ jobs:
   - task: CondaEnvironment@0
     inputs:
       environmentName: 'ghsapi'
-      packageSpecs:
       createOptions: '--file $(Build.SourcesDirectory)\spec-file.txt'
+      cleanEnvironment: true
     displayName: Setting up conda environment
   - task: CmdLine@2
     inputs:
