@@ -58,10 +58,10 @@ def main():
     # Get the recoding name and index
     return_var, recording_name, recording_index = gen.ghs_get_recording_name()
     if return_var != "OK":
-        print(f"Failed on GHSGetStorageLocation. Return Status: {return_var}")
+        print(f"Failed on GHSGetRecordingName. Return Status: {return_var}")
         sys.exit()
     print(
-        f"GHSGetStorageLocation - Return Status: {return_var}\
+        f"GHSGetRecordingName - Return Status: {return_var}\
         Recording name: {recording_name}\
         Recording index: {recording_index}"
     )
