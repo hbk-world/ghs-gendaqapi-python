@@ -11,6 +11,7 @@ Package Contents:
 from . import acquisition_api as _acquisition
 from . import connection_api as _connection
 from . import mainframe_api as _mainframe
+from . import manage_mainframe_settings as _manage_mainframe_settings
 from . import manage_recordings_api as _manage_recordings
 from .connection import ConnectionHandler
 from .ghsapi_states import (
@@ -398,6 +399,10 @@ class GHS:
         The system needs to be idle before calling this function.
         The recording base name parameter must be UTF-8 encoded.
 
+        Args:
+            recording_name: The desired base name of the recording file
+            recording_index: The desired index of the recording file
+
         Returns:
             String value representing request status.
         """
@@ -411,10 +416,80 @@ class GHS:
 
         The system needs to be idle before calling this function.
 
+        Args:
+            storage_location: The desired storage location.
+
         Returns:
             String value representing request status.
         """
 
         return _manage_recordings.set_storage_location(
             self._con_handle, storage_location
+        )
+
+    # Manage recordings APIs
+
+    def ghs_apply_persisted_settings(self) -> str:
+        """A mainframe might contain persisted settings (being applied upon
+        boot). This method re-applies these settings. In Perception this
+        maps on the 'Configured boot' feature.
+
+        The system needs to be idle before calling this function.
+        This function overwrites any previously set settings and / or
+        persisted settings.
+
+        Returns:
+            String value representing request status.
+        """
+
+        return _manage_mainframe_settings.apply_persisted_settings(
+            self._con_handle
+        )
+
+    def ghs_persist_current_settings(self) -> str:
+        """Persists the current mainframe settings.
+
+        The persisted mainframe settings are applied upon a mainframe
+        boot.
+
+        Returns:
+            String value representing request status.
+        """
+
+        return _manage_mainframe_settings.persist_current_settings(
+            self._con_handle
+        )
+
+    def ghs_get_current_settings(self) -> tuple[str, bytes | None, int | None]:
+        """Retrieves the current mainframe settings as a blob.
+
+        As this blob can be of variable size, it is upon the caller to
+        ensure reading the correct amount of memory.
+        Memory for this blob is allocated by the API.
+
+        Returns:
+            Tuple with status, base name and index of the recording
+            file.
+        """
+
+        return _manage_mainframe_settings.get_current_settings(
+            self._con_handle
+        )
+
+    def ghs_set_current_settings(self, blob: bytes, blob_size: int) -> str:
+        """Persists the current mainframe settings.
+
+        The persisted mainframe settings are applied upon a mainframe
+        boot.
+
+        Args:
+            blob: Settings blob.
+            blob_size: Size of the settings blob.
+
+        Returns:
+            String value representing request status.
+        """
+
+        return _manage_mainframe_settings.set_current_settings(
+            self._con_handle, blob, blob_size
         )
