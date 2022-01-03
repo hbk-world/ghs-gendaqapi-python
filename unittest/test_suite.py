@@ -10,6 +10,7 @@ import test_connection_api
 import test_connection_handler
 import test_json
 import test_mainframe_api
+import test_manage_mainframe_settings
 import test_manage_recordings
 
 if __name__ == "__main__":
@@ -26,6 +27,7 @@ if __name__ == "__main__":
     suite.addTests(loader.loadTestsFromModule(test_acquisition_api))
     suite.addTests(loader.loadTestsFromModule(test_mainframe_api))
     suite.addTests(loader.loadTestsFromModule(test_manage_recordings))
+    suite.addTests(loader.loadTestsFromModule(test_manage_mainframe_settings))
 
     # initialize a runner, pass it your suite and run it
     HTMLTestRunner(
@@ -44,6 +46,7 @@ if __name__ == "__main__":
     suite.addTests(loader.loadTestsFromModule(test_acquisition_api))
     suite.addTests(loader.loadTestsFromModule(test_mainframe_api))
     suite.addTests(loader.loadTestsFromModule(test_manage_recordings))
+    suite.addTests(loader.loadTestsFromModule(test_manage_mainframe_settings))
 
     result = not XMLTestRunner(output="reports").run(suite).wasSuccessful()
     sys.exit(result)
