@@ -282,7 +282,7 @@ class TestManageRecordings(unittest.TestCase):
             "Failed on delete all recording.",
         )
 
-    def test_set_get_high_low_srorage_enabled(self):
+    def test_set_get_high_low_storage_enabled(self):
         """Test to set then get high low storage enabled."""
 
         return_var = self.gen.ghs_set_storage_location("Local1")
@@ -320,7 +320,7 @@ class TestManageRecordings(unittest.TestCase):
             "Failed on get high low storage enabled.",
         )
 
-    def test_wrong_set_get_high_low_srorage_enabled(self):
+    def test_wrong_set_get_high_low_storage_enabled(self):
         """Test to set wrong high low storage enabled then get previous
         set values
         """
