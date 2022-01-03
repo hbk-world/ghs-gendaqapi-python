@@ -63,13 +63,6 @@ class TestManageMainframeSettings(unittest.TestCase):
     def test_set_get_current_settings(self):
         """Test to set then get current settings."""
 
-        return_var = self.gen.ghs_set_storage_location("Local1")
-        self.assertEqual(
-            return_var,
-            "OK",
-            "Failed on set mainframe as storage location.",
-        )
-
         return_var = self.gen.ghs_set_high_low_rate_storage_enabled(
             "SyncChannels", "A", "Enable", "Enable"
         )
