@@ -2,6 +2,7 @@
 
 import os
 import sys
+import time
 import unittest
 
 import HtmlTestRunner
@@ -38,7 +39,7 @@ class TestManageMainframeSettings(unittest.TestCase):
 
     def tearDown(self):
         # runs after each test
-        pass
+        self.gen.ghs_stop_recording()
 
     def test_persist_current_settings(self):
         """Test copy of active settings to boot settings."""
@@ -50,6 +51,32 @@ class TestManageMainframeSettings(unittest.TestCase):
             "Failed to persist current settings.",
         )
 
+    def test_persist_current_settings_when_recording(self):
+        """Test copy of active settings to boot settings when recording."""
+
+        return_var = self.gen.ghs_start_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on start recording.",
+        )
+
+        return_var = self.gen.ghs_persist_current_settings()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to persist current settings.",
+        )
+
+        return_var = self.gen.ghs_stop_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on stop recording.",
+        )
+
+        time.sleep(2)
+
     def test_apply_persisted_settings(self):
         """Test copy of boot settings to active settings."""
 
@@ -59,6 +86,33 @@ class TestManageMainframeSettings(unittest.TestCase):
             "OK",
             "Failed to apply persisted settings.",
         )
+
+    def test_apply_persisted_settings_when_recording(self):
+        """Test copy of boot settings to active settings when
+        recording."""
+
+        return_var = self.gen.ghs_start_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on start recording.",
+        )
+
+        return_var = self.gen.ghs_apply_persisted_settings()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to apply persisted settings.",
+        )
+
+        return_var = self.gen.ghs_stop_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on stop recording.",
+        )
+
+        time.sleep(2)
 
     def test_set_get_current_settings(self):
         """Test to set then get current settings."""
