@@ -101,7 +101,7 @@ class TestManageMainframeSettings(unittest.TestCase):
         return_var = self.gen.ghs_apply_persisted_settings()
         self.assertEqual(
             return_var,
-            "OK",
+            "SystemNotIdle",
             "Failed to apply persisted settings.",
         )
 
