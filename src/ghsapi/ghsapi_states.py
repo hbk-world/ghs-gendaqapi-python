@@ -45,6 +45,8 @@ GHSReturnValue = {
     "FieldBusAlready_Enabled": 39,
     "CANBusNotFound": 46,
     "WriteAccessBlocked": 47,
+    "InvalidOutputNumber": 49,
+    "IncompatibleDigitalOutputMode": 50,
 }
 
 GHSAccess = {
@@ -209,6 +211,19 @@ GHSEnableDisable = {
 GHSRecordingDataSource = {
     "SyncChannels": 0,
     "SyncRealTimeFormulas": 1,
+}
+
+GHSDigitalOutput = {
+    "Output1": 0,
+    "Output2": 1,
+}
+
+GHSDigitalOutMode = {
+    "Low": 0,
+    "High": 1,
+    "Acquiring": 2,
+    "Trigger": 3,
+    "Alarm": 4,
 }
 
 

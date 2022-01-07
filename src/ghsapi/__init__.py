@@ -13,9 +13,11 @@ from . import connection_api as _connection
 from . import mainframe_api as _mainframe
 from . import manage_mainframe_settings as _manage_mainframe_settings
 from . import manage_recordings_api as _manage_recordings
+from . import recorder_api as _recorder
 from .connection import ConnectionHandler
 from .ghsapi_states import (
     RETURN_KEY,
+    GHSDigitalOutMode,
     GHSReturnValue,
     GHSSyncStatus,
     GHSUserMode,
@@ -492,4 +494,182 @@ class GHS:
 
         return _manage_mainframe_settings.set_current_settings(
             self._con_handle, blob, blob_size
+        )
+
+    # Recorder APIs
+
+    def ghs_get_channel_count(self, slot_id: str) -> tuple[str, int | None]:
+        """Retrieve the number of channels for a recorder.
+
+        This method can be called by multiple connected clients at same
+        time.
+
+        Args:
+            slot_id: The slot containing the recorder to get number of
+            channels for (e.g. 'A' for the first slot).
+
+        Returns:
+            Tuple with status and number of channels for the recorder.
+        """
+
+        return _recorder.get_channel_count(self._con_handle, slot_id)
+
+    def ghs_get_digital_output(
+        self, slot_id: str, digital_output: str | int
+    ) -> tuple[str, str | None]:
+        """Retrieve the Digital Output Mode for a specified Output ID in a
+        recorder.
+
+        This method can be called by multiple connected clients at same
+        time.
+
+        Args:
+            slot_id: The slot containing the recorder to get number of
+            channels for (e.g. 'A' for the first slot).
+            digital_output: The output number desired.
+
+        Returns:
+            Tuple with status and digital output mode for that output.
+        """
+
+        return _recorder.get_digital_output(
+            self._con_handle, slot_id, digital_output
+        )
+
+    def ghs_get_recorder_enabled(self, slot_id: str) -> tuple[str, str | None]:
+        """Determine if recorder is enabled or disabled.
+
+        This method can be called by multiple connected clients at same
+        time.
+
+        Args:
+            slot_id: The slot containing the recorder to get number of
+            channels for (e.g. 'A' for the first slot).
+
+        Returns:
+            Tuple with status and recorder enabled status.
+        """
+
+        return _recorder.get_recorder_enabled(self._con_handle, slot_id)
+
+    def ghs_get_recorder_info(
+        self, slot_id: str
+    ) -> tuple[str, str | None, str | None, str | None, str | None]:
+        """Determine type, name, serial number and firmware version
+        information for a recorder.
+
+        The recorderType, recorderName, serialNumber and firmwareVersion
+        parameters are UTF-8 encoded.
+
+        This method can be called by multiple connected clients at same
+        time.
+
+        Args:
+            slot_id: The slot containing the recorder to get number of
+            channels for (e.g. 'A' for the first slot).
+
+        Returns:
+            Tuple with status and recorder information.
+        """
+
+        return _recorder.get_recorder_info(self._con_handle, slot_id)
+
+    def ghs_get_sample_rate(self, slot_id: str) -> tuple[str, float | None]:
+        """Determine the sample rate for a recorder.
+
+        This method can be called by multiple connected clients at same
+        time.
+
+        Args:
+            slot_id: The slot containing the recorder to get number of
+            channels for (e.g. 'A' for the first slot).
+
+        Returns:
+            Tuple with status and sample rate for a recorder.
+        """
+
+        return _recorder.get_sample_rate(self._con_handle, slot_id)
+
+    def ghs_set_digital_output(
+        self,
+        slot_id: str,
+        digital_output: str | int,
+        digital_output_mode: str | int,
+    ) -> str:
+        """Set the Digital Output Mode for a specified Output ID in a
+        recorder.
+
+        This method will only process requests from the connected client
+        with the most privileges order (Privileges order: 1- Perception,
+        2- GenDaq, 3- Other)
+
+        Args:
+            slot_id: The slot containing the recorder to get number of
+            channels for (e.g. 'A' for the first slot).
+            digital_output: The output number desired.
+            digital_output_mode: The digital output mode to set on that
+            output.
+
+        Returns:
+            String value representing request status.
+        """
+
+        return _recorder.set_digital_output(
+            self._con_handle, slot_id, digital_output, digital_output_mode
+        )
+
+    def ghs_set_recorder_enabled(
+        self,
+        slot_id: str,
+        enabled: str | int,
+    ) -> str:
+        """Enable or disable a recorder.
+
+        The system needs to be idle before calling this function.
+
+        This method will only process requests from the connected client
+        with the most privileges order (Privileges order: 1- Perception,
+        2- GenDaq, 3- Other)
+
+        Args:
+            slot_id: The slot containing the recorder to get number of
+            channels for (e.g. 'A' for the first slot).
+            enabled: Set to GHS_Enable/GHS_Disable to enable/disable the
+            recorder.
+
+        Returns:
+            String value representing request status.
+        """
+
+        return _recorder.set_recorder_enabled(
+            self._con_handle, slot_id, enabled
+        )
+
+    def ghs_set_sample_rate(
+        self,
+        slot_id: str,
+        sample_rate: float,
+    ) -> str:
+        """Set the sample rate for a recorder.
+
+        The system needs to be idle before calling this function.
+        This function overwrites any previously set sample rate setting for
+        the specified recorder.
+        If the specified sample rate is not supported by the recorder, the
+        sample rate is rounded to the nearest supported sample rate.
+
+        This method will only process requests from the connected client
+        with the most privileges order (Privileges order: 1- Perception,
+        2- GenDaq, 3- Other)
+
+        Args:
+            slot_id: The slot containing the recorder to get number of
+            channels for (e.g. 'A' for the first slot).
+            sample_rate: In samples per second.
+
+        Returns:
+            String value representing request status.
+        """
+        return _recorder.set_sample_rate(
+            self._con_handle, slot_id, sample_rate
         )
