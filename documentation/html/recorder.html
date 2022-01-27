@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recorder &mdash; GEN DAQ API - Python Driver 1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Manage mainframe settings" href="managemainframe.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> GEN DAQ API - Python Driver
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="ghspyapi.html">API Functions</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="connections.html">Connections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="acquisition.html">Acquisition control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mainframe.html">Mainframe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="managerecording.html">Manage recordings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="managemainframe.html">Manage mainframe settings</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Recorder</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">GEN DAQ API - Python Driver</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="ghspyapi.html">API Functions</a> &raquo;</li>
+      <li>Recorder</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/recorder.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="recorder">
+<h1>Recorder<a class="headerlink" href="#recorder" title="Permalink to this headline"></a></h1>
+<p>Recorder related API functions.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_get_recorder_info">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_get_recorder_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_get_recorder_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_get_recorder_info" title="Permalink to this definition"></a></dt>
+<dd><p>Determine type, name, serial number and firmware version
+information for a recorder.</p>
+<p><em>The recorderType, recorderName, serialNumber and firmwareVersion
+parameters are UTF-8 encoded.</em></p>
+<p><em>This method can be called by multiple connected clients at same
+time.</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>slot_id</strong> – The slot containing the recorder</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Status and recorder information as type, name, serial
+number and firmware version</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_get_recorder_enabled">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_get_recorder_enabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_get_recorder_enabled"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_get_recorder_enabled" title="Permalink to this definition"></a></dt>
+<dd><p>Determine if recorder is enabled or disabled.</p>
+<p><em>This method can be called by multiple connected clients at same
+time.</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>slot_id</strong> – The slot containing the recorder</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>API status and recorder enabled status.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_set_recorder_enabled">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_set_recorder_enabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_set_recorder_enabled"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_set_recorder_enabled" title="Permalink to this definition"></a></dt>
+<dd><p>Enable or disable a recorder.</p>
+<p><em>The system needs to be idle before calling this function.</em></p>
+<p><em>This method will only process requests from the connected client
+with the most privileges order (Privileges order: 1- Perception,
+2- GenDaq, 3- Other)</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
+<li><p><strong>enabled</strong> – Set to GHS_Enable/GHS_Disable to enable/disable</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>API status.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_get_channel_count">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_get_channel_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_get_channel_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_get_channel_count" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieve the number of channels for a recorder.</p>
+<p><em>This method can be called by multiple connected clients at same
+time.</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>slot_id</strong> – The slot containing the recorder</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Status and number of channels for the recorder.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_get_sample_rate">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_get_sample_rate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_get_sample_rate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_get_sample_rate" title="Permalink to this definition"></a></dt>
+<dd><p>Determine the sample rate for a recorder.</p>
+<p><em>This method can be called by multiple connected clients at same
+time.</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>slot_id</strong> – The slot containing the recorder</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Status and sample rate for a recorder.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_set_sample_rate">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_set_sample_rate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_set_sample_rate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_set_sample_rate" title="Permalink to this definition"></a></dt>
+<dd><p>Set the sample rate for a recorder.</p>
+<p><em>The system needs to be idle before calling this function.
+This function overwrites any previously set sample rate setting for
+the specified recorder.
+If the specified sample rate is not supported by the recorder, the
+sample rate is rounded to the nearest supported sample rate.</em></p>
+<p><em>This method will only process requests from the connected client
+with the most privileges order (Privileges order: 1- Perception,
+2- GenDaq, 3- Other)</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
+<li><p><strong>sample_rate</strong> – In samples per second.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>API status.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_get_digital_output">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_get_digital_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">digital_output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_get_digital_output"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_get_digital_output" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieve the Digital Output Mode for a specified Output ID in a
+recorder.</p>
+<p><em>This method can be called by multiple connected clients at same
+time.</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
+<li><p><strong>digital_output</strong> – The output number desired.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Status and digital output mode for that output.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_set_digital_output">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_set_digital_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">digital_output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">digital_output_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_set_digital_output"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_set_digital_output" title="Permalink to this definition"></a></dt>
+<dd><p>Set the Digital Output Mode for a specified Output ID in a
+recorder.</p>
+<p><em>This method will only process requests from the connected client
+with the most privileges order (Privileges order: 1- Perception,
+2- GenDaq, 3- Other)</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
+<li><p><strong>digital_output</strong> – The output number desired.</p></li>
+<li><p><strong>digital_output_mode</strong> – The digital output mode to set</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>API status.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="managemainframe.html" class="btn btn-neutral float-left" title="Manage mainframe settings" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Hottinger Bruel and Kjaer Benelux B.V..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

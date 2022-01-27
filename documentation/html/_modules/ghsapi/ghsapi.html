@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ghsapi.ghsapi &mdash; GEN DAQ API - Python Driver 1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> GEN DAQ API - Python Driver
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ghspyapi.html">API Functions</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">GEN DAQ API - Python Driver</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>ghsapi.ghsapi</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for ghsapi.ghsapi</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (C) 2022 Hottinger Bruel and Kjaer Benelux B.V.</span>
+<span class="c1"># Schutweg 15a</span>
+<span class="c1"># 5145 NP Waalwijk</span>
+<span class="c1"># The Netherlands</span>
+<span class="c1"># http://www.hbm.com</span>
+
+<span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
+<span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
+<span class="c1"># in the Software without restriction, including without limitation the rights</span>
+<span class="c1"># to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span>
+<span class="c1"># copies of the Software, and to permit persons to whom the Software is</span>
+<span class="c1"># furnished to do so, subject to the following conditions:</span>
+
+<span class="c1"># The above copyright notice and this permission notice shall be included in</span>
+<span class="c1"># all copies or substantial portions of the Software.</span>
+
+<span class="c1"># THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+<span class="c1"># IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="c1"># FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="c1"># AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="c1"># LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
+<span class="c1"># OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</span>
+<span class="c1"># SOFTWARE.</span>
+
+<span class="sd">&quot;&quot;&quot;GEN DAQ API - Python.</span>
+
+<span class="sd">The GEN DAQ API can be used to control the HBM GEN Series tethered</span>
+<span class="sd">mainframes without using Perception.</span>
+
+<span class="sd">Package Contents:</span>
+<span class="sd">    Connections: Connection related API functions.</span>
+<span class="sd">    Acquisition control: Acquisition control related API functions.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">acquisition_api</span> <span class="k">as</span> <span class="n">_acquisition</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">connection_api</span> <span class="k">as</span> <span class="n">_connection</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">mainframe_api</span> <span class="k">as</span> <span class="n">_mainframe</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">manage_mainframe_settings</span> <span class="k">as</span> <span class="n">_manage_mainframe_settings</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">manage_recordings_api</span> <span class="k">as</span> <span class="n">_manage_recordings</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">recorder_api</span> <span class="k">as</span> <span class="n">_recorder</span>
+<span class="kn">from</span> <span class="nn">.connection</span> <span class="kn">import</span> <span class="n">ConnectionHandler</span>
+<span class="kn">from</span> <span class="nn">.ghsapi_states</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">RETURN_KEY</span><span class="p">,</span>
+    <span class="n">GHSDigitalOutMode</span><span class="p">,</span>
+    <span class="n">GHSReturnValue</span><span class="p">,</span>
+    <span class="n">GHSSyncStatus</span><span class="p">,</span>
+    <span class="n">GHSUserMode</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">CLIENT_API_VERSION</span> <span class="o">=</span> <span class="mi">4</span>
+
+
+<span class="k">class</span> <span class="nc">GHS</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;GEN DAQ API object.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _con_handle: An unique identifier per mainframe connection.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span> <span class="o">=</span> <span class="n">ConnectionHandler</span><span class="p">()</span>
+
+    <span class="c1"># Connection related API functions.</span>
+<div class="viewcode-block" id="GHS.ghs_connect"><a class="viewcode-back" href="../../connections.html#ghsapi.ghsapi.GHS.ghs_connect">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip_address</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">port_num</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Establishes a connection to the mainframe.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ip_address: IP address needs to be an IPV4 address.</span>
+<span class="sd">            port_num: TCP port number (currently defined as 8006).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Connect return status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_connection</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">ip_address</span><span class="p">,</span> <span class="n">port_num</span><span class="p">,</span> <span class="n">CLIENT_API_VERSION</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_disconnect"><a class="viewcode-back" href="../../connections.html#ghsapi.ghsapi.GHS.ghs_disconnect">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Disconnects from a connected mainframe.</span>
+
+<span class="sd">        *Results in error when the handle is not valid and / or</span>
+<span class="sd">        mainframe is not connected.*</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Disconnect return status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_connection</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_client_api_version"><a class="viewcode-back" href="../../connections.html#ghsapi.ghsapi.GHS.ghs_get_client_api_version">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_client_api_version</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Client&#39;s API version.</span>
+
+<span class="sd">        *This function can be useful when ghs_connect() returns</span>
+<span class="sd">        GHSReturnValue_APIMismatch.*</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Version number of the client.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">CLIENT_API_VERSION</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_current_access"><a class="viewcode-back" href="../../connections.html#ghsapi.ghsapi.GHS.ghs_get_current_access">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_current_access</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Current access permission to the mainframe.</span>
+
+<span class="sd">        *The current access permissions might change at any time.</span>
+<span class="sd">        For example, when Perception connects concurrently to the same</span>
+<span class="sd">        mainframe, write access is dropped for the connected GEN DAQ</span>
+<span class="sd">        API client. If a concurrently connected Perception disconnects,</span>
+<span class="sd">        write access is granted to the connected GEN DAQ API client.</span>
+<span class="sd">        API functions that require write access will return</span>
+<span class="sd">        WriteAccessBlocked in case this client currently has no write</span>
+<span class="sd">        access.*</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Access permission.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_connection</span><span class="o">.</span><span class="n">get_current_access</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
+
+    <span class="c1"># Acquisition control related API functions.</span>
+<div class="viewcode-block" id="GHS.ghs_start_preview"><a class="viewcode-back" href="../../acquisition.html#ghsapi.ghsapi.GHS.ghs_start_preview">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_start_preview</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Starts preview mode.</span>
+
+<span class="sd">        *The system needs to be idle before calling this function.*</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Start preview status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_acquisition</span><span class="o">.</span><span class="n">start_preview</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_stop_preview"><a class="viewcode-back" href="../../acquisition.html#ghsapi.ghsapi.GHS.ghs_stop_preview">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_stop_preview</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Stops preview mode.</span>
+
+<span class="sd">        *The system needs to be in preview mode before calling this</span>
+<span class="sd">        function.*</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Stop preview status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_acquisition</span><span class="o">.</span><span class="n">stop_preview</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_start_recording"><a class="viewcode-back" href="../../acquisition.html#ghsapi.ghsapi.GHS.ghs_start_recording">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_start_recording</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Start recording on local storage.</span>
+
+<span class="sd">        *The system needs to be idle before calling this function. Note</span>
+<span class="sd">        that the connected mainframe will generate a recording name.</span>
+<span class="sd">        This command can be executed only successfully when the local</span>
+<span class="sd">        storage is set.*</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Start recording status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_acquisition</span><span class="o">.</span><span class="n">start_recording</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_pause_recording"><a class="viewcode-back" href="../../acquisition.html#ghsapi.ghsapi.GHS.ghs_pause_recording">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_pause_recording</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Pauses a started recording.</span>
+
+<span class="sd">        *The system needs to be recording before calling this function.*</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Pause recording status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_acquisition</span><span class="o">.</span><span class="n">pause_recording</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_resume_recording"><a class="viewcode-back" href="../../acquisition.html#ghsapi.ghsapi.GHS.ghs_resume_recording">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_resume_recording</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Resumes a paused recording.</span>
+
+<span class="sd">        *The system needs to be paused before calling this function.*</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Resume recording status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_acquisition</span><span class="o">.</span><span class="n">resume_recording</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_stop_recording"><a class="viewcode-back" href="../../acquisition.html#ghsapi.ghsapi.GHS.ghs_stop_recording">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_stop_recording</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Stops a started recording.</span>
+
+<span class="sd">        *The system needs to be recording before calling this function.*</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Stop recording status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_acquisition</span><span class="o">.</span><span class="n">stop_recording</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_trigger"><a class="viewcode-back" href="../../acquisition.html#ghsapi.ghsapi.GHS.ghs_trigger">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_trigger</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Issues a trigger.</span>
+
+<span class="sd">        Results in error when the trigger cannot be issued.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Trigger status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_acquisition</span><span class="o">.</span><span class="n">trigger</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_acquisition_state"><a class="viewcode-back" href="../../acquisition.html#ghsapi.ghsapi.GHS.ghs_get_acquisition_state">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_acquisition_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Returns the Acquisition State of the Mainframe.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Status and acquisition state of the mainframe.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_acquisition</span><span class="o">.</span><span class="n">get_acquisition_state</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_acquisition_start_time"><a class="viewcode-back" href="../../acquisition.html#ghsapi.ghsapi.GHS.ghs_get_acquisition_start_time">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_acquisition_start_time</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves the absolute time of the start of acquisition.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Status and the absolute time of the start of</span>
+<span class="sd">            acquisition as year, days and seconds.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_acquisition</span><span class="o">.</span><span class="n">get_acquisition_start_time</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_acquisition_time"><a class="viewcode-back" href="../../acquisition.html#ghsapi.ghsapi.GHS.ghs_get_acquisition_time">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_acquisition_time</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves the current acquisition time relative to the start</span>
+<span class="sd">        of acquistion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Status and current acquisition time relative to</span>
+<span class="sd">            the start of acquistion.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_acquisition</span><span class="o">.</span><span class="n">get_acquisition_time</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
+
+    <span class="c1"># Mainframe APIs</span>
+
+<div class="viewcode-block" id="GHS.ghs_identify"><a class="viewcode-back" href="../../mainframe.html#ghsapi.ghsapi.GHS.ghs_identify">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_identify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity_flag</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Enable or disable the identification sound of the connected</span>
+<span class="sd">        mainframe.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            identity_flag: Enable or disable flag.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Identify API status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_mainframe</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">identity_flag</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_disk_space"><a class="viewcode-back" href="../../mainframe.html#ghsapi.ghsapi.GHS.ghs_get_disk_space">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_disk_space</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Get total and available mainframe internal disk space.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Status, total mainframe internal disk space in</span>
+<span class="sd">            GB, available internal disk space in GB.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_mainframe</span><span class="o">.</span><span class="n">get_disk_space</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_sync_status"><a class="viewcode-back" href="../../mainframe.html#ghsapi.ghsapi.GHS.ghs_get_sync_status">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_sync_status</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Determine the mainframe sync status.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            API status and sync status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_mainframe</span><span class="o">.</span><span class="n">get_sync_status</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_slot_count"><a class="viewcode-back" href="../../mainframe.html#ghsapi.ghsapi.GHS.ghs_get_slot_count">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_slot_count</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Retrieve the number of slots in the mainframe.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Status and number of slots in the mainframe.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_mainframe</span><span class="o">.</span><span class="n">get_slot_count</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_user_mode"><a class="viewcode-back" href="../../mainframe.html#ghsapi.ghsapi.GHS.ghs_get_user_mode">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_user_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Retrieve the user mode.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            API status and user mode.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_mainframe</span><span class="o">.</span><span class="n">get_user_mode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_set_user_mode"><a class="viewcode-back" href="../../mainframe.html#ghsapi.ghsapi.GHS.ghs_set_user_mode">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_set_user_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Set the user mode.</span>
+
+<span class="sd">        *The system needs to be idle before calling this function.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            user_mode: The desired user mode.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            API status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_mainframe</span><span class="o">.</span><span class="n">set_user_mode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">user_mode</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_mainframe_info"><a class="viewcode-back" href="../../mainframe.html#ghsapi.ghsapi.GHS.ghs_get_mainframe_info">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_mainframe_info</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Determine type, name, serial number and firmware version</span>
+<span class="sd">        information for the connected mainframe.</span>
+
+<span class="sd">        *The mainframeType, mainframeName, serialNumber and</span>
+<span class="sd">        firmwareVersion parameters are UTF-8 encoded.*</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            API status and mainframe info as type, name, serial number</span>
+<span class="sd">            and firmware version.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_mainframe</span><span class="o">.</span><span class="n">get_mainframe_info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
+
+    <span class="c1"># Manage recordings APIs</span>
+
+<div class="viewcode-block" id="GHS.ghs_delete_all_recordings"><a class="viewcode-back" href="../../managerecording.html#ghsapi.ghsapi.GHS.ghs_delete_all_recordings">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_delete_all_recordings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Deletes all recordings from local mainframe storage.</span>
+
+<span class="sd">        *Recordings are deleted asynchronously.*</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            API status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_manage_recordings</span><span class="o">.</span><span class="n">delete_all_recordings</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_delete_last_recording"><a class="viewcode-back" href="../../managerecording.html#ghsapi.ghsapi.GHS.ghs_delete_last_recording">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_delete_last_recording</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Deletes the most recent recording from local mainframe</span>
+<span class="sd">        storage.</span>
+
+<span class="sd">        *Recordings are deleted asynchronously.*</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            API status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_manage_recordings</span><span class="o">.</span><span class="n">delete_last_recording</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_recording_name"><a class="viewcode-back" href="../../managerecording.html#ghsapi.ghsapi.GHS.ghs_get_recording_name">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_recording_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Retrieve the recording base name and recording index of the</span>
+<span class="sd">        last recording file.</span>
+
+<span class="sd">        *The recording base name parameter is UTF-8 encoded.*</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Status, base name and index of the recording</span>
+<span class="sd">            file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_manage_recordings</span><span class="o">.</span><span class="n">get_recording_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_storage_location"><a class="viewcode-back" href="../../managerecording.html#ghsapi.ghsapi.GHS.ghs_get_storage_location">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_storage_location</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Retrieve the storage location.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Status and storage location.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_manage_recordings</span><span class="o">.</span><span class="n">get_storage_location</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_high_low_rate_storage_enabled"><a class="viewcode-back" href="../../managerecording.html#ghsapi.ghsapi.GHS.ghs_get_high_low_rate_storage_enabled">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_high_low_rate_storage_enabled</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Retrieve storage enabled status of high and low rate data</span>
+<span class="sd">        for the specified recording data source.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            source: The recording data source</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Status, flag to indicate if high and low rate</span>
+<span class="sd">            data is stored.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_manage_recordings</span><span class="o">.</span><span class="n">get_high_low_rate_storage_enabled</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">slot_id</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_set_high_low_rate_storage_enabled"><a class="viewcode-back" href="../../managerecording.html#ghsapi.ghsapi.GHS.ghs_set_high_low_rate_storage_enabled">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_set_high_low_rate_storage_enabled</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">source</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">high_rate_enabled</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">low_rate_enabled</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Enable/disable storage of high and low rate data for the</span>
+<span class="sd">        specified recording data source.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            source: The recording data source</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            high_rate_enabled: Enable/disable storage of high rate data</span>
+<span class="sd">            low_rate_enabled: Enable/disable storage of low rate data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            API status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_manage_recordings</span><span class="o">.</span><span class="n">set_high_low_rate_storage_enabled</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span>
+            <span class="n">source</span><span class="p">,</span>
+            <span class="n">slot_id</span><span class="p">,</span>
+            <span class="n">high_rate_enabled</span><span class="p">,</span>
+            <span class="n">low_rate_enabled</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_set_recording_name"><a class="viewcode-back" href="../../managerecording.html#ghsapi.ghsapi.GHS.ghs_set_recording_name">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_set_recording_name</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">recording_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">recording_index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Set the recording base name and recording index for the next</span>
+<span class="sd">         recording file.</span>
+
+<span class="sd">        *The system needs to be idle before calling this function.</span>
+<span class="sd">        The recording base name parameter must be UTF-8 encoded.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            recording_name: The desired base name of the recording file</span>
+<span class="sd">            recording_index: The desired index of the recording file</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            API status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_manage_recordings</span><span class="o">.</span><span class="n">set_recording_name</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">recording_name</span><span class="p">,</span> <span class="n">recording_index</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_set_storage_location"><a class="viewcode-back" href="../../managerecording.html#ghsapi.ghsapi.GHS.ghs_set_storage_location">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_set_storage_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">storage_location</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Set the storage location.</span>
+
+<span class="sd">        *The system needs to be idle before calling this function.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            storage_location: The desired storage location.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            API status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_manage_recordings</span><span class="o">.</span><span class="n">set_storage_location</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">storage_location</span>
+        <span class="p">)</span></div>
+
+    <span class="c1"># Manage recordings APIs</span>
+
+<div class="viewcode-block" id="GHS.ghs_apply_persisted_settings"><a class="viewcode-back" href="../../managemainframe.html#ghsapi.ghsapi.GHS.ghs_apply_persisted_settings">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_apply_persisted_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;A mainframe might contain persisted settings (being applied upon</span>
+<span class="sd">        boot). This method re-applies these settings. In Perception this</span>
+<span class="sd">        maps on the &#39;Configured boot&#39; feature.</span>
+
+<span class="sd">        *The system needs to be idle before calling this function.</span>
+<span class="sd">        This function overwrites any previously set settings and / or</span>
+<span class="sd">        persisted settings.*</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            API status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_manage_mainframe_settings</span><span class="o">.</span><span class="n">apply_persisted_settings</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_persist_current_settings"><a class="viewcode-back" href="../../managemainframe.html#ghsapi.ghsapi.GHS.ghs_persist_current_settings">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_persist_current_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Persists the current mainframe settings.</span>
+
+<span class="sd">        *The persisted mainframe settings are applied upon a mainframe</span>
+<span class="sd">        boot.*</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            API status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_manage_mainframe_settings</span><span class="o">.</span><span class="n">persist_current_settings</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_current_settings"><a class="viewcode-back" href="../../managemainframe.html#ghsapi.ghsapi.GHS.ghs_get_current_settings">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_current_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves the current mainframe settings as a blob.</span>
+
+<span class="sd">        *As this blob can be of variable size, it is upon the caller to</span>
+<span class="sd">        ensure reading the correct amount of memory.</span>
+<span class="sd">        Memory for this blob is allocated by the API.*</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Status, base name and index of the recording</span>
+<span class="sd">            file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_manage_mainframe_settings</span><span class="o">.</span><span class="n">get_current_settings</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_set_current_settings"><a class="viewcode-back" href="../../managemainframe.html#ghsapi.ghsapi.GHS.ghs_set_current_settings">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_set_current_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blob</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">blob_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Persists the current mainframe settings.</span>
+
+<span class="sd">        *The persisted mainframe settings are applied upon a mainframe</span>
+<span class="sd">        boot.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            blob: Settings blob.</span>
+<span class="sd">            blob_size: Size of the settings blob.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            API status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_manage_mainframe_settings</span><span class="o">.</span><span class="n">set_current_settings</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">blob</span><span class="p">,</span> <span class="n">blob_size</span>
+        <span class="p">)</span></div>
+
+    <span class="c1"># Recorder APIs</span>
+
+<div class="viewcode-block" id="GHS.ghs_get_channel_count"><a class="viewcode-back" href="../../recorder.html#ghsapi.ghsapi.GHS.ghs_get_channel_count">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_channel_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Retrieve the number of channels for a recorder.</span>
+
+<span class="sd">        *This method can be called by multiple connected clients at same</span>
+<span class="sd">        time.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Status and number of channels for the recorder.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_recorder</span><span class="o">.</span><span class="n">get_channel_count</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_digital_output"><a class="viewcode-back" href="../../recorder.html#ghsapi.ghsapi.GHS.ghs_get_digital_output">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_digital_output</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">digital_output</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Retrieve the Digital Output Mode for a specified Output ID in a</span>
+<span class="sd">        recorder.</span>
+
+<span class="sd">        *This method can be called by multiple connected clients at same</span>
+<span class="sd">        time.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            digital_output: The output number desired.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Status and digital output mode for that output.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_recorder</span><span class="o">.</span><span class="n">get_digital_output</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">,</span> <span class="n">digital_output</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_recorder_enabled"><a class="viewcode-back" href="../../recorder.html#ghsapi.ghsapi.GHS.ghs_get_recorder_enabled">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_recorder_enabled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Determine if recorder is enabled or disabled.</span>
+
+<span class="sd">        *This method can be called by multiple connected clients at same</span>
+<span class="sd">        time.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            API status and recorder enabled status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_recorder</span><span class="o">.</span><span class="n">get_recorder_enabled</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_recorder_info"><a class="viewcode-back" href="../../recorder.html#ghsapi.ghsapi.GHS.ghs_get_recorder_info">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_recorder_info</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Determine type, name, serial number and firmware version</span>
+<span class="sd">        information for a recorder.</span>
+
+<span class="sd">        *The recorderType, recorderName, serialNumber and firmwareVersion</span>
+<span class="sd">        parameters are UTF-8 encoded.*</span>
+
+<span class="sd">        *This method can be called by multiple connected clients at same</span>
+<span class="sd">        time.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Status and recorder information as type, name, serial</span>
+<span class="sd">            number and firmware version</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_recorder</span><span class="o">.</span><span class="n">get_recorder_info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_sample_rate"><a class="viewcode-back" href="../../recorder.html#ghsapi.ghsapi.GHS.ghs_get_sample_rate">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_sample_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Determine the sample rate for a recorder.</span>
+
+<span class="sd">        *This method can be called by multiple connected clients at same</span>
+<span class="sd">        time.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Status and sample rate for a recorder.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_recorder</span><span class="o">.</span><span class="n">get_sample_rate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_set_digital_output"><a class="viewcode-back" href="../../recorder.html#ghsapi.ghsapi.GHS.ghs_set_digital_output">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_set_digital_output</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">digital_output</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">digital_output_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Set the Digital Output Mode for a specified Output ID in a</span>
+<span class="sd">        recorder.</span>
+
+<span class="sd">        *This method will only process requests from the connected client</span>
+<span class="sd">        with the most privileges order (Privileges order: 1- Perception,</span>
+<span class="sd">        2- GenDaq, 3- Other)*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            digital_output: The output number desired.</span>
+<span class="sd">            digital_output_mode: The digital output mode to set</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            API status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_recorder</span><span class="o">.</span><span class="n">set_digital_output</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">,</span> <span class="n">digital_output</span><span class="p">,</span> <span class="n">digital_output_mode</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_set_recorder_enabled"><a class="viewcode-back" href="../../recorder.html#ghsapi.ghsapi.GHS.ghs_set_recorder_enabled">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_set_recorder_enabled</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">enabled</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Enable or disable a recorder.</span>
+
+<span class="sd">        *The system needs to be idle before calling this function.*</span>
+
+<span class="sd">        *This method will only process requests from the connected client</span>
+<span class="sd">        with the most privileges order (Privileges order: 1- Perception,</span>
+<span class="sd">        2- GenDaq, 3- Other)*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            enabled: Set to GHS_Enable/GHS_Disable to enable/disable</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            API status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_recorder</span><span class="o">.</span><span class="n">set_recorder_enabled</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">,</span> <span class="n">enabled</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_set_sample_rate"><a class="viewcode-back" href="../../recorder.html#ghsapi.ghsapi.GHS.ghs_set_sample_rate">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_set_sample_rate</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">sample_rate</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Set the sample rate for a recorder.</span>
+
+<span class="sd">        *The system needs to be idle before calling this function.</span>
+<span class="sd">        This function overwrites any previously set sample rate setting for</span>
+<span class="sd">        the specified recorder.</span>
+<span class="sd">        If the specified sample rate is not supported by the recorder, the</span>
+<span class="sd">        sample rate is rounded to the nearest supported sample rate.*</span>
+
+<span class="sd">        *This method will only process requests from the connected client</span>
+<span class="sd">        with the most privileges order (Privileges order: 1- Perception,</span>
+<span class="sd">        2- GenDaq, 3- Other)*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            sample_rate: In samples per second.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            API status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_recorder</span><span class="o">.</span><span class="n">set_sample_rate</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">,</span> <span class="n">sample_rate</span>
+        <span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Hottinger Bruel and Kjaer Benelux B.V..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
