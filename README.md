@@ -19,7 +19,8 @@ pip install ghsapi
 
 ## Usage
 
-Refer [examples](./examples) for detailed use cases
+Refer [examples](./examples) for detailed use cases. 
+Refer [documentation](https://refactored-engine-3e569069.pages.github.io/html/index.html) for detailed API documentation
 
 ```python
 from ghsapi import ghsapi
@@ -58,7 +59,7 @@ conda create --name <env> --file spec-file.txt
 ### Install dependencies
 
 ```bash
-python install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 ## Run example files
