@@ -14,7 +14,7 @@ Python 3.10+
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install [GEN DAQ API - Python Driver](https://pypi.org/project/ghs-gendaqapi-python/) package.
 
 ```bash
-pip install ghs-gendaqapi-python
+pip install ghs-gendaqapi-py
 ```
 
 ## Usage
