@@ -11,3 +11,10 @@ Mainframe related API functions.
 .. automethod:: ghsapi.ghsapi.GHS.ghs_get_user_mode
 .. automethod:: ghsapi.ghsapi.GHS.ghs_set_user_mode
 .. automethod:: ghsapi.ghsapi.GHS.ghs_get_mainframe_info
+
+**Accepted values:**
+
+- **identity_flag** - "Enable", "Disable"
+- **user_mode** - "Sweeps", "Continuous", "Dual"  
+
+*Note: Storage locations needs to be set to local mainframe storage to get disk space.*

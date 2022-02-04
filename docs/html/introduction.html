@@ -18,7 +18,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API Functions" href="ghspyapi.html" />
+    <link rel="next" title="Release Notes" href="releasenotes.html" />
     <link rel="prev" title="GEN DAQ API - Python Driver’s documentation" href="index.html" /> 
 </head>
 
@@ -39,6 +39,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ghspyapi.html">API Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="remarks.html">Remarks</a></li>
 </ul>
@@ -69,26 +70,25 @@
              
   <section id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h1>
-<p>Welcome to the GEN DAQ API help file.
+<p>Welcome to the <strong>GEN DAQ API - Python Driver</strong> help file.
 The GEN DAQ API can be used to control the HBM GEN Series tethered mainframes without using Perception.
 Perception is a Microsoft® Windows® based application used for controlling all HBM GEN Series mainframes.
 These mainframes can even run unattended, in practice the GEN DAQ API will most often be used to control the mainframe.</p>
 <p>The controlling software will take care of the following basic tasks:</p>
 <ul class="simple">
-<li><p>Setting the correct predefined configuration (ghs__set_current_settings())</p></li>
-<li><p>Getting the current configuration (ghs__get_current_settings())</p></li>
-<li><p>Control the acquisition mode state: Start Recording, Start Preview, Stop, Pause and Resume. For more information also see Acquisition State</p></li>
-<li><p>Getting / Setting the data acquisition sample rate (ghs__set_sample_rate(), ghs__get_sample_rate() )</p></li>
-<li><p>Generating manual triggers (ghs__trigger())</p></li>
-<li><p>Getting / Setting the general recorder settings (ghs_get_recorder_information(), ghs__get_recorder_enabled(), ghs_get_channel_count(), … )</p></li>
-<li><p>Getting / Setting the general channel settings (ghs_get_channel_name(), ghs__set_channel_name(), ghs_get_channel_storage_enabled(), ghs_set_channel_storage_enabled(), … )</p></li>
-<li><p>Getting / Setting the Sweep settings (ghs_get_sweep_recording_mode(), ghs_set_sweep_recording_mode(), ghs_get_sweep_length(), ghs_set_sweep_length(), … )</p></li>
-<li><p>Getting / Setting the Continuous settings (ghs_get_continuous_recording_mode(), ghs_set_continuous_recording_mode(), ghs_get_continuous_lead_out_time(), ghs_set_continuous_lead_out_time(), … )</p></li>
-<li><p>Getting / Setting the analog channel settings (ghs__get_aplifier_mode(), ghs_set_aplifier_mode(), ghs_get_span_and_offset(), ghs_set_span_and_offset(), …)</p></li>
-<li><p>Getting / Setting the timer / counter channel settings (ghs_get_timer_counter_mode(), ghs_set_timer_counter_mode(), ghs_get_timer_counter_range(), ghs_set_timer_counter_range(), … )</p></li>
-<li><p>Fieldbus alike data streaming (ghs_initiate_field_bus_data_transfer(), ghs_stop_field_bus_data_transfer(), ghs_receive_field_bus_data(), ghs_read_next_snapshot(), … )</p></li>
+<li><p>Setting the correct predefined configuration (<strong>ghs__set_current_settings()</strong>)</p></li>
+<li><p>Getting the current configuration (<strong>ghs__get_current_settings()</strong>)</p></li>
+<li><p>Control the acquisition mode state: Start Recording, Start Preview, Stop, Pause and Resume.</p></li>
+<li><p>Getting / Setting the data acquisition sample rate (<strong>ghs__set_sample_rate()</strong>, <strong>ghs__get_sample_rate()</strong>)</p></li>
+<li><p>Generating manual triggers (<strong>ghs__trigger()</strong>)</p></li>
+<li><p>Getting / Setting the general recorder settings (<strong>ghs_get_recorder_information()</strong>, <strong>ghs__get_recorder_enabled()</strong>, <strong>ghs_get_channel_count()</strong>, … )</p></li>
+<li><p>Getting / Setting the general channel settings (<strong>ghs_get_channel_name()</strong>, <strong>ghs__set_channel_name()</strong>, <strong>ghs_get_channel_storage_enabled()</strong>, <strong>ghs_set_channel_storage_enabled()</strong>, … )</p></li>
+<li><p>Getting / Setting the Sweep settings (<strong>ghs_get_sweep_recording_mode()</strong>, <strong>ghs_set_sweep_recording_mode()</strong>, <strong>ghs_get_sweep_length()</strong>, <strong>ghs_set_sweep_length()</strong>, … )</p></li>
+<li><p>Getting / Setting the Continuous settings (<strong>ghs_get_continuous_recording_mode()</strong>, <strong>ghs_set_continuous_recording_mode()</strong>, <strong>ghs_get_continuous_lead_out_time()</strong>, <strong>ghs_set_continuous_lead_out_time()</strong>, … )</p></li>
+<li><p>Getting / Setting the analog channel settings (<strong>ghs__get_aplifier_mode()</strong>, <strong>ghs_set_aplifier_mode()</strong>, <strong>ghs_get_span_and_offset()</strong>, <strong>ghs_set_span_and_offset()</strong>, …)</p></li>
+<li><p>Getting / Setting the timer / counter channel settings (<strong>ghs_get_timer_counter_mode()</strong>, <strong>ghs_set_timer_counter_mode()</strong>, <strong>ghs_get_timer_counter_range()</strong>, <strong>ghs_set_timer_counter_range()</strong>, … )</p></li>
+<li><p>Fieldbus alike data streaming (<strong>ghs_initiate_field_bus_data_transfer()</strong>, <strong>ghs_stop_field_bus_data_transfer()</strong>, <strong>ghs_receive_field_bus_data()</strong>, <strong>ghs_read_next_snapshot()</strong>, … )</p></li>
 </ul>
-<p>With this new version the command set has been extended but not all settings can be set, for specific settings Perception is needed. The command set will be extended in the future.</p>
 </section>
 
 
@@ -96,7 +96,7 @@ These mainframes can even run unattended, in practice the GEN DAQ API will most 
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="GEN DAQ API - Python Driver’s documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="ghspyapi.html" class="btn btn-neutral float-right" title="API Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="releasenotes.html" class="btn btn-neutral float-right" title="Release Notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
