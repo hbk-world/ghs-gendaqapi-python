@@ -20,7 +20,7 @@ pip install ghs-gendaqapi-py
 ## Usage
 
 Refer [examples](./examples) for detailed use cases. 
-Refer [documentation](https://refactored-engine-3e569069.pages.github.io/html/index.html) for detailed API documentation
+Refer [documentation](https://hbk-world.github.io/ghs-gendaqapi-python/html/index.html) for detailed API documentation
 
 ```python
 from ghsapi import ghsapi
