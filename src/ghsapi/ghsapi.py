@@ -33,6 +33,7 @@ Package Contents:
 """
 
 from . import acquisition_api as _acquisition
+from . import channel_api as _channel
 from . import connection_api as _connection
 from . import mainframe_api as _mainframe
 from . import manage_mainframe_settings as _manage_mainframe_settings
@@ -679,4 +680,148 @@ class GHS:
         """
         return _recorder.set_sample_rate(
             self._con_handle, slot_id, sample_rate
+        )
+
+    # Channel APIs
+
+    ## Functions
+
+    def ghs_get_channel_type(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, int | None]:
+        """Determine the type of a channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            GHSChannelType: Type of the channel
+        """
+
+        return _channel.get_channel_type(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_get_channel_name(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, int | None]:
+        """Determine the name of a channel.
+
+        *The channel name is UTF-8 encoded*
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            channel_name: The name of the channel
+        """
+
+        return _channel.get_channel_name(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_channel_name(
+        self, slot_id: str, channel_index: int, channel_name: str
+    ) -> str:
+        """Set the name for a channel.
+
+        *The channel name is UTF-8 encoded*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            channel_name: The name of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_channel_name(
+            self._con_handle, slot_id, channel_index, channel_name
+        )
+
+    def ghs_get_channel_storage_enabled(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, str | None]:
+        """Determine if storage is enabled or disabled for a channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            GHSEnableDisable: The storage enabled status for the
+            channel
+        """
+
+        return _channel.get_channel_storage_enabled(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_channel_storage_enabled(
+        self,
+        slot_id: str,
+        channel_index: int,
+        enabled: str | int,
+    ) -> str:
+        """Enable or disable storage for a channel.
+
+        *The system needs to be idle before calling this function.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            enabled: The desired storage enabled status for the channel
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_channel_storage_enabled(
+            self._con_handle, slot_id, channel_index, enabled
+        )
+
+    def ghs_cmd_zeroing(
+        self, slot_id: str, channel_index: int, ezeroing: str | int
+    ) -> str:
+        """Perform zeroing in a channel.
+
+        *The system needs to be idle before calling this function.*
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            ezeroing: Zero / Unzero the specific channel
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.cmd_zeroing(
+            self._con_handle, slot_id, channel_index, ezeroing
         )
