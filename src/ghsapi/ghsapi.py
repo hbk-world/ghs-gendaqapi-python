@@ -42,7 +42,9 @@ from . import recorder_api as _recorder
 from .connection import ConnectionHandler
 from .ghsapi_states import (
     RETURN_KEY,
+    GHSChannelType,
     GHSDigitalOutMode,
+    GHSEnableDisable,
     GHSReturnValue,
     GHSSyncStatus,
     GHSUserMode,
