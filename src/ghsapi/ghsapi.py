@@ -827,3 +827,300 @@ class GHS:
         return _channel.cmd_zeroing(
             self._con_handle, slot_id, channel_index, ezeroing
         )
+
+    ## Analog Module
+
+    def ghs_get_trigger_settings(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[
+        str, str | None, float | None, float | None, float | None, str | None
+    ]:
+        """Determine the trigger settings for an analog channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            GHSTriggerMode: Trigger Mode
+            primary_level: The primary trigger level
+            secondary_level: The secondary trigger level
+            hysteresis: The trigger hysteresis
+            direction: The trigger direction
+        """
+
+        return _channel.get_trigger_settings(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_trigger_settings(
+        self,
+        slot_id: str,
+        channel_index: int,
+        trigger_mode: str | int,
+        primary_level: float,
+        secondary_level: float,
+        hysteresis: float,
+        direction: str | int,
+    ) -> str:
+        """Set the trigger settings for an analog channel.
+
+        *The system needs to be idle before calling this function.*
+
+        *This function overwrites any previously set trigger settings
+        for the specified recorder.*
+
+        *If the specified trigger mode or value is not supported by the
+        recorder, the trigger mode remains unchanged or the value is
+        rounded to the nearest supported value.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            trigger_mode: Trigger Mode. Default is TriggerMode_Basic
+            primary_level: The desired primary trigger level
+            secondary_level: The desired secondary trigger level
+            hysteresis: The desired trigger hysteresis
+            direction: The desired trigger direction
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_trigger_settings(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            trigger_mode,
+            primary_level,
+            secondary_level,
+            hysteresis,
+            direction,
+        )
+
+    def ghs_get_signal_coupling(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, str | None]:
+        """Determine the signal coupling for an analog channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            GHSSignalCoupling: The signal coupling
+        """
+
+        return _channel.get_signal_coupling(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_signal_coupling(
+        self,
+        slot_id: str,
+        channel_index: int,
+        signal_coupling: str | int,
+    ) -> str:
+        """Set the signal coupling for an analog channel.
+
+        *If the specified signal coupling mode is not supported by the
+        recorder, the signal coupling mode remains unchanged.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            signal_coupling: The desired signal coupling.
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_signal_coupling(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            signal_coupling,
+        )
+
+    def ghs_get_input_coupling(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, str | None]:
+        """Determine the input coupling for an analog channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            GHSInputCoupling: The input coupling
+        """
+
+        return _channel.get_input_coupling(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_input_coupling(
+        self,
+        slot_id: str,
+        channel_index: int,
+        input_coupling: str | int,
+    ) -> str:
+        """Set the input coupling for an analog channel.
+
+        *If the specified input coupling mode is not supported by the
+        recorder, the input coupling mode remains unchanged.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            input_coupling: The desired input coupling.
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_input_coupling(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            input_coupling,
+        )
+
+    def ghs_get_span_and_offset(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, float | None, float | None]:
+        """Determine the span and offset for an analog channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            span: The span in user units
+            offset: The offset in user units
+        """
+
+        return _channel.get_span_and_offset(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_span_and_offset(
+        self,
+        slot_id: str,
+        channel_index: int,
+        span: float,
+        offset: float,
+    ) -> str:
+        """Set Span and offset for analog channels.
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            span: The span in user units. The value is adapted to
+            available options.
+            offset: The offset in user units. The value is adapted to
+            available options.
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_span_and_offset(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            span,
+            offset,
+        )
+
+    def ghs_get_filter_type_and_frequency(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, str | None, float | None]:
+        """Determine the filter type and frequency for an analog channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            GHSFilterType: The filter type
+            frequency: The filter frequency in Hz
+        """
+
+        return _channel.get_filter_type_and_frequency(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_filter_type_and_frequency(
+        self,
+        slot_id: str,
+        channel_index: int,
+        filter_type: str | int,
+        frequency: float,
+    ) -> str:
+        """Set the filter type and frequency for an analog channel.
+
+        *This function overwrites any previously set filter settings
+        for the specified recorder.*
+
+        *If a specified filter type or value is not supported by the
+        recorder, the filter type remains the same or the value is rounded to a supported vale.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            filter_type: The filter type. Default is
+            GHSFilterType_Bessel.
+            frequency: The filter frequency in Hz.
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_filter_type_and_frequency(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            filter_type,
+            frequency,
+        )
