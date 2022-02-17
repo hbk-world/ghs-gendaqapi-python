@@ -306,7 +306,9 @@ def cmd_zeroing(
         "ZeroingMode": ezeroing,
     }
 
-    response_json = con_handle.send_request_wait_response("Zeroing", ezeroing_dict)
+    response_json = con_handle.send_request_wait_response(
+        "Zeroing", ezeroing_dict
+    )
 
     return to_string(response_json[RETURN_KEY], GHSReturnValue)
 
@@ -318,7 +320,9 @@ def cmd_zeroing(
 
 def get_trigger_settings(
     con_handle: ConnectionHandler, slot_id: str, channel_index: int
-) -> tuple[str, str | None, float | None, float | None, float | None, str | None]:
+) -> tuple[
+    str, str | None, float | None, float | None, float | None, str | None
+]:
     """Determine the trigger settings for an analog channel.
 
      Read - This method can be called by multiple connected clients at
@@ -433,7 +437,10 @@ def set_trigger_settings(
     if isinstance(trigger_mode, str) and trigger_mode in GHSTriggerMode:
         trigger_mode = from_string(trigger_mode, GHSTriggerMode)
 
-    elif isinstance(trigger_mode, int) and trigger_mode in GHSTriggerMode.values():
+    elif (
+        isinstance(trigger_mode, int)
+        and trigger_mode in GHSTriggerMode.values()
+    ):
         pass
 
     else:
@@ -537,7 +544,10 @@ def set_signal_coupling(
     if not slot_id or not channel_index or not signal_coupling:
         return "NullPtrArgument"
 
-    if isinstance(signal_coupling, str) and signal_coupling in GHSSignalCoupling:
+    if (
+        isinstance(signal_coupling, str)
+        and signal_coupling in GHSSignalCoupling
+    ):
         signal_coupling = from_string(signal_coupling, GHSSignalCoupling)
 
     elif (
@@ -640,7 +650,8 @@ def set_input_coupling(
         input_coupling = from_string(input_coupling, GHSInputCoupling)
 
     elif (
-        isinstance(input_coupling, int) and input_coupling in GHSInputCoupling.values()
+        isinstance(input_coupling, int)
+        and input_coupling in GHSInputCoupling.values()
     ):
         pass
 
@@ -854,7 +865,9 @@ def set_filter_type_and_frequency(
     if isinstance(filter_type, str) and filter_type in GHSFilterType:
         filter_type = from_string(filter_type, GHSFilterType)
 
-    elif isinstance(filter_type, int) and filter_type in GHSFilterType.values():
+    elif (
+        isinstance(filter_type, int) and filter_type in GHSFilterType.values()
+    ):
         pass
 
     else:

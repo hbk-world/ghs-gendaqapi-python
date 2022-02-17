@@ -44,9 +44,11 @@ from .ghsapi_states import (
     RETURN_KEY,
     GHSChannelType,
     GHSDigitalOutMode,
+    GHSDirection,
     GHSEnableDisable,
     GHSReturnValue,
     GHSSyncStatus,
+    GHSTriggerMode,
     GHSUserMode,
 )
 
