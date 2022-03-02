@@ -66,6 +66,7 @@ class TestChannel(unittest.TestCase):
         self.gen.ghs_stop_recording()
         self.gen.ghs_set_recorder_enabled("A", "Enable")
 
+    # Functions
     def test_get_channel_type(self):
         """Test get channel type and it's return value"""
 
@@ -363,7 +364,7 @@ class TestChannel(unittest.TestCase):
         self.assertEqual(
             return_var[0],
             "InvalidSlotID",
-            "Failed on set storage of invalid channel.",
+            "Failed on get storage of invalid channel.",
         )
 
     def test_get_channel_storage_disabled_recorder(self):
@@ -460,6 +461,791 @@ class TestChannel(unittest.TestCase):
         )
 
         time.sleep(2)
+
+    # Analog module
+    def test_set_get_trigger_settings(self):
+        """Test set and get trigger settings"""
+
+        return_var = self.gen.ghs_set_trigger_settings(
+            "A", 1, "Dual", 10.0, 20.0, 30.0, "RisingEdge"
+        )
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set trigger settings.",
+        )
+
+        (
+            return_var,
+            trigger_mode,
+            primary_level,
+            secondary_level,
+            hysteresis,
+            direction,
+        ) = self.gen.ghs_get_trigger_settings("A", 1)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get trigger settings.",
+        )
+        self.assertEqual(
+            trigger_mode,
+            "Dual",
+            "Failed to set trigger settings - trigger mode.",
+        )
+        self.assertEqual(
+            primary_level,
+            10.0,
+            "Failed to set trigger settings - primary level.",
+        )
+        self.assertEqual(
+            secondary_level,
+            20.0,
+            "Failed to set trigger settings - secondary level.",
+        )
+        self.assertEqual(
+            hysteresis,
+            30.0,
+            "Failed to set trigger settings - hysteresis.",
+        )
+        self.assertEqual(
+            direction,
+            "RisingEdge",
+            "Failed to set trigger settings - direction.",
+        )
+
+    def test_set_trigger_settings_invalid_channel(self):
+        """Test set trigger settings on invalid channel"""
+
+        return_var = self.gen.ghs_set_trigger_settings(
+            "Z", 100, "Dual", 10.0, 20.0, 30.0, "RisingEdge"
+        )
+        self.assertEqual(
+            return_var,
+            "InvalidSlotID",
+            "Failed on set trigger settings on invalid channel.",
+        )
+
+    def test_set_trigger_settings_non_analog_channel(self):
+        """Test set trigger settings on non analog channel"""
+
+        return_var = self.gen.ghs_set_trigger_settings(
+            "E", 1, "Dual", 10.0, 20.0, 30.0, "RisingEdge"
+        )
+        self.assertEqual(
+            return_var,
+            "InvalidChannelType",
+            "Failed on set trigger settings on non analog channel.",
+        )
+
+    def test_set_trigger_settings_disabled_recorder(self):
+        """Test set trigger settings of disabled recorder"""
+
+        return_var = self.gen.ghs_set_recorder_enabled("A", "Disable")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to disable recorder.",
+        )
+
+        return_var = self.gen.ghs_set_trigger_settings(
+            "A", 1, "Dual", 20.0, 30.0, 40.0, "RisingEdge"
+        )
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set trigger settings of disabled recorder.",
+        )
+
+        (
+            return_var,
+            trigger_mode,
+            primary_level,
+            secondary_level,
+            hysteresis,
+            direction,
+        ) = self.gen.ghs_get_trigger_settings("A", 1)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get trigger settings of desabled recorder.",
+        )
+        self.assertEqual(
+            trigger_mode,
+            "Dual",
+            "Failed to set trigger settings - trigger mode.",
+        )
+        self.assertEqual(
+            primary_level,
+            20.0,
+            "Failed to set trigger settings - primary level.",
+        )
+        self.assertEqual(
+            secondary_level,
+            30.0,
+            "Failed to set trigger settings - secondary level.",
+        )
+        self.assertEqual(
+            hysteresis,
+            40.0,
+            "Failed to set trigger settings - hysteresis.",
+        )
+        self.assertEqual(
+            direction,
+            "RisingEdge",
+            "Failed to set trigger settings - direction.",
+        )
+
+    def test_set_trigger_settings_not_idle(self):
+        """Test set trigger settings when system not idle"""
+
+        return_var = self.gen.ghs_set_storage_location("Local1")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set mainframe as storage location.",
+        )
+
+        return_var = self.gen.ghs_start_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to start a recording.",
+        )
+
+        return_var = self.gen.ghs_set_trigger_settings(
+            "A", 1, "Dual", 20.0, 30.0, 40.0, "RisingEdge"
+        )
+        self.assertEqual(
+            return_var,
+            "SystemNotIdle",
+            "Failed on set trigger settings when system not idle.",
+        )
+
+        return_var = self.gen.ghs_stop_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to stop recording.",
+        )
+
+        time.sleep(2)
+
+    def test_get_invalid_trigger_settings(self):
+        """Test get trigger settings of invalid channel"""
+
+        return_var = self.gen.ghs_get_trigger_settings("Z", 100)
+        self.assertEqual(
+            return_var[0],
+            "InvalidSlotID",
+            "Failed on get trigger settings of invalid channel.",
+        )
+
+    def test_get_trigger_settings_disabled_recorder(self):
+        """Test get trigger settings of disabled recorder"""
+
+        return_var = self.gen.ghs_set_recorder_enabled("A", "Disable")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to disable recorder.",
+        )
+
+        return_var = self.gen.ghs_get_trigger_settings("A", 1)
+        self.assertEqual(
+            return_var[0],
+            "OK",
+            "Failed on get trigger settings of disabled recorder.",
+        )
+
+    def test_get_trigger_settings_non_analog(self):
+        """Test get trigger settings of non analog channel"""
+
+        return_var = self.gen.ghs_get_trigger_settings("E", 1)
+        self.assertEqual(
+            return_var[0],
+            "InvalidChannelType",
+            "Failed on get trigger settings of non analog channel.",
+        )
+
+    def test_get_trigger_settings_valid(self):
+        """Test get trigger settings and check return value"""
+
+        (
+            return_var,
+            trigger_mode,
+            primary_level,
+            secondary_level,
+            hysteresis,
+            direction,
+        ) = self.gen.ghs_get_trigger_settings("A", 1)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get trigger settings.",
+        )
+        self.assertEqual(
+            trigger_mode in ghsapi.GHSTriggerMode,
+            True,
+            "Failed on validate trigger settings - trigger mode",
+        )
+        self.assertEqual(
+            direction in ghsapi.GHSDirection,
+            True,
+            "Failed on validate trigger settings - direction",
+        )
+        self.assertEqual(
+            isinstance(primary_level, float)
+            and isinstance(secondary_level, float)
+            and isinstance(hysteresis, float),
+            True,
+            "Failed on validate trigger settings.",
+        )
+
+    def test_set_get_signal_coupling(self):
+        """Test set and get signal coupling"""
+
+        return_var = self.gen.ghs_set_signal_coupling("A", 1, "DC")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set signal coupling.",
+        )
+
+        return_var, signal_coupling = self.gen.ghs_get_signal_coupling("A", 1)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get signal coupling.",
+        )
+        self.assertEqual(
+            signal_coupling,
+            "DC",
+            "Failed to set signal coupling.",
+        )
+
+    def test_set_signal_coupling_invalid_channel(self):
+        """Test set signal coupling on invalid channel"""
+
+        return_var = self.gen.ghs_set_signal_coupling("Z", 100, "DC")
+        self.assertEqual(
+            return_var,
+            "InvalidSlotID",
+            "Failed on set signal coupling on invalid channel.",
+        )
+
+    def test_set_signal_coupling_non_analog_channel(self):
+        """Test set signal coupling on non analog channel"""
+
+        return_var = self.gen.ghs_set_signal_coupling("E", 1, "DC")
+        self.assertEqual(
+            return_var,
+            "InvalidChannelType",
+            "Failed on set signal coupling on non analog channel.",
+        )
+
+    def test_set_signal_coupling_disabled_recorder(self):
+        """Test set signal coupling of disabled recorder"""
+
+        return_var = self.gen.ghs_set_recorder_enabled("A", "Disable")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to disable recorder.",
+        )
+
+        return_var = self.gen.ghs_set_signal_coupling("A", 1, "DC")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set signal coupling of disabled recorder.",
+        )
+
+        return_var, signal_coupling = self.gen.ghs_get_signal_coupling("A", 1)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get signal coupling of disabled recorder.",
+        )
+        self.assertEqual(
+            signal_coupling,
+            "DC",
+            "Failed to set signal coupling.",
+        )
+
+    def test_set_signal_coupling_not_supported(self):
+        """Test set signal coupling with not supported mode"""
+
+        return_var = self.gen.ghs_set_signal_coupling("A", 1, "Charge")
+        self.assertEqual(
+            return_var,
+            "Adapted",
+            "Failed on set signal coupling with not supported mode.",
+        )
+
+    def test_get_invalid_signal_coupling(self):
+        """Test get signal coupling of invalid channel"""
+
+        return_var = self.gen.ghs_get_signal_coupling("Z", 100)
+        self.assertEqual(
+            return_var[0],
+            "InvalidSlotID",
+            "Failed on get signal coupling of invalid channel.",
+        )
+
+    def test_get_signal_coupling_disabled_recorder(self):
+        """Test get signal coupling of disabled recorder"""
+
+        return_var = self.gen.ghs_set_recorder_enabled("A", "Disable")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to disable recorder.",
+        )
+
+        return_var = self.gen.ghs_get_signal_coupling("A", 1)
+        self.assertEqual(
+            return_var[0],
+            "OK",
+            "Failed on get signal coupling of disabled recorder.",
+        )
+
+    def test_get_signal_coupling_non_analog(self):
+        """Test get signal coupling of non analog channel"""
+
+        return_var = self.gen.ghs_get_signal_coupling("E", 1)
+        self.assertEqual(
+            return_var[0],
+            "InvalidChannelType",
+            "Failed on get signal coupling of non analog channel.",
+        )
+
+    def test_set_get_input_coupling(self):
+        """Test set and get input coupling"""
+
+        return_var = self.gen.ghs_set_input_coupling(
+            "A", 1, "SingleEndedPositive"
+        )
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set input coupling.",
+        )
+
+        return_var, input_coupling = self.gen.ghs_get_input_coupling("A", 1)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get input coupling.",
+        )
+        self.assertEqual(
+            input_coupling,
+            "SingleEndedPositive",
+            "Failed to set input coupling.",
+        )
+
+    def test_set_input_coupling_invalid_channel(self):
+        """Test set input coupling on invalid channel"""
+
+        return_var = self.gen.ghs_set_input_coupling(
+            "Z", 100, "SingleEndedPositive"
+        )
+        self.assertEqual(
+            return_var,
+            "InvalidSlotID",
+            "Failed on set input coupling on invalid channel.",
+        )
+
+    def test_set_input_coupling_non_analog_channel(self):
+        """Test set input coupling on non analog channel"""
+
+        return_var = self.gen.ghs_set_input_coupling(
+            "E", 1, "SingleEndedPositive"
+        )
+        self.assertEqual(
+            return_var,
+            "InvalidChannelType",
+            "Failed on set input coupling on non analog channel.",
+        )
+
+    def test_set_input_coupling_disabled_recorder(self):
+        """Test set input coupling of disabled recorder"""
+
+        return_var = self.gen.ghs_set_recorder_enabled("A", "Disable")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to disable recorder.",
+        )
+
+        return_var = self.gen.ghs_set_input_coupling(
+            "A", 1, "SingleEndedPositive"
+        )
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set input coupling of disabled recorder.",
+        )
+
+        return_var, input_coupling = self.gen.ghs_get_input_coupling("A", 1)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get input coupling of disabled recorder.",
+        )
+        self.assertEqual(
+            input_coupling,
+            "SingleEndedPositive",
+            "Failed to set input coupling.",
+        )
+
+    def test_set_input_coupling_not_supported(self):
+        """Test set input coupling with not supported mode"""
+
+        return_var = self.gen.ghs_set_input_coupling(
+            "A", 1, "FloatingDifferential"
+        )
+        self.assertEqual(
+            return_var,
+            "Adapted",
+            "Failed on set input coupling with not supported mode.",
+        )
+
+    def test_set_input_coupling_not_idle(self):
+        """Test set input coupling when system not idle"""
+
+        return_var = self.gen.ghs_set_storage_location("Local1")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set mainframe as storage location.",
+        )
+
+        return_var = self.gen.ghs_start_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to start a recording.",
+        )
+
+        return_var = self.gen.ghs_set_input_coupling(
+            "A", 1, "SingleEndedPositive"
+        )
+        self.assertEqual(
+            return_var,
+            "SystemNotIdle",
+            "Failed on set trigger settings when system not idle.",
+        )
+
+        return_var = self.gen.ghs_stop_recording()
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to stop recording.",
+        )
+
+        time.sleep(2)
+
+    def test_get_invalid_input_coupling(self):
+        """Test get input coupling of invalid channel"""
+
+        return_var = self.gen.ghs_get_input_coupling("Z", 100)
+        self.assertEqual(
+            return_var[0],
+            "InvalidSlotID",
+            "Failed on get input coupling of invalid channel.",
+        )
+
+    def test_get_input_coupling_disabled_recorder(self):
+        """Test get input coupling of disabled recorder"""
+
+        return_var = self.gen.ghs_set_recorder_enabled("A", "Disable")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to disable recorder.",
+        )
+
+        return_var = self.gen.ghs_get_input_coupling("A", 1)
+        self.assertEqual(
+            return_var[0],
+            "OK",
+            "Failed on get input coupling of disabled recorder.",
+        )
+
+    def test_get_input_coupling_non_analog(self):
+        """Test get input coupling of non analog channel"""
+
+        return_var = self.gen.ghs_get_input_coupling("E", 1)
+        self.assertEqual(
+            return_var[0],
+            "InvalidChannelType",
+            "Failed on get input coupling of non analog channel.",
+        )
+
+    def test_set_get_span_offset(self):
+        """Test set and get span and offset"""
+
+        return_var = self.gen.ghs_set_span_and_offset("A", 1, 10.0, 20.0)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set span and offset.",
+        )
+
+        return_var, span, offset = self.gen.ghs_get_span_and_offset("A", 1)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get span and offset.",
+        )
+        self.assertEqual(
+            span,
+            10.0,
+            "Failed to set span.",
+        )
+        self.assertEqual(
+            offset,
+            20.0,
+            "Failed to set offset.",
+        )
+
+    def test_set_span_offset_invalid_channel(self):
+        """Test set span and offset on invalid channel"""
+
+        return_var = self.gen.ghs_set_span_and_offset("Z", 100, 10.0, 20.0)
+        self.assertEqual(
+            return_var,
+            "InvalidSlotID",
+            "Failed on set span and offset on invalid channel.",
+        )
+
+    def test_set_span_offset_non_analog_channel(self):
+        """Test set span and offset on non analog channel"""
+
+        return_var = self.gen.ghs_set_span_and_offset("E", 1, 10.0, 20.0)
+        self.assertEqual(
+            return_var,
+            "InvalidChannelType",
+            "Failed on set span and offset on non analog channel.",
+        )
+
+    def test_set_span_offset_disabled_recorder(self):
+        """Test set span and offset of disabled recorder"""
+
+        return_var = self.gen.ghs_set_recorder_enabled("A", "Disable")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to disable recorder.",
+        )
+
+        return_var = self.gen.ghs_set_span_and_offset("A", 1, 10.0, 20.0)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set span and offset of disabled recorder.",
+        )
+
+        return_var, span, offset = self.gen.ghs_get_span_and_offset("A", 1)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get span and offset on disabled recorder.",
+        )
+        self.assertEqual(
+            span,
+            10.0,
+            "Failed to set span.",
+        )
+        self.assertEqual(
+            offset,
+            20.0,
+            "Failed to set offset.",
+        )
+
+    def test_get_invalid_span_offset(self):
+        """Test get span offset of invalid channel"""
+
+        return_var = self.gen.ghs_get_span_and_offset("Z", 100)
+        self.assertEqual(
+            return_var[0],
+            "InvalidSlotID",
+            "Failed on get span offset of invalid channel.",
+        )
+
+    def test_get_span_offset_disabled_recorder(self):
+        """Test get span offset of disabled recorder"""
+
+        return_var = self.gen.ghs_set_recorder_enabled("A", "Disable")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to disable recorder.",
+        )
+
+        return_var = self.gen.ghs_get_span_and_offset("A", 1)
+        self.assertEqual(
+            return_var[0],
+            "OK",
+            "Failed on get span and offset of disabled recorder.",
+        )
+
+    def test_get_span_offset_non_analog(self):
+        """Test get span and offset of non analog channel"""
+
+        return_var = self.gen.ghs_get_span_and_offset("E", 1)
+        self.assertEqual(
+            return_var[0],
+            "InvalidChannelType",
+            "Failed on get span and offset of non analog channel.",
+        )
+
+    def test_set_get_filter_frequency(self):
+        """Test set and get filter type and frequency"""
+
+        return_var = self.gen.ghs_set_filter_type_and_frequency(
+            "A", 1, "FIR", 1250.0
+        )
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set filter type and frequency.",
+        )
+
+        (
+            return_var,
+            filter_type,
+            frequency,
+        ) = self.gen.ghs_get_filter_type_and_frequency("A", 1)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get filter type and frequency.",
+        )
+        self.assertEqual(
+            filter_type,
+            "FIR",
+            "Failed to set filter type.",
+        )
+        self.assertEqual(
+            frequency,
+            1250.0,
+            "Failed to set frequency.",
+        )
+
+    def test_set_filter_frequency_invalid_channel(self):
+        """Test set filter type and frequency on invalid channel"""
+
+        return_var = self.gen.ghs_set_filter_type_and_frequency(
+            "Z", 100, "FIR", 1250.0
+        )
+        self.assertEqual(
+            return_var,
+            "InvalidSlotID",
+            "Failed on set filter type and frequency on invalid channel.",
+        )
+
+    def test_set_filter_frequency_non_analog_channel(self):
+        """Test set filter type and frequency on non analog channel"""
+
+        return_var = self.gen.ghs_set_filter_type_and_frequency(
+            "E", 1, "FIR", 1250.0
+        )
+        self.assertEqual(
+            return_var,
+            "InvalidChannelType",
+            "Failed on set filter type and frequency on non analog channel.",
+        )
+
+    def test_set_filter_frequency_disabled_recorder(self):
+        """Test set filter type and frequency of disabled recorder"""
+
+        return_var = self.gen.ghs_set_recorder_enabled("A", "Disable")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to disable recorder.",
+        )
+
+        return_var = self.gen.ghs_set_filter_type_and_frequency(
+            "A", 1, "FIR", 1250.0
+        )
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set filter type and frequency of disabled recorder.",
+        )
+
+        (
+            return_var,
+            filter_type,
+            frequency,
+        ) = self.gen.ghs_get_filter_type_and_frequency("A", 1)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get filter type and frequency of disbaled recorder.",
+        )
+        self.assertEqual(
+            filter_type,
+            "FIR",
+            "Failed to set filter type.",
+        )
+        self.assertEqual(
+            frequency,
+            1250.0,
+            "Failed to set frequency.",
+        )
+
+    def test_set_filter_frequency_not_supported(self):
+        """Test set filter type and frequency with not supported type"""
+
+        return_var = self.gen.ghs_set_filter_type_and_frequency(
+            "A", 1, "Bessel_AA", 1500.0
+        )
+        self.assertEqual(
+            return_var,
+            "Adapted",
+            "Failed on set filter type and frequency with not supported type.",
+        )
+
+    def test_get_invalid_filter_frequency(self):
+        """Test get filter type and frequency of invalid channel"""
+
+        return_var = self.gen.ghs_get_filter_type_and_frequency("Z", 100)
+        self.assertEqual(
+            return_var[0],
+            "InvalidSlotID",
+            "Failed on get filter type and frequency of invalid channel.",
+        )
+
+    def test_get_filter_frequency_disabled_recorder(self):
+        """Test get filter type and frequency of disabled recorder"""
+
+        return_var = self.gen.ghs_set_recorder_enabled("A", "Disable")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to disable recorder.",
+        )
+
+        return_var = self.gen.ghs_get_filter_type_and_frequency("A", 1)
+        self.assertEqual(
+            return_var[0],
+            "OK",
+            "Failed on get filter type and frequency of disabled recorder.",
+        )
+
+    def test_get_filter_frequency_non_analog(self):
+        """Test get filter type and frequency of non analog channel"""
+
+        return_var = self.gen.ghs_get_filter_type_and_frequency("E", 1)
+        self.assertEqual(
+            return_var[0],
+            "InvalidChannelType",
+            "Failed on get filter type and frequency of non analog channel.",
+        )
 
 
 if __name__ == "__main__":

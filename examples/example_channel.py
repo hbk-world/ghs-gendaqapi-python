@@ -110,6 +110,114 @@ def main():
         sys.exit()
     print(f"GHSCmdZeroing - Return Status: {return_var}")
 
+    # Set trigger setting for analog channel
+    return_var = gen.ghs_set_trigger_settings(
+        "A", 1, "Dual", 10, 20, 30, "RisingEdge"
+    )
+    if (return_var != "OK") and (return_var != "Adapted"):
+        print(f"Failed on GHSSetTriggerSettings. Return Status: {return_var}")
+        sys.exit()
+    print(f"GHSSetTriggerSettings - Return Status: {return_var}")
+
+    # Get trigger setting for analog channel
+    (
+        return_var,
+        trigger_mode,
+        primary_level,
+        secondary_level,
+        hysteresis,
+        direction,
+    ) = gen.ghs_get_trigger_settings("A", 1)
+    if return_var != "OK":
+        print(f"Failed on GHSGetTriggerSettings. Return Status: {return_var}")
+        sys.exit()
+    print(
+        f"GHSGetTriggerSettings - Return Status: {return_var}\
+        Trigger Mode: {trigger_mode}\
+        Primary Level: {primary_level}\
+        Secondary Level: {secondary_level}\
+        Hysteresis: {hysteresis}\
+        Direction: {direction}"
+    )
+
+    # Set the signal coupling for an analog channel.
+    return_var = gen.ghs_set_signal_coupling("A", 1, "DC")
+    if return_var != "OK" and return_var != "Adapted":
+        print(f"Failed on GHSSetSignalCoupling. Return Status: {return_var}")
+        sys.exit()
+    print(f"GHSSetSignalCoupling - Return Status: {return_var}")
+
+    # Determine the signal coupling for an analog channel.
+    return_var, signal_coupling = gen.ghs_get_signal_coupling("A", 1)
+    if return_var != "OK":
+        print(f"Failed on GHSGetSignalCoupling. Return Status: {return_var}")
+        sys.exit()
+    print(
+        f"GHSGetSignalCoupling - Return Status: {return_var}\
+        Signal Coupling: {signal_coupling}"
+    )
+
+    # Set the input coupling for an analog channel.
+    return_var = gen.ghs_set_input_coupling("A", 1, "Current")
+    if return_var != "OK" and return_var != "Adapted":
+        print(f"Failed on GHSSetInputCoupling. Return Status: {return_var}")
+        sys.exit()
+    print(f"GHSSetInputCoupling - Return Status: {return_var}")
+
+    # Determine the input coupling for an analog channel.
+    return_var, input_coupling = gen.ghs_get_input_coupling("A", 1)
+    if return_var != "OK":
+        print(f"Failed on GHSGetInputCoupling. Return Status: {return_var}")
+        sys.exit()
+    print(
+        f"GHSGetInputCoupling - Return Status: {return_var}\
+        Input Coupling: {input_coupling}"
+    )
+
+    # Set Span and offset for analog channels.
+    return_var = gen.ghs_set_span_and_offset("A", 1, 10.0, 20.0)
+    if return_var != "OK" and return_var != "Adapted":
+        print(f"Failed on GHSSetSpanAndOffset. Return Status: {return_var}")
+        sys.exit()
+    print(f"GHSSetSpanAndOffset - Return Status: {return_var}")
+
+    # Determine the span and offset for an analog channel.
+    return_var, span, offset = gen.ghs_get_span_and_offset("A", 1)
+    if return_var != "OK":
+        print(f"Failed on GHSGetSpanAndOffset. Return Status: {return_var}")
+        sys.exit()
+    print(
+        f"GHSGetSpanAndOffset - Return Status: {return_var}\
+        Span: {span}\
+        Offset: {offset}"
+    )
+
+    # Set the filter type and frequency for an analog channel.
+    return_var = gen.ghs_set_filter_type_and_frequency(
+        "A", 1, "Bessel_AA", 150000.0
+    )
+    if return_var != "OK" and return_var != "Adapted":
+        print(
+            f"Failed on GHSSetFilterTypeAndFrequency. Return Status: {return_var}"
+        )
+        sys.exit()
+    print(f"GHSSetFilterTypeAndFrequency - Return Status: {return_var}")
+
+    # Determine the filter type and frequency for an analog channel.
+    return_var, filter_type, frequency = gen.ghs_get_filter_type_and_frequency(
+        "A", 1
+    )
+    if return_var != "OK":
+        print(
+            f"Failed on GHSGetFilterTypeAndFrequency. Return Status: {return_var}"
+        )
+        sys.exit()
+    print(
+        f"GHSGetFilterTypeAndFrequency - Return Status: {return_var}\
+        Filter Type: {filter_type}\
+        Frequency: {frequency}"
+    )
+
     # Disconnect
     return_var = gen.ghs_disconnect()
     if return_var != "OK":
