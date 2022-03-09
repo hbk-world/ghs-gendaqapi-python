@@ -1102,7 +1102,8 @@ class GHS:
         for the specified recorder.*
 
         *If a specified filter type or value is not supported by the
-        recorder, the filter type remains the same or the value is rounded to a supported vale.*
+        recorder, the filter type remains the same or the value is rounded to
+        a supported vale.*
 
         *ReadWrite - This method will only process requests from the
         connected client with the most privileges order (Privileges
@@ -1125,4 +1126,315 @@ class GHS:
             channel_index,
             filter_type,
             frequency,
+        )
+
+    def ghs_get_excitation(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, str | None, float | None]:
+        """Determine the excitation type and value for an analog channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            GHSExcitationType: The excitation type
+            excitation_value: The excitation value in user units (voltage or
+            current).
+        """
+
+        return _channel.get_excitation(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_excitation(
+        self,
+        slot_id: str,
+        channel_index: int,
+        excitation_type: str | int,
+        excitation_value: float,
+    ) -> str:
+        """Set the excitation type and value for an analog channel.
+
+        *The system needs to be idle before calling this function.*
+
+        *If the specified excitation type or value is not supported by the
+        recorder, the excitation type remains unchanged or the value is
+        rounded to the nearest supported value.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            excitation_type: The desired excitation type. Default is
+            ExcitationType_Voltage.
+            excitation_value: The desired excitation value in user units
+            (voltage or current).
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_excitation(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            excitation_type,
+            excitation_value,
+        )
+
+    def ghs_get_amplifier_mode(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, str | None]:
+        """Determine the amplifier mode for an analog channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            GHSAmplifierMode: The amplifier mode
+        """
+
+        return _channel.get_amplifier_mode(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_amplifier_mode(
+        self,
+        slot_id: str,
+        channel_index: int,
+        amplifier_mode: str | int,
+    ) -> str:
+        """Set the amplifier mode for an analog channel.
+
+        *The system needs to be idle before calling this function.*
+
+        *If the specified amplifier mode is not supported by the recorder, the
+        amplifier mode remains unchanged.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            amplifier_mode: The desired amplifier mode
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_amplifier_mode(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            amplifier_mode,
+        )
+
+    def ghs_get_technical_units(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, str | None, float | None, float | None]:
+        """Determine the technical units, unit multiplier and unit offset for
+        an analog channel.
+
+        *The units parameter is UTF-8 encoded.*
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            units: The technical units (e.g. 'V' for Volt or 'Hz' for Hertz).
+            multiplier: The technical units multiplier value.
+            offset: The technical units offset value.
+        """
+
+        return _channel.get_technical_units(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_technical_units(
+        self,
+        slot_id: str,
+        channel_index: int,
+        units: str,
+        multiplier: float,
+        offset: float,
+    ) -> str:
+        """Set the technical units, unit multiplier and unit offset for an
+        analog channel.
+
+        *The units parameter must be UTF-8 encoded.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            units: The desired technical units (e.g. 'V' for Volt or 'Hz' for
+            Hertz).
+            multiplier: The desired technical units multiplier value.
+            offset: The desired technical units offset value.
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_technical_units(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            units,
+            multiplier,
+            offset,
+        )
+
+    def ghs_get_auto_range(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, str | None, float | None]:
+        """Determine the auto range enable and time settings.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            GHSEnableDisable: The auto range enabled setting.
+            auto_range_time: The time for auto range in seconds.
+        """
+
+        return _channel.get_auto_range(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_auto_range(
+        self,
+        slot_id: str,
+        channel_index: int,
+        auto_range_enabled: str | int,
+        auto_range_time: float,
+    ) -> str:
+        """Set Auto range settings for analog channels.
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            auto_range_enabled: The auto range enabled setting. The value is
+            adapted to available options.
+            auto_range_time: The time for auto range in seconds. The value is
+            adapted to available options.
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_auto_range(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            auto_range_enabled,
+            auto_range_time,
+        )
+
+    def ghs_cmd_auto_range_now(
+        self,
+        slot_id: str,
+        channel_index: int,
+        auto_range_time: float,
+    ) -> str:
+        """Command a single shot for auto range.
+
+        *The system needs to be acquiring for this function to have any
+        effect.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            auto_range_time: The time for auto range in seconds. The value is
+            adapted to available options.
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.cmd_auto_range_now(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            auto_range_time,
+        )
+
+    def ghs_get_channel_cal_info(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[
+        str,
+        str | None,
+        str | None,
+        str | None,
+        str | None,
+        str | None,
+        str | None,
+    ]:
+        """Retrieve calibration information for an analog channel.
+
+        *The calibrationDateTime, verificationDateTime,
+        powerVerificationDateTime, calibrationLab, verificationLab and
+        powerVerificationLab parameters are UTF-8 encoded.*
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            calibration_date_time: The date and time this analog channel has
+            been calibrated.
+            verification_date_time: The date and time the calibration for this
+            analog channel has been verified.
+            power_verification_date_time: The date and time the power
+            calibration for this analog channel has been verified (if applicable).
+            calibration_lab: The laboratory that conducted the calibration
+            for this analog channel.
+            verification_lab: The laboratory that verified the calibration for
+            this analog channel.
+            power_verification_lab: The laboratory that verified the power
+            calibration for this analog channel (if applicable).
+        """
+
+        return _channel.get_channel_cal_info(
+            self._con_handle, slot_id, channel_index
         )
