@@ -1109,6 +1109,679 @@ class TestChannelAPI(unittest.TestCase):
             "set_filter_type_and_frequency invalid argument check failed.",
         )
 
+    def test_get_excitation(self):
+        """Test get_excitation api with success response"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+            with patch(
+                "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
+            ) as mock_req_ros:
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["OK"],
+                    "ExcitationType": 0,
+                    "ExcitationValue": 25.0,
+                }
+                self.assertEqual(
+                    channel_api.get_excitation(self.con_handle, "A", 1),
+                    ("OK", "Voltage", 25.0),
+                    "get_excitation success response test failed.",
+                )
+
+    def test_get_excitation_neg(self):
+        """Test get_excitation api with failure response"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+            with patch(
+                "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
+            ) as mock_req_ros:
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["NOK"],
+                    "ExcitationType": 0,
+                    "ExcitationValue": 25.0,
+                }
+                self.assertEqual(
+                    channel_api.get_excitation(self.con_handle, "A", 1),
+                    ("NOK", None, None),
+                    "get_excitation failure response test failed.",
+                )
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["NOK"],
+                }
+                self.assertEqual(
+                    channel_api.get_excitation(self.con_handle, "A", 1),
+                    ("NOK", None, None),
+                    "get_excitation failure response test failed.",
+                )
+
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["OK"],
+                }
+                self.assertEqual(
+                    channel_api.get_excitation(self.con_handle, "A", 1),
+                    ("OK", None, None),
+                    "get_excitation failure response test failed.",
+                )
+
+    def test_get_excitation_null_args(self):
+        """Test get_excitation api with null args"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+        self.assertEqual(
+            channel_api.get_excitation(self.con_handle, None, None),
+            ("NullPtrArgument", None, None),
+            "get_excitation null argument check failed.",
+        )
+
+    def test_set_excitation(self):
+        """Test set_excitation api with success response"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+            with patch(
+                "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
+            ) as mock_req_ros:
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["OK"],
+                }
+                self.assertEqual(
+                    channel_api.set_excitation(
+                        self.con_handle, "A", 1, "Voltage", 25.0
+                    ),
+                    "OK",
+                    "set_excitation success response test failed.",
+                )
+
+    def test_set_excitation_null_args(self):
+        """Test set_excitation api with null args"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+        self.assertEqual(
+            channel_api.set_excitation(
+                self.con_handle, None, None, None, None
+            ),
+            "NullPtrArgument",
+            "set_excitation null argument check failed.",
+        )
+
+    def test_set_excitation_invalid_args(self):
+        """Test set_excitation api with invalid args"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+        self.assertEqual(
+            channel_api.set_excitation(self.con_handle, "A", 1, "Vol", 25.0),
+            "InvalidDataType",
+            "set_excitation invalid argument check failed.",
+        )
+        self.assertEqual(
+            channel_api.set_excitation(self.con_handle, "A", 1, "Voltage", 25),
+            "InvalidDataType",
+            "set_excitation invalid argument check failed.",
+        )
+
+    def test_get_amplifier_mode(self):
+        """Test get_amplifier_mode api with success response"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+            with patch(
+                "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
+            ) as mock_req_ros:
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["OK"],
+                    "AmplifierMode": 0,
+                }
+                self.assertEqual(
+                    channel_api.get_amplifier_mode(self.con_handle, "A", 1),
+                    ("OK", "Basic"),
+                    "get_amplifier_mode success response test failed.",
+                )
+
+    def test_get_amplifier_mode_neg(self):
+        """Test get_amplifier_mode api with failure response"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+            with patch(
+                "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
+            ) as mock_req_ros:
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["NOK"],
+                    "AmplifierMode": 0,
+                }
+                self.assertEqual(
+                    channel_api.get_amplifier_mode(self.con_handle, "A", 1),
+                    ("NOK", None),
+                    "get_amplifier_mode failure response test failed.",
+                )
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["NOK"],
+                }
+                self.assertEqual(
+                    channel_api.get_amplifier_mode(self.con_handle, "A", 1),
+                    ("NOK", None),
+                    "get_amplifier_mode failure response test failed.",
+                )
+
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["OK"],
+                }
+                self.assertEqual(
+                    channel_api.get_amplifier_mode(self.con_handle, "A", 1),
+                    ("OK", None),
+                    "get_amplifier_mode failure response test failed.",
+                )
+
+    def test_get_amplifier_mode_null_args(self):
+        """Test get_amplifier_mode api with null args"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+        self.assertEqual(
+            channel_api.get_amplifier_mode(self.con_handle, None, None),
+            ("NullPtrArgument", None),
+            "get_amplifier_mode null argument check failed.",
+        )
+
+    def test_set_amplifier_mode(self):
+        """Test set_amplifier_mode api with success response"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+            with patch(
+                "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
+            ) as mock_req_ros:
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["OK"],
+                }
+                self.assertEqual(
+                    channel_api.set_amplifier_mode(
+                        self.con_handle, "A", 1, "Basic"
+                    ),
+                    "OK",
+                    "set_amplifier_mode success response test failed.",
+                )
+
+    def test_set_amplifier_mode_null_args(self):
+        """Test set_amplifier_mode api with null args"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+        self.assertEqual(
+            channel_api.set_amplifier_mode(self.con_handle, None, None, None),
+            "NullPtrArgument",
+            "set_amplifier_mode null argument check failed.",
+        )
+
+    def test_set_amplifier_mode_invalid_args(self):
+        """Test set_amplifier_mode api with invalid args"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+        self.assertEqual(
+            channel_api.set_amplifier_mode(self.con_handle, "A", 1, "Base"),
+            "InvalidDataType",
+            "set_amplifier_mode invalid argument check failed.",
+        )
+
+    def test_get_technical_units(self):
+        """Test get_technical_units api with success response"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+            with patch(
+                "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
+            ) as mock_req_ros:
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["OK"],
+                    "UnitType": "KGS",
+                    "Multiplier": 10.0,
+                    "Offset": 20.0,
+                }
+                self.assertEqual(
+                    channel_api.get_technical_units(self.con_handle, "A", 1),
+                    ("OK", "KGS", 10.0, 20.0),
+                    "get_technical_units success response test failed.",
+                )
+
+    def test_get_technical_units_neg(self):
+        """Test get_technical_units api with failure response"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+            with patch(
+                "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
+            ) as mock_req_ros:
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["NOK"],
+                    "UnitType": "KGS",
+                    "Multiplier": 10.0,
+                    "Offset": 20.0,
+                }
+                self.assertEqual(
+                    channel_api.get_technical_units(self.con_handle, "A", 1),
+                    ("NOK", None, None, None),
+                    "get_technical_units failure response test failed.",
+                )
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["NOK"],
+                }
+                self.assertEqual(
+                    channel_api.get_technical_units(self.con_handle, "A", 1),
+                    ("NOK", None, None, None),
+                    "get_technical_units failure response test failed.",
+                )
+
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["OK"],
+                }
+                self.assertEqual(
+                    channel_api.get_technical_units(self.con_handle, "A", 1),
+                    ("OK", None, None, None),
+                    "get_technical_units failure response test failed.",
+                )
+
+    def test_get_technical_units_null_args(self):
+        """Test get_technical_units api with null args"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+        self.assertEqual(
+            channel_api.get_technical_units(self.con_handle, None, None),
+            ("NullPtrArgument", None, None, None),
+            "get_technical_units null argument check failed.",
+        )
+
+    def test_set_technical_units(self):
+        """Test set_technical_units api with success response"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+            with patch(
+                "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
+            ) as mock_req_ros:
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["OK"],
+                }
+                self.assertEqual(
+                    channel_api.set_technical_units(
+                        self.con_handle, "A", 1, "KGS", 10.0, 20.0
+                    ),
+                    "OK",
+                    "set_technical_units success response test failed.",
+                )
+
+    def test_set_technical_units_null_args(self):
+        """Test set_technical_units api with null args"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+        self.assertEqual(
+            channel_api.set_technical_units(
+                self.con_handle, None, None, None, None, None
+            ),
+            "NullPtrArgument",
+            "set_technical_units null argument check failed.",
+        )
+
+    def test_set_technical_units_invalid_args(self):
+        """Test set_technical_units api with invalid args"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+        self.assertEqual(
+            channel_api.set_technical_units(
+                self.con_handle, "A", 1, 10, 10.0, 20.0
+            ),
+            "InvalidDataType",
+            "set_technical_units invalid argument check failed.",
+        )
+        self.assertEqual(
+            channel_api.set_technical_units(
+                self.con_handle, "A", 1, 10, 10, 20.0
+            ),
+            "InvalidDataType",
+            "set_technical_units invalid argument check failed.",
+        )
+        self.assertEqual(
+            channel_api.set_technical_units(
+                self.con_handle, "A", 1, "KGS", 10.0, 20
+            ),
+            "InvalidDataType",
+            "set_technical_units invalid argument check failed.",
+        )
+
+    def test_get_auto_range(self):
+        """Test get_auto_range api with success response"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+            with patch(
+                "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
+            ) as mock_req_ros:
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["OK"],
+                    "AutoRangeEnabled": 1,
+                    "AutoRangeTime": 10.0,
+                }
+                self.assertEqual(
+                    channel_api.get_auto_range(self.con_handle, "A", 1),
+                    ("OK", "Enable", 10.0),
+                    "get_auto_range success response test failed.",
+                )
+
+    def test_get_auto_range_neg(self):
+        """Test get_auto_range api with failure response"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+            with patch(
+                "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
+            ) as mock_req_ros:
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["NOK"],
+                    "AutoRangeEnabled": 1,
+                    "AutoRangeTime": 10.0,
+                }
+                self.assertEqual(
+                    channel_api.get_auto_range(self.con_handle, "A", 1),
+                    ("NOK", None, None),
+                    "get_auto_range failure response test failed.",
+                )
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["NOK"],
+                }
+                self.assertEqual(
+                    channel_api.get_auto_range(self.con_handle, "A", 1),
+                    ("NOK", None, None),
+                    "get_auto_range failure response test failed.",
+                )
+
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["OK"],
+                }
+                self.assertEqual(
+                    channel_api.get_auto_range(self.con_handle, "A", 1),
+                    ("OK", None, None),
+                    "get_auto_range failure response test failed.",
+                )
+
+    def test_get_auto_range_null_args(self):
+        """Test get_auto_range api with null args"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+        self.assertEqual(
+            channel_api.get_auto_range(self.con_handle, None, None),
+            ("NullPtrArgument", None, None),
+            "get_auto_range null argument check failed.",
+        )
+
+    def test_set_auto_range(self):
+        """Test set_auto_range api with success response"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+            with patch(
+                "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
+            ) as mock_req_ros:
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["OK"],
+                }
+                self.assertEqual(
+                    channel_api.set_auto_range(
+                        self.con_handle, "A", 1, "Enable", 10.0
+                    ),
+                    "OK",
+                    "set_auto_range success response test failed.",
+                )
+
+    def test_set_auto_range_null_args(self):
+        """Test set_auto_range api with null args"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+        self.assertEqual(
+            channel_api.set_auto_range(
+                self.con_handle, None, None, None, None
+            ),
+            "NullPtrArgument",
+            "set_auto_range null argument check failed.",
+        )
+
+    def test_set_auto_range_invalid_args(self):
+        """Test set_auto_range api with invalid args"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+        self.assertEqual(
+            channel_api.set_auto_range(self.con_handle, "A", 1, "On", 10.0),
+            "InvalidDataType",
+            "set_auto_range invalid argument check failed.",
+        )
+        self.assertEqual(
+            channel_api.set_auto_range(self.con_handle, "A", 1, "Enable", 10),
+            "InvalidDataType",
+            "set_auto_range invalid argument check failed.",
+        )
+
+    def test_cmd_auto_range_now(self):
+        """Test cmd_auto_range_now api with success response"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+            with patch(
+                "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
+            ) as mock_req_ros:
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["OK"],
+                }
+                self.assertEqual(
+                    channel_api.cmd_auto_range_now(
+                        self.con_handle, "A", 1, 10.0
+                    ),
+                    "OK",
+                    "cmd_auto_range_now success response test failed.",
+                )
+
+    def test_cmd_auto_range_now_null_args(self):
+        """Test cmd_auto_range_now api with null args"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+        self.assertEqual(
+            channel_api.cmd_auto_range_now(self.con_handle, None, None, None),
+            "NullPtrArgument",
+            "cmd_auto_range_now null argument check failed.",
+        )
+
+    def test_cmd_auto_range_now_invalid_args(self):
+        """Test cmd_auto_range_now api with invalid args"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+        self.assertEqual(
+            channel_api.cmd_auto_range_now(self.con_handle, "A", 1, 10),
+            "InvalidDataType",
+            "cmd_auto_range_now invalid argument check failed.",
+        )
+
+    def test_get_channel_cal_info(self):
+        """Test get_channel_cal_info api with success response"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+            with patch(
+                "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
+            ) as mock_req_ros:
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["OK"],
+                    "CalibrationDateTime": "01-01-2000",
+                    "VerificationDateTime": "01-01-2000",
+                    "PowerVerificationDateTime": "01-01-2000",
+                    "CalibrationLab": "simCalLab2000",
+                    "VerificationLab": "simCalLab2000",
+                    "PowerVerificationLab": "simCalLab2000",
+                }
+                self.assertEqual(
+                    channel_api.get_channel_cal_info(self.con_handle, "A", 1),
+                    (
+                        "OK",
+                        "01-01-2000",
+                        "01-01-2000",
+                        "01-01-2000",
+                        "simCalLab2000",
+                        "simCalLab2000",
+                        "simCalLab2000",
+                    ),
+                    "get_channel_cal_info success response test failed.",
+                )
+
+    def test_get_channel_cal_info_neg(self):
+        """Test get_channel_cal_info api with failure response"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+            with patch(
+                "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
+            ) as mock_req_ros:
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["NOK"],
+                    "CalibrationDateTime": "01-01-2000",
+                    "VerificationDateTime": "01-01-2000",
+                    "PowerVerificationDateTime": "01-01-2000",
+                    "CalibrationLab": "simCalLab2000",
+                    "VerificationLab": "simCalLab2000",
+                    "PowerVerificationLab": "simCalLab2000",
+                }
+                self.assertEqual(
+                    channel_api.get_channel_cal_info(self.con_handle, "A", 1),
+                    ("NOK", None, None, None, None, None, None),
+                    "get_channel_cal_info failure response test failed.",
+                )
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["NOK"],
+                }
+                self.assertEqual(
+                    channel_api.get_channel_cal_info(self.con_handle, "A", 1),
+                    ("NOK", None, None, None, None, None, None),
+                    "get_channel_cal_info failure response test failed.",
+                )
+
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["OK"],
+                }
+                self.assertEqual(
+                    channel_api.get_channel_cal_info(self.con_handle, "A", 1),
+                    ("OK", None, None, None, None, None, None),
+                    "get_channel_cal_info failure response test failed.",
+                )
+
+    def test_get_channel_cal_info_null_args(self):
+        """Test get_channel_cal_info api with null args"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+        self.assertEqual(
+            channel_api.get_channel_cal_info(self.con_handle, None, None),
+            ("NullPtrArgument", None, None, None, None, None, None),
+            "get_channel_cal_info null argument check failed.",
+        )
+
 
 if __name__ == "__main__":
     unittest.main(

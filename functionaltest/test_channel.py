@@ -64,6 +64,7 @@ class TestChannel(unittest.TestCase):
     def tearDown(self):
         # runs after each test
         self.gen.ghs_stop_recording()
+        time.sleep(2)
         self.gen.ghs_set_recorder_enabled("A", "Enable")
 
     # Functions
@@ -1245,6 +1246,577 @@ class TestChannel(unittest.TestCase):
             return_var[0],
             "InvalidChannelType",
             "Failed on get filter type and frequency of non analog channel.",
+        )
+
+    def test_set_get_excitation(self):
+        """Test set and get excitation type and value"""
+
+        return_var = self.gen.ghs_set_excitation("A", 1, "Voltage", 10.0)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set excitation type and value.",
+        )
+
+        (
+            return_var,
+            excitation_type,
+            excitation_value,
+        ) = self.gen.ghs_get_excitation("A", 1)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get excitation type and value.",
+        )
+        self.assertEqual(
+            excitation_type,
+            "Voltage",
+            "Failed to set excitation type.",
+        )
+        self.assertEqual(
+            excitation_value,
+            10.0,
+            "Failed to set excitation value.",
+        )
+
+    def test_set_excitation_invalid_channel(self):
+        """Test set excitation type and value on invalid channel"""
+
+        return_var = self.gen.ghs_set_excitation("Z", 100, "Voltage", 10.0)
+        self.assertEqual(
+            return_var,
+            "InvalidSlotID",
+            "Failed on set excitation type and value on invalid channel.",
+        )
+
+    def test_set_excitation_non_analog_channel(self):
+        """Test set excitation type and value on non analog channel"""
+
+        return_var = self.gen.ghs_set_excitation("E", 1, "Voltage", 10.0)
+        self.assertEqual(
+            return_var,
+            "InvalidChannelType",
+            "Failed on set excitation type and value on non analog channel.",
+        )
+
+    def test_set_excitation_disabled_recorder(self):
+        """Test set excitation type and value of disabled recorder"""
+
+        return_var = self.gen.ghs_set_recorder_enabled("A", "Disable")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to disable recorder.",
+        )
+
+        return_var = self.gen.ghs_set_excitation("A", 1, "Voltage", 10.0)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set excitation type and value of disabled recorder.",
+        )
+
+        (
+            return_var,
+            excitation_type,
+            excitation_value,
+        ) = self.gen.ghs_get_excitation("A", 1)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get excitation type and value of disbaled recorder.",
+        )
+        self.assertEqual(
+            excitation_type,
+            "Voltage",
+            "Failed to set excitation type.",
+        )
+        self.assertEqual(
+            excitation_value,
+            10.0,
+            "Failed to set excitation value.",
+        )
+
+    def test_set_excitation_not_supported(self):
+        """Test set excitation type and value with not supported value"""
+
+        return_var = self.gen.ghs_set_excitation("A", 1, "Voltage", 15.0)
+        self.assertEqual(
+            return_var,
+            "Adapted",
+            "Failed on set excitation type and value with not supported type.",
+        )
+
+    def test_get_invalid_excitation(self):
+        """Test get excitation type and value of invalid channel"""
+
+        return_var = self.gen.ghs_get_excitation("Z", 100)
+        self.assertEqual(
+            return_var[0],
+            "InvalidSlotID",
+            "Failed on get excitation type and value of invalid channel.",
+        )
+
+    def test_get_excitation_disabled_recorder(self):
+        """Test get excitation type and value of disabled recorder"""
+
+        return_var = self.gen.ghs_set_recorder_enabled("A", "Disable")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to disable recorder.",
+        )
+
+        return_var = self.gen.ghs_get_excitation("A", 1)
+        self.assertEqual(
+            return_var[0],
+            "OK",
+            "Failed on get excitation type and value of disabled recorder.",
+        )
+
+    def test_get_excitation_non_analog(self):
+        """Test get excitation type and value of non analog channel"""
+
+        return_var = self.gen.ghs_get_excitation("E", 1)
+        self.assertEqual(
+            return_var[0],
+            "InvalidChannelType",
+            "Failed on get excitation type and value of non analog channel.",
+        )
+
+    def test_set_get_amplifier_mode(self):
+        """Test set and get amplifier mode"""
+
+        return_var = self.gen.ghs_set_amplifier_mode("A", 1, "Basic")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set amplifier mode.",
+        )
+
+        (
+            return_var,
+            amplifier_mode,
+        ) = self.gen.ghs_get_amplifier_mode("A", 1)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get amplifier mode.",
+        )
+        self.assertEqual(
+            amplifier_mode,
+            "Basic",
+            "Failed to set amplifier mode.",
+        )
+
+    def test_set_amplifier_mode_invalid_channel(self):
+        """Test set amplifier mode on invalid channel"""
+
+        return_var = self.gen.ghs_set_amplifier_mode("Z", 100, "Basic")
+        self.assertEqual(
+            return_var,
+            "InvalidSlotID",
+            "Failed on set amplifier mode on invalid channel.",
+        )
+
+    def test_set_amplifier_mode_non_analog_channel(self):
+        """Test set amplifier mode on non analog channel"""
+
+        return_var = self.gen.ghs_set_amplifier_mode("E", 1, "Basic")
+        self.assertEqual(
+            return_var,
+            "InvalidChannelType",
+            "Failed on set amplifier mode on non analog channel.",
+        )
+
+    def test_set_amplifier_mode_disabled_recorder(self):
+        """Test set amplifier mode of disabled recorder"""
+
+        return_var = self.gen.ghs_set_recorder_enabled("A", "Disable")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to disable recorder.",
+        )
+
+        return_var = self.gen.ghs_set_amplifier_mode("A", 1, "Basic")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set amplifier mode of disabled recorder.",
+        )
+
+        (
+            return_var,
+            amplifier_mode,
+        ) = self.gen.ghs_get_amplifier_mode("A", 1)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get amplifier mode of disbaled recorder.",
+        )
+        self.assertEqual(
+            amplifier_mode,
+            "Basic",
+            "Failed to set amplifier mode.",
+        )
+
+    def test_get_invalid_amplifier_mode(self):
+        """Test get amplifier mode of invalid channel"""
+
+        return_var = self.gen.ghs_get_amplifier_mode("Z", 100)
+        self.assertEqual(
+            return_var[0],
+            "InvalidSlotID",
+            "Failed on get amplifier mode of invalid channel.",
+        )
+
+    def test_get_amplifier_mode_disabled_recorder(self):
+        """Test get amplifier mode of disabled recorder"""
+
+        return_var = self.gen.ghs_set_recorder_enabled("A", "Disable")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to disable recorder.",
+        )
+
+        return_var = self.gen.ghs_get_amplifier_mode("A", 1)
+        self.assertEqual(
+            return_var[0],
+            "OK",
+            "Failed on get amplifier mode of disabled recorder.",
+        )
+
+    def test_get_amplifier_mode_non_analog(self):
+        """Test get amplifier mode of non analog channel"""
+
+        return_var = self.gen.ghs_get_amplifier_mode("E", 1)
+        self.assertEqual(
+            return_var[0],
+            "InvalidChannelType",
+            "Failed on get amplifier mode of non analog channel.",
+        )
+
+    def test_set_get_technical_units(self):
+        """Test set and get technical units, unit multiplier and unit offset"""
+
+        return_var = self.gen.ghs_set_technical_units(
+            "A", 1, "KGS", 10.0, 20.0
+        )
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set technical units, unit multiplier and unit offset.",
+        )
+
+        (
+            return_var,
+            units,
+            multiplier,
+            offset,
+        ) = self.gen.ghs_get_technical_units("A", 1)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get technical units, unit multiplier and unit offset.",
+        )
+        self.assertEqual(
+            units,
+            "KGS",
+            "Failed to set technical units.",
+        )
+        self.assertEqual(
+            multiplier,
+            10.0,
+            "Failed to set unit multiplier.",
+        )
+        self.assertEqual(
+            offset,
+            20.0,
+            "Failed to set unit offset.",
+        )
+
+    def test_set_technical_units_invalid_channel(self):
+        """Test set technical units, unit multiplier and unit offset on invalid channel"""
+
+        return_var = self.gen.ghs_set_technical_units(
+            "Z", 100, "KGS", 10.0, 20.0
+        )
+        self.assertEqual(
+            return_var,
+            "InvalidSlotID",
+            "Failed on set technical units, unit multiplier and unit offset on invalid channel.",
+        )
+
+    def test_set_technical_units_non_analog_channel(self):
+        """Test set technical units, unit multiplier and unit offset on non analog channel"""
+
+        return_var = self.gen.ghs_set_technical_units(
+            "E", 1, "KGS", 10.0, 20.0
+        )
+        self.assertEqual(
+            return_var,
+            "InvalidChannelType",
+            "Failed on set technical units, unit multiplier and unit offset on non analog channel.",
+        )
+
+    def test_set_technical_units_disabled_recorder(self):
+        """Test set technical units, unit multiplier and unit offset of disabled recorder"""
+
+        return_var = self.gen.ghs_set_recorder_enabled("A", "Disable")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to disable recorder.",
+        )
+
+        return_var = self.gen.ghs_set_technical_units(
+            "A", 1, "KGS", 10.0, 20.0
+        )
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set technical units, unit multiplier and unit offset of disabled recorder.",
+        )
+
+        (
+            return_var,
+            units,
+            multiplier,
+            offset,
+        ) = self.gen.ghs_get_technical_units("A", 1)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get technical units, unit multiplier and unit offset of disabled recorder.",
+        )
+        self.assertEqual(
+            units,
+            "KGS",
+            "Failed to set technical units.",
+        )
+        self.assertEqual(
+            multiplier,
+            10.0,
+            "Failed to set unit multiplier.",
+        )
+        self.assertEqual(
+            offset,
+            20.0,
+            "Failed to set unit offset.",
+        )
+
+    def test_get_invalid_technical_units(self):
+        """Test get technical units, unit multiplier and unit offset of invalid channel"""
+
+        return_var = self.gen.ghs_get_technical_units("Z", 100)
+        self.assertEqual(
+            return_var[0],
+            "InvalidSlotID",
+            "Failed on get technical units, unit multiplier and unit offset of invalid channel.",
+        )
+
+    def test_get_technical_units_disabled_recorder(self):
+        """Test get technical units, unit multiplier and unit offset of disabled recorder"""
+
+        return_var = self.gen.ghs_set_recorder_enabled("A", "Disable")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to disable recorder.",
+        )
+
+        return_var = self.gen.ghs_get_technical_units("A", 1)
+        self.assertEqual(
+            return_var[0],
+            "OK",
+            "Failed on get technical units, unit multiplier and unit offset of disabled recorder.",
+        )
+
+    def test_get_technical_units_non_analog(self):
+        """Test get technical units, unit multiplier and unit offset of non analog channel"""
+
+        return_var = self.gen.ghs_get_technical_units("E", 1)
+        self.assertEqual(
+            return_var[0],
+            "InvalidChannelType",
+            "Failed on get technical units, unit multiplier and unit offset of non analog channel.",
+        )
+
+    def test_set_get_auto_range(self):
+        """Test set and get auto range enable and time settings"""
+
+        return_var = self.gen.ghs_set_auto_range("A", 1, "Enable", 10.0)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set auto range enable and time settings.",
+        )
+
+        (
+            return_var,
+            auto_range_enabled,
+            auto_range_time,
+        ) = self.gen.ghs_get_auto_range("A", 1)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get auto range enable and time settings.",
+        )
+        self.assertEqual(
+            auto_range_enabled,
+            "Enable",
+            "Failed to set auto range enable.",
+        )
+        self.assertEqual(
+            auto_range_time,
+            10.0,
+            "Failed to set time settings.",
+        )
+
+    def test_set_auto_range_invalid_channel(self):
+        """Test set auto range enable and time settings on invalid channel"""
+
+        return_var = self.gen.ghs_set_auto_range("Z", 100, "Enable", 10.0)
+        self.assertEqual(
+            return_var,
+            "InvalidSlotID",
+            "Failed on set auto range enable and time settings on invalid channel.",
+        )
+
+    def test_set_auto_range_non_analog_channel(self):
+        """Test set auto range enable and time settings on non analog channel"""
+
+        return_var = self.gen.ghs_set_auto_range("E", 1, "Enable", 10.0)
+        self.assertEqual(
+            return_var,
+            "InvalidChannelType",
+            "Failed on set auto range enable and time settings on non analog channel.",
+        )
+
+    def test_set_auto_range_disabled_recorder(self):
+        """Test set auto range enable and time settings of disabled recorder"""
+
+        return_var = self.gen.ghs_set_recorder_enabled("A", "Disable")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to disable recorder.",
+        )
+
+        return_var = self.gen.ghs_set_auto_range("A", 1, "Enable", 10.0)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set auto range enable and time settings of disabled recorder.",
+        )
+
+        (
+            return_var,
+            auto_range_enabled,
+            auto_range_time,
+        ) = self.gen.ghs_get_auto_range("A", 1)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get auto range enable and time settings of disabled recorder.",
+        )
+        self.assertEqual(
+            auto_range_enabled,
+            "Enable",
+            "Failed to set auto range enable.",
+        )
+        self.assertEqual(
+            auto_range_time,
+            10.0,
+            "Failed to set time settings.",
+        )
+
+    def test_get_invalid_auto_range(self):
+        """Test get auto range enable and time settings of invalid channel"""
+
+        return_var = self.gen.ghs_get_auto_range("Z", 100)
+        self.assertEqual(
+            return_var[0],
+            "InvalidSlotID",
+            "Failed on get auto range enable and time settings of invalid channel.",
+        )
+
+    def test_get_auto_range_disabled_recorder(self):
+        """Test get auto range enable and time settings of disabled recorder"""
+
+        return_var = self.gen.ghs_set_recorder_enabled("A", "Disable")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to disable recorder.",
+        )
+
+        return_var = self.gen.ghs_get_auto_range("A", 1)
+        self.assertEqual(
+            return_var[0],
+            "OK",
+            "Failed on get auto range enable and time settings of disabled recorder.",
+        )
+
+    def test_get_auto_range_non_analog(self):
+        """Test get auto range enable and time settings of non analog channel"""
+
+        return_var = self.gen.ghs_get_auto_range("E", 1)
+        self.assertEqual(
+            return_var[0],
+            "InvalidChannelType",
+            "Failed on get auto range enable and time settings of non analog channel.",
+        )
+
+    def test_cmd_auto_range_now(self):
+        """Test command a single shot for auto range"""
+
+        return_var = self.gen.ghs_cmd_auto_range_now("A", 1, 20.0)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on command a single shot for auto range.",
+        )
+
+    def test_cmd_auto_range_now_invalid_channel(self):
+        """Test command a single shot for auto range on invalid channel"""
+
+        return_var = self.gen.ghs_cmd_auto_range_now("Z", 100, 20.0)
+        self.assertEqual(
+            return_var,
+            "InvalidSlotID",
+            "Failed on command a single shot for auto range on invalid channel.",
+        )
+
+    def test_cmd_auto_range_now_non_analog_channel(self):
+        """Test command a single shot for auto range on non analog channel"""
+
+        return_var = self.gen.ghs_cmd_auto_range_now("E", 1, 20.0)
+        self.assertEqual(
+            return_var,
+            "InvalidChannelType",
+            "Failed on command a single shot for auto range on non analog channel.",
+        )
+
+    def test_get_channel_cal_info(self):
+        """Test to get calibration information for an analog channel."""
+
+        return_var = self.gen.ghs_get_channel_cal_info("A", 1)
+        result_type = (
+            return_var[0] == "OK"
+            and isinstance(return_var[1], str)
+            and isinstance(return_var[2], str)
+            and isinstance(return_var[3], str)
+            and isinstance(return_var[4], str)
+            and isinstance(return_var[5], str)
+            and isinstance(return_var[6], str)
+        )
+        self.assertEqual(
+            result_type,
+            True,
+            "Failed to get calibration information.",
         )
 
 

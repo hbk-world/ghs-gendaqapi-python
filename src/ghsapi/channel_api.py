@@ -27,9 +27,11 @@
 from .connection import ConnectionHandler
 from .ghsapi_states import (
     RETURN_KEY,
+    GHSAmplifierMode,
     GHSChannelType,
     GHSDirection,
     GHSEnableDisable,
+    GHSExcitationType,
     GHSFilterType,
     GHSInputCoupling,
     GHSReturnValue,
@@ -888,3 +890,591 @@ def set_filter_type_and_frequency(
     )
 
     return to_string(response_json[RETURN_KEY], GHSReturnValue)
+
+
+def get_excitation(
+    con_handle: ConnectionHandler, slot_id: str, channel_index: int
+) -> tuple[str, str | None, float | None]:
+    """Determine the excitation type and value for an analog channel.
+
+     Read - This method can be called by multiple connected clients at
+     same time.
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+
+    Returns:
+       Tuple with status, excitation type and excitation value
+    """
+
+    if not slot_id or not channel_index:
+        return "NullPtrArgument", None, None
+
+    excitation_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "GetExcitation", excitation_dict
+    )
+
+    if (
+        not any(
+            key in response_json
+            for key in [
+                "ExcitationType",
+                "ExcitationValue",
+            ]
+        )
+    ) or (response_json[RETURN_KEY] != GHSReturnValue["OK"]):
+        return (
+            to_string(response_json[RETURN_KEY], GHSReturnValue),
+            None,
+            None,
+        )
+
+    return (
+        to_string(response_json[RETURN_KEY], GHSReturnValue),
+        to_string(response_json["ExcitationType"], GHSExcitationType),
+        response_json["ExcitationValue"],
+    )
+
+
+def set_excitation(
+    con_handle: ConnectionHandler,
+    slot_id: str,
+    channel_index: int,
+    excitation_type: str | int,
+    excitation_value: float,
+) -> str:
+    """Set the excitation type and value for an analog channel.
+
+     The system needs to be idle before calling this function.
+
+     If the specified excitation type or value is not supported by the
+     recorder, the excitation type remains unchanged or the value is rounded
+     to the nearest supported value.
+
+     ReadWrite - This method will only process requests from the
+     connected client with the most privileges order (Privileges order:
+     1- Perception, 2- GenDaq, 3- Other)
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+        excitation_type: The desired excitation type. Default is
+        ExcitationType_Voltage.
+        excitation_value: The desired excitation value in user units (voltage
+        or current).
+
+    Returns:
+       String value representing request status.
+    """
+
+    if (
+        not slot_id
+        or not channel_index
+        or not excitation_type
+        or not excitation_value
+    ):
+        return "NullPtrArgument"
+
+    if (
+        isinstance(excitation_type, str)
+        and excitation_type in GHSExcitationType
+    ):
+        excitation_type = from_string(excitation_type, GHSExcitationType)
+
+    elif (
+        isinstance(excitation_type, int)
+        and excitation_type in GHSExcitationType.values()
+    ):
+        pass
+
+    else:
+        return "InvalidDataType"
+
+    if not isinstance(excitation_value, float):
+        return "InvalidDataType"
+
+    excitation_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+        "ExcitationType": excitation_type,
+        "ExcitationValue": excitation_value,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "SetExcitation", excitation_dict
+    )
+
+    return to_string(response_json[RETURN_KEY], GHSReturnValue)
+
+
+def get_amplifier_mode(
+    con_handle: ConnectionHandler, slot_id: str, channel_index: int
+) -> tuple[str, str | None]:
+    """Determine the amplifier mode for an analog channel.
+
+     Read - This method can be called by multiple connected clients at
+     same time.
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+
+    Returns:
+       Tuple with status and amplifier mode
+    """
+
+    if not slot_id or not channel_index:
+        return "NullPtrArgument", None
+
+    amplifier_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "GetAmplifierMode", amplifier_dict
+    )
+
+    if ("AmplifierMode" not in response_json) or (
+        response_json[RETURN_KEY] != GHSReturnValue["OK"]
+    ):
+        return (
+            to_string(response_json[RETURN_KEY], GHSReturnValue),
+            None,
+        )
+
+    return (
+        to_string(response_json[RETURN_KEY], GHSReturnValue),
+        to_string(response_json["AmplifierMode"], GHSAmplifierMode),
+    )
+
+
+def set_amplifier_mode(
+    con_handle: ConnectionHandler,
+    slot_id: str,
+    channel_index: int,
+    amplifier_mode: str | int,
+) -> str:
+    """Set the amplifier mode for an analog channel.
+
+     The system needs to be idle before calling this function.
+
+     If the specified amplifier mode is not supported by the recorder, the
+     amplifier mode remains unchanged.
+
+     ReadWrite - This method will only process requests from the
+     connected client with the most privileges order (Privileges order:
+     1- Perception, 2- GenDaq, 3- Other)
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+        amplifier_mode: The desired amplifier mode
+
+    Returns:
+       String value representing request status.
+    """
+
+    if not slot_id or not channel_index or not amplifier_mode:
+        return "NullPtrArgument"
+
+    if isinstance(amplifier_mode, str) and amplifier_mode in GHSAmplifierMode:
+        amplifier_mode = from_string(amplifier_mode, GHSAmplifierMode)
+
+    elif (
+        isinstance(amplifier_mode, int)
+        and amplifier_mode in GHSAmplifierMode.values()
+    ):
+        pass
+
+    else:
+        return "InvalidDataType"
+
+    amplifier_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+        "AmplifierMode": amplifier_mode,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "SetAmplifierMode", amplifier_dict
+    )
+
+    return to_string(response_json[RETURN_KEY], GHSReturnValue)
+
+
+def get_technical_units(
+    con_handle: ConnectionHandler, slot_id: str, channel_index: int
+) -> tuple[str, str | None, float | None, float | None]:
+    """Determine the technical units, unit multiplier and unit offset for an
+    analog channel.
+
+    The units parameter is UTF-8 encoded.
+
+    Read - This method can be called by multiple connected clients at
+    same time.
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+
+    Returns:
+       Tuple with status, technical units, technical units multiplier value
+       and technical units offset value.
+    """
+
+    if not slot_id or not channel_index:
+        return "NullPtrArgument", None, None, None
+
+    technical_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "GetTechnicalUnits", technical_dict
+    )
+
+    if (
+        not any(
+            key in response_json
+            for key in [
+                "Multiplier",
+                "Offset",
+                "UnitType",
+            ]
+        )
+    ) or (response_json[RETURN_KEY] != GHSReturnValue["OK"]):
+        return (
+            to_string(response_json[RETURN_KEY], GHSReturnValue),
+            None,
+            None,
+            None,
+        )
+
+    return (
+        to_string(response_json[RETURN_KEY], GHSReturnValue),
+        response_json["UnitType"],
+        response_json["Multiplier"],
+        response_json["Offset"],
+    )
+
+
+def set_technical_units(
+    con_handle: ConnectionHandler,
+    slot_id: str,
+    channel_index: int,
+    units: str,
+    multiplier: float,
+    offset: float,
+) -> str:
+    """Set the technical units, unit multiplier and unit offset for an analog
+    channel.
+
+     The units parameter is UTF-8 encoded.
+
+     ReadWrite - This method will only process requests from the
+     connected client with the most privileges order (Privileges order:
+     1- Perception, 2- GenDaq, 3- Other)
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+        units: The desired technical units (e.g. 'V' for Volt or 'Hz' for
+        Hertz).
+        multiplier: The desired technical units multiplier value.
+        offset: The desired technical units offset value.
+
+    Returns:
+       String value representing request status.
+    """
+
+    if (
+        not slot_id
+        or not channel_index
+        or not units
+        or not multiplier
+        or not offset
+    ):
+        return "NullPtrArgument"
+
+    if (
+        not isinstance(units, str)
+        or not isinstance(multiplier, float)
+        or not isinstance(offset, float)
+    ):
+        return "InvalidDataType"
+
+    technical_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+        "UnitType": units,
+        "Multiplier": multiplier,
+        "Offset": offset,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "SetTechnicalUnits", technical_dict
+    )
+
+    return to_string(response_json[RETURN_KEY], GHSReturnValue)
+
+
+def get_auto_range(
+    con_handle: ConnectionHandler, slot_id: str, channel_index: int
+) -> tuple[str, str | None, float | None]:
+    """Determine the auto range enable and time settings.
+
+     Read - This method can be called by multiple connected clients at
+     same time.
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+
+    Returns:
+       Tuple with status, auto range enabled setting and time for auto range
+       in seconds
+    """
+
+    if not slot_id or not channel_index:
+        return "NullPtrArgument", None, None
+
+    auto_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "GetAutoRange", auto_dict
+    )
+
+    if (
+        not any(
+            key in response_json
+            for key in [
+                "AutoRangeEnabled",
+                "AutoRangeTime",
+            ]
+        )
+    ) or (response_json[RETURN_KEY] != GHSReturnValue["OK"]):
+        return (
+            to_string(response_json[RETURN_KEY], GHSReturnValue),
+            None,
+            None,
+        )
+
+    return (
+        to_string(response_json[RETURN_KEY], GHSReturnValue),
+        to_string(response_json["AutoRangeEnabled"], GHSEnableDisable),
+        response_json["AutoRangeTime"],
+    )
+
+
+def set_auto_range(
+    con_handle: ConnectionHandler,
+    slot_id: str,
+    channel_index: int,
+    auto_range_enabled: str | int,
+    auto_range_time: float,
+) -> str:
+    """Set Auto range settings for analog channels.
+
+     ReadWrite - This method will only process requests from the
+     connected client with the most privileges order (Privileges order:
+     1- Perception, 2- GenDaq, 3- Other)
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+        auto_range_enabled: The auto range enabled setting. The value is
+        adapted to available options.
+        auto_range_time: The time for auto range in seconds. The value is
+        adapted to available options.
+
+    Returns:
+       String value representing request status.
+    """
+
+    if (
+        not slot_id
+        or not channel_index
+        or not auto_range_enabled
+        or not auto_range_time
+    ):
+        return "NullPtrArgument"
+
+    if (
+        isinstance(auto_range_enabled, str)
+        and auto_range_enabled in GHSEnableDisable
+    ):
+        auto_range_enabled = from_string(auto_range_enabled, GHSEnableDisable)
+
+    elif (
+        isinstance(auto_range_enabled, int)
+        and auto_range_enabled in GHSEnableDisable.values()
+    ):
+        pass
+
+    else:
+        return "InvalidDataType"
+
+    if not isinstance(auto_range_time, float):
+        return "InvalidDataType"
+
+    auto_range_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+        "AutoRangeEnabled": auto_range_enabled,
+        "AutoRangeTime": auto_range_time,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "SetAutoRange", auto_range_dict
+    )
+
+    return to_string(response_json[RETURN_KEY], GHSReturnValue)
+
+
+def cmd_auto_range_now(
+    con_handle: ConnectionHandler,
+    slot_id: str,
+    channel_index: int,
+    auto_range_time: float,
+) -> str:
+    """Command a single shot for auto range.
+
+     The system needs to be acquiring for this function to have any effect.
+
+     ReadWrite - This method will only process requests from the
+     connected client with the most privileges order (Privileges order:
+     1- Perception, 2- GenDaq, 3- Other)
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+        auto_range_time: The time for auto range in seconds. The value is
+        adapted to available options.
+
+    Returns:
+       String value representing request status.
+    """
+
+    if not slot_id or not channel_index or not auto_range_time:
+        return "NullPtrArgument"
+
+    if not isinstance(auto_range_time, float):
+        return "InvalidDataType"
+
+    auto_range_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+        "AutoRangeTime": auto_range_time,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "AutoRangeNow", auto_range_dict
+    )
+
+    return to_string(response_json[RETURN_KEY], GHSReturnValue)
+
+
+def get_channel_cal_info(
+    con_handle: ConnectionHandler, slot_id: str, channel_index: int
+) -> tuple[
+    str, str | None, str | None, str | None, str | None, str | None, str | None
+]:
+    """Retrieve calibration information for an analog channel.
+
+    The calibrationDateTime, verificationDateTime, powerVerificationDateTime,
+    calibrationLab, verificationLab and powerVerificationLab parameters are
+    UTF-8 encoded.
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+
+    Returns:
+       Tuple with status and calibration information
+    """
+
+    if not slot_id or not channel_index:
+        return "NullPtrArgument", None, None, None, None, None, None
+
+    cal_info_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "GetChannelCalibrationInformation", cal_info_dict
+    )
+
+    if (
+        not any(
+            key in response_json
+            for key in [
+                "CalibrationDateTime",
+                "VerificationDateTime",
+                "PowerVerificationDateTime",
+                "CalibrationLab",
+                "VerificationLab",
+                "PowerVerificationLab",
+            ]
+        )
+    ) or (response_json[RETURN_KEY] != GHSReturnValue["OK"]):
+        return (
+            to_string(response_json[RETURN_KEY], GHSReturnValue),
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+        )
+
+    return (
+        to_string(response_json[RETURN_KEY], GHSReturnValue),
+        response_json["CalibrationDateTime"],
+        response_json["VerificationDateTime"],
+        response_json["PowerVerificationDateTime"],
+        response_json["CalibrationLab"],
+        response_json["VerificationLab"],
+        response_json["PowerVerificationLab"],
+    )
