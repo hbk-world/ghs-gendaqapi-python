@@ -1438,3 +1438,174 @@ class GHS:
         return _channel.get_channel_cal_info(
             self._con_handle, slot_id, channel_index
         )
+
+    ## Timer/Counter Module
+
+    def ghs_get_timer_counter_gate_time(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, float | None]:
+        """Determine the gate time for a timer/counter channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            gate_time: The gate time in seconds
+        """
+
+        return _channel.get_timer_counter_gate_time(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_timer_counter_gate_time(
+        self,
+        slot_id: str,
+        channel_index: int,
+        gate_time: float,
+    ) -> str:
+        """Determine the gate time for a timer/counter channel.
+
+        The system needs to be idle before calling this function.
+
+        If the specified timer/counter gate time is not supported by the
+        recorder, the timer/counter gate time is rounded to the nearest
+        supported gate time.
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            gate_time: The desired gate time in seconds.
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_timer_counter_gate_time(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            gate_time,
+        )
+
+    def ghs_get_timer_counter_mode(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, str | None]:
+        """Determine the mode for a timer/counter channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            GHSTimerCounterMode: The timer/counter mode
+        """
+
+        return _channel.get_timer_counter_mode(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_timer_counter_mode(
+        self,
+        slot_id: str,
+        channel_index: int,
+        mode: str | int,
+    ) -> str:
+        """Set the mode for a timer/counter channel.
+
+        *The system needs to be idle before calling this function.*
+
+        *If the specified timer/counter mode is not supported by the recorder, the
+        timer/counter mode remains unchanged.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            mode: The desired timer/counter mode. Default is
+            TimerCounterMode_RPMUniDirectional.
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_timer_counter_mode(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            mode,
+        )
+
+    def ghs_get_timer_counter_range(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, float | None, float | None]:
+        """Determine the range for a timer/counter channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            lower_value: The lower range value.
+            upper_value: The upper range value.
+        """
+
+        return _channel.get_timer_counter_range(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_timer_counter_range(
+        self,
+        slot_id: str,
+        channel_index: int,
+        lower_value: float,
+        upper_value: float,
+    ) -> str:
+        """Set the range for a timer/counter channel.
+
+        *The system needs to be idle before calling this function.*
+
+        *If the specified timer/counter range is illegal (i.e. upperValue <
+        lowerValue), the timer/counter range values are corrected to the
+        nearest possible values.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            lower_value: The desired lower range value.
+            upper_value: The desired upper range value.
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_timer_counter_range(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            lower_value,
+            upper_value,
+        )

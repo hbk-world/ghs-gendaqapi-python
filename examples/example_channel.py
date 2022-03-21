@@ -326,6 +326,66 @@ def main():
         Power Verification Lab: {power_verification_lab}"
     )
 
+    # Set the gate time for a timer/counter channel.
+    return_var = gen.ghs_set_timer_counter_gate_time("A", 1, 23.0)
+    if return_var != "OK":
+        print(
+            f"Failed on GHSSetTimerCounterGateTime. Return Status: {return_var}"
+        )
+        sys.exit()
+    print(f"GHSSetTimerCounterGateTime - Return Status: {return_var}")
+
+    # Determine the gate time for a timer/counter channel.
+    return_var, gate_time = gen.ghs_get_timer_counter_gate_time("A", 1)
+    if return_var != "OK":
+        print(
+            f"Failed on GHSGetTimerCounterGateTime. Return Status: {return_var}"
+        )
+        sys.exit()
+    print(
+        f"GHSGetTimerCounterGateTime - Return Status: {return_var}\
+        Gate Time: {gate_time}"
+    )
+
+    # Set the mode for a timer/counter channel.
+    return_var = gen.ghs_set_timer_counter_mode("A", 1, "CountQuadrature")
+    if return_var != "OK":
+        print(f"Failed on GHSSetTimerCounterMode. Return Status: {return_var}")
+        sys.exit()
+    print(f"GHSSetTimerCounterMode - Return Status: {return_var}")
+
+    # Determine the mode for a timer/counter channel.
+    return_var, mode = gen.ghs_get_timer_counter_mode("A", 1)
+    if return_var != "OK":
+        print(f"Failed on GHSGetTimerCounterMode. Return Status: {return_var}")
+        sys.exit()
+    print(
+        f"GHSGetTimerCounterMode - Return Status: {return_var}\
+        Timer/counter mode: {mode}"
+    )
+
+    # Set the range for a timer/counter channel.
+    return_var = gen.ghs_set_timer_counter_range("A", 1, 10, 20)
+    if return_var != "OK":
+        print(
+            f"Failed on GHSSetTimerCounterRange. Return Status: {return_var}"
+        )
+        sys.exit()
+    print(f"GHSSetTimerCounterRange - Return Status: {return_var}")
+
+    # Determine the range for a timer/counter channel.
+    return_var, lower, upper = gen.ghs_get_timer_counter_range("A", 1)
+    if return_var != "OK":
+        print(
+            f"Failed on GHSGetTimerCounterRange. Return Status: {return_var}"
+        )
+        sys.exit()
+    print(
+        f"GHSGetTimerCounterRange - Return Status: {return_var}\
+        Lower value: {lower}\
+        Upper value: {upper}"
+    )
+
     # Disconnect
     return_var = gen.ghs_disconnect()
     if return_var != "OK":

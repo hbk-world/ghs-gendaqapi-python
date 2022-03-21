@@ -36,6 +36,7 @@ from .ghsapi_states import (
     GHSInputCoupling,
     GHSReturnValue,
     GHSSignalCoupling,
+    GHSTimerCounterMode,
     GHSTriggerMode,
     from_string,
     to_string,
@@ -1478,3 +1479,307 @@ def get_channel_cal_info(
         response_json["VerificationLab"],
         response_json["PowerVerificationLab"],
     )
+
+
+# Timer/Counter
+
+
+def get_timer_counter_gate_time(
+    con_handle: ConnectionHandler, slot_id: str, channel_index: int
+) -> tuple[str, float | None]:
+    """Determine the gate time for a timer/counter channel.
+
+     Read - This method can be called by multiple connected clients at
+     same time.
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+
+    Returns:
+       Tuple with status and the gate time in seconds.
+    """
+
+    if not slot_id or not channel_index:
+        return "NullPtrArgument", None
+
+    gate_time_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "GetTimerCounterGateTime", gate_time_dict
+    )
+
+    if ("GateTime" not in response_json) or (
+        response_json[RETURN_KEY] != GHSReturnValue["OK"]
+    ):
+        return (
+            to_string(response_json[RETURN_KEY], GHSReturnValue),
+            None,
+        )
+
+    return (
+        to_string(response_json[RETURN_KEY], GHSReturnValue),
+        response_json["GateTime"],
+    )
+
+
+def set_timer_counter_gate_time(
+    con_handle: ConnectionHandler,
+    slot_id: str,
+    channel_index: int,
+    gate_time: float,
+) -> str:
+    """Set the gate time for a timer/counter channel.
+
+     The system needs to be idle before calling this function.
+
+     If the specified timer/counter gate time is not supported by the
+     recorder, the timer/counter gate time is rounded to the nearest supported
+     gate time.
+
+     ReadWrite - This method will only process requests from the
+     connected client with the most privileges order (Privileges order:
+     1- Perception, 2- GenDaq, 3- Other)
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+        gate_time: The desired gate time in seconds.
+
+    Returns:
+       String value representing request status.
+    """
+
+    if not slot_id or not channel_index or not gate_time:
+        return "NullPtrArgument"
+
+    if not isinstance(gate_time, float):
+        return "InvalidDataType"
+
+    gate_time_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+        "GateTime": gate_time,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "SetTimerCounterGateTime", gate_time_dict
+    )
+
+    return to_string(response_json[RETURN_KEY], GHSReturnValue)
+
+
+def get_timer_counter_mode(
+    con_handle: ConnectionHandler, slot_id: str, channel_index: int
+) -> tuple[str, str | None]:
+    """Determine the mode for a timer/counter channel.
+
+     Read - This method can be called by multiple connected clients at
+     same time.
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+
+    Returns:
+       Tuple with status and the timer/counter mode
+    """
+
+    if not slot_id or not channel_index:
+        return "NullPtrArgument", None
+
+    mode_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "GetTimerCounterMode", mode_dict
+    )
+
+    if ("TimerCounterMode" not in response_json) or (
+        response_json[RETURN_KEY] != GHSReturnValue["OK"]
+    ):
+        return (
+            to_string(response_json[RETURN_KEY], GHSReturnValue),
+            None,
+        )
+
+    return (
+        to_string(response_json[RETURN_KEY], GHSReturnValue),
+        to_string(response_json["TimerCounterMode"], GHSTimerCounterMode),
+    )
+
+
+def set_timer_counter_mode(
+    con_handle: ConnectionHandler,
+    slot_id: str,
+    channel_index: int,
+    mode: str | int,
+) -> str:
+    """Set the mode for a timer/counter channel.
+
+     The system needs to be idle before calling this function.
+
+     If the specified timer/counter mode is not supported by the recorder, the
+     timer/counter mode remains unchanged.
+
+     ReadWrite - This method will only process requests from the
+     connected client with the most privileges order (Privileges order:
+     1- Perception, 2- GenDaq, 3- Other)
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+        mode: The desired timer/counter mode. Default is
+        TimerCounterMode_RPMUniDirectional.
+
+    Returns:
+       String value representing request status.
+    """
+
+    if not slot_id or not channel_index or not mode:
+        return "NullPtrArgument"
+
+    if isinstance(mode, str) and mode in GHSTimerCounterMode:
+        mode = from_string(mode, GHSTimerCounterMode)
+
+    elif isinstance(mode, int) and mode in GHSTimerCounterMode.values():
+        pass
+
+    else:
+        return "InvalidDataType"
+
+    mode_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+        "TimerCounterMode": mode,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "SetTimerCounterMode", mode_dict
+    )
+
+    return to_string(response_json[RETURN_KEY], GHSReturnValue)
+
+
+def get_timer_counter_range(
+    con_handle: ConnectionHandler, slot_id: str, channel_index: int
+) -> tuple[str, float | None, float | None]:
+    """Determine the range for a timer/counter channel.
+
+    Read - This method can be called by multiple connected clients at
+    same time.
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+
+    Returns:
+       Tuple with status, the lower range value and the upper range value.
+    """
+
+    if not slot_id or not channel_index:
+        return "NullPtrArgument", None, None
+
+    range_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "GetTimerCounterRange", range_dict
+    )
+
+    if (
+        not any(
+            key in response_json
+            for key in [
+                "UpperValue",
+                "LowerValue",
+            ]
+        )
+    ) or (response_json[RETURN_KEY] != GHSReturnValue["OK"]):
+        return (
+            to_string(response_json[RETURN_KEY], GHSReturnValue),
+            None,
+            None,
+        )
+
+    return (
+        to_string(response_json[RETURN_KEY], GHSReturnValue),
+        response_json["UpperValue"],
+        response_json["LowerValue"],
+    )
+
+
+def set_timer_counter_range(
+    con_handle: ConnectionHandler,
+    slot_id: str,
+    channel_index: int,
+    lower_value: float,
+    upper_value: float,
+) -> str:
+    """Set the range for a timer/counter channel.
+
+     The system needs to be idle before calling this function.
+
+     If the specified timer/counter range is illegal (i.e. upperValue <
+     lowerValue), the timer/counter range values are corrected to the nearest
+     possible values.
+
+     ReadWrite - This method will only process requests from the
+     connected client with the most privileges order (Privileges order:
+     1- Perception, 2- GenDaq, 3- Other)
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+        lower_value: The desired lower range value.
+        upper_value: The desired upper range value.
+
+    Returns:
+       String value representing request status.
+    """
+
+    if not slot_id or not channel_index or not lower_value or not upper_value:
+        return "NullPtrArgument"
+
+    if not isinstance(lower_value, float) or not isinstance(
+        upper_value, float
+    ):
+        return "InvalidDataType"
+
+    range_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+        "UpperValue": upper_value,
+        "LowerValue": lower_value,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "SetTimerCounterRange", range_dict
+    )
+
+    return to_string(response_json[RETURN_KEY], GHSReturnValue)
