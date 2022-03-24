@@ -1782,6 +1782,424 @@ class TestChannelAPI(unittest.TestCase):
             "get_channel_cal_info null argument check failed.",
         )
 
+    # Timer/Counter Module
+
+    def test_get_timer_counter_gate_time(self):
+        """Test get_timer_counter_gate_time api with success response"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+            with patch(
+                "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
+            ) as mock_req_ros:
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["OK"],
+                    "GateTime": 23.0,
+                }
+                self.assertEqual(
+                    channel_api.get_timer_counter_gate_time(
+                        self.con_handle, "A", 11
+                    ),
+                    ("OK", 23.0),
+                    "get_timer_counter_gate_time success response test failed.",
+                )
+
+    def test_get_timer_counter_gate_time_neg(self):
+        """Test get_timer_counter_gate_time api with failure response"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+            with patch(
+                "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
+            ) as mock_req_ros:
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["NOK"],
+                    "GateTime": 23.0,
+                }
+                self.assertEqual(
+                    channel_api.get_timer_counter_gate_time(
+                        self.con_handle, "A", 11
+                    ),
+                    ("NOK", None),
+                    "get_timer_counter_gate_time failure response test failed.",
+                )
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["NOK"],
+                }
+                self.assertEqual(
+                    channel_api.get_timer_counter_gate_time(
+                        self.con_handle, "A", 11
+                    ),
+                    ("NOK", None),
+                    "get_timer_counter_gate_time failure response test failed.",
+                )
+
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["OK"],
+                }
+                self.assertEqual(
+                    channel_api.get_timer_counter_gate_time(
+                        self.con_handle, "A", 11
+                    ),
+                    ("OK", None),
+                    "get_timer_counter_gate_time failure response test failed.",
+                )
+
+    def test_get_timer_counter_gate_time_null_args(self):
+        """Test get_timer_counter_gate_time api with null args"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+        self.assertEqual(
+            channel_api.get_timer_counter_gate_time(
+                self.con_handle, None, None
+            ),
+            ("NullPtrArgument", None),
+            "get_timer_counter_gate_time null argument check failed.",
+        )
+
+    def test_set_timer_counter_gate_time(self):
+        """Test set_timer_counter_gate_time api with success response"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+            with patch(
+                "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
+            ) as mock_req_ros:
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["OK"],
+                }
+                self.assertEqual(
+                    channel_api.set_timer_counter_gate_time(
+                        self.con_handle, "A", 11, 23.0
+                    ),
+                    "OK",
+                    "set_timer_counter_gate_time success response test failed.",
+                )
+
+    def test_set_timer_counter_gate_time_null_args(self):
+        """Test set_timer_counter_gate_time api with null args"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+        self.assertEqual(
+            channel_api.set_timer_counter_gate_time(
+                self.con_handle, None, None, None
+            ),
+            "NullPtrArgument",
+            "set_timer_counter_gate_time null argument check failed.",
+        )
+
+    def test_set_timer_counter_gate_time_invalid_args(self):
+        """Test set_timer_counter_gate_time api with invalid args"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+        self.assertEqual(
+            channel_api.set_timer_counter_gate_time(
+                self.con_handle, "A", 11, 20
+            ),
+            "InvalidDataType",
+            "set_timer_counter_gate_time invalid argument check failed.",
+        )
+
+    def test_get_timer_counter_mode(self):
+        """Test get_timer_counter_mode api with success response"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+            with patch(
+                "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
+            ) as mock_req_ros:
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["OK"],
+                    "TimerCounterMode": 8,
+                }
+                self.assertEqual(
+                    channel_api.get_timer_counter_mode(
+                        self.con_handle, "A", 11
+                    ),
+                    ("OK", "CountQuadrature"),
+                    "get_timer_counter_mode success response test failed.",
+                )
+
+    def test_get_timer_counter_mode_neg(self):
+        """Test get_timer_counter_mode api with failure response"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+            with patch(
+                "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
+            ) as mock_req_ros:
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["NOK"],
+                    "TimerCounterMode": 8,
+                }
+                self.assertEqual(
+                    channel_api.get_timer_counter_mode(
+                        self.con_handle, "A", 11
+                    ),
+                    ("NOK", None),
+                    "get_timer_counter_mode failure response test failed.",
+                )
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["NOK"],
+                }
+                self.assertEqual(
+                    channel_api.get_timer_counter_mode(
+                        self.con_handle, "A", 11
+                    ),
+                    ("NOK", None),
+                    "get_timer_counter_mode failure response test failed.",
+                )
+
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["OK"],
+                }
+                self.assertEqual(
+                    channel_api.get_timer_counter_mode(
+                        self.con_handle, "A", 11
+                    ),
+                    ("OK", None),
+                    "get_timer_counter_mode failure response test failed.",
+                )
+
+    def test_get_timer_counter_mode_null_args(self):
+        """Test get_timer_counter_mode api with null args"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+        self.assertEqual(
+            channel_api.get_timer_counter_mode(self.con_handle, None, None),
+            ("NullPtrArgument", None),
+            "get_timer_counter_mode null argument check failed.",
+        )
+
+    def test_set_timer_counter_mode(self):
+        """Test set_timer_counter_mode api with success response"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+            with patch(
+                "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
+            ) as mock_req_ros:
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["OK"],
+                }
+                self.assertEqual(
+                    channel_api.set_timer_counter_mode(
+                        self.con_handle, "A", 11, "CountQuadrature"
+                    ),
+                    "OK",
+                    "set_timer_counter_mode success response test failed.",
+                )
+
+    def test_set_timer_counter_mode_null_args(self):
+        """Test set_timer_counter_mode api with null args"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+        self.assertEqual(
+            channel_api.set_timer_counter_mode(
+                self.con_handle, None, None, None
+            ),
+            "NullPtrArgument",
+            "set_timer_counter_mode null argument check failed.",
+        )
+
+    def test_set_timer_counter_mode_invalid_args(self):
+        """Test set_timer_counter_mode api with invalid args"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+        self.assertEqual(
+            channel_api.set_timer_counter_mode(
+                self.con_handle, "A", 11, "Base"
+            ),
+            "InvalidDataType",
+            "set_timer_counter_mode invalid argument check failed.",
+        )
+
+    def test_get_timer_counter_range(self):
+        """Test get_timer_counter_range api with success response"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+            with patch(
+                "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
+            ) as mock_req_ros:
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["OK"],
+                    "LowerValue": 10.0,
+                    "UpperValue": 20.0,
+                }
+                self.assertEqual(
+                    channel_api.get_timer_counter_range(
+                        self.con_handle, "A", 11
+                    ),
+                    ("OK", 20.0, 10.0),
+                    "get_timer_counter_range success response test failed.",
+                )
+
+    def test_get_timer_counter_range_neg(self):
+        """Test get_timer_counter_range api with failure response"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+            with patch(
+                "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
+            ) as mock_req_ros:
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["NOK"],
+                    "LowerValue": 10.0,
+                    "UpperValue": 20.0,
+                }
+                self.assertEqual(
+                    channel_api.get_timer_counter_range(
+                        self.con_handle, "A", 11
+                    ),
+                    ("NOK", None, None),
+                    "get_timer_counter_range failure response test failed.",
+                )
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["NOK"],
+                }
+                self.assertEqual(
+                    channel_api.get_timer_counter_range(
+                        self.con_handle, "A", 11
+                    ),
+                    ("NOK", None, None),
+                    "get_timer_counter_range failure response test failed.",
+                )
+
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["OK"],
+                }
+                self.assertEqual(
+                    channel_api.get_timer_counter_range(
+                        self.con_handle, "A", 11
+                    ),
+                    ("OK", None, None),
+                    "get_timer_counter_range failure response test failed.",
+                )
+
+    def test_get_timer_counter_range_null_args(self):
+        """Test get_timer_counter_range api with null args"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+        self.assertEqual(
+            channel_api.get_timer_counter_range(self.con_handle, None, None),
+            ("NullPtrArgument", None, None),
+            "get_timer_counter_range null argument check failed.",
+        )
+
+    def test_set_timer_counter_range(self):
+        """Test set_timer_counter_range api with success response"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+            with patch(
+                "test_connection_handler.connection.ConnectionHandler.send_request_wait_response"
+            ) as mock_req_ros:
+                mock_req_ros.return_value = {
+                    self.RETURN_KEY: self.GHSReturnValue["OK"],
+                }
+                self.assertEqual(
+                    channel_api.set_timer_counter_range(
+                        self.con_handle, "A", 11, 10.0, 20.0
+                    ),
+                    "OK",
+                    "set_timer_counter_range success response test failed.",
+                )
+
+    def test_set_timer_counter_range_null_args(self):
+        """Test set_timer_counter_range api with null args"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+        self.assertEqual(
+            channel_api.set_timer_counter_range(
+                self.con_handle, None, None, None, None
+            ),
+            "NullPtrArgument",
+            "set_timer_counter_range null argument check failed.",
+        )
+
+    def test_set_timer_counter_range_invalid_args(self):
+        """Test set_timer_counter_range api with invalid args"""
+
+        with patch(
+            "test_connection_handler.connection.ConnectionHandler.connection_establish"
+        ) as mock_con_est:
+            mock_con_est.return_value = self.GHSReturnValue["OK"]
+
+        self.assertEqual(
+            channel_api.set_timer_counter_range(
+                self.con_handle, "A", 11, 10, 20.0
+            ),
+            "InvalidDataType",
+            "set_timer_counter_range invalid argument check failed.",
+        )
+        self.assertEqual(
+            channel_api.set_timer_counter_range(
+                self.con_handle, "A", 11, 10.0, 20
+            ),
+            "InvalidDataType",
+            "set_timer_counter_range invalid argument check failed.",
+        )
+
 
 if __name__ == "__main__":
     unittest.main(

@@ -326,6 +326,7 @@ def main():
         Power Verification Lab: {power_verification_lab}"
     )
 
+    ## NOTE: Enter valid timer/counter channel slot ID and index
     # Set the gate time for a timer/counter channel.
     return_var = gen.ghs_set_timer_counter_gate_time("A", 1, 23.0)
     if return_var != "OK":
@@ -365,7 +366,7 @@ def main():
     )
 
     # Set the range for a timer/counter channel.
-    return_var = gen.ghs_set_timer_counter_range("A", 1, 10, 20)
+    return_var = gen.ghs_set_timer_counter_range("A", 1, 10.0, 20.0)
     if return_var != "OK":
         print(
             f"Failed on GHSSetTimerCounterRange. Return Status: {return_var}"
