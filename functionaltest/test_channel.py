@@ -531,7 +531,7 @@ class TestChannel(unittest.TestCase):
         """Test set trigger settings on non analog channel"""
 
         return_var = self.gen.ghs_set_trigger_settings(
-            "E", 1, "Dual", 10.0, 20.0, 30.0, "RisingEdge"
+            "A", 25, "Dual", 10.0, 20.0, 30.0, "RisingEdge"
         )
         self.assertEqual(
             return_var,
@@ -662,7 +662,7 @@ class TestChannel(unittest.TestCase):
     def test_get_trigger_settings_non_analog(self):
         """Test get trigger settings of non analog channel"""
 
-        return_var = self.gen.ghs_get_trigger_settings("E", 1)
+        return_var = self.gen.ghs_get_trigger_settings("A", 25)
         self.assertEqual(
             return_var[0],
             "InvalidChannelType",
@@ -738,7 +738,7 @@ class TestChannel(unittest.TestCase):
     def test_set_signal_coupling_non_analog_channel(self):
         """Test set signal coupling on non analog channel"""
 
-        return_var = self.gen.ghs_set_signal_coupling("E", 1, "DC")
+        return_var = self.gen.ghs_set_signal_coupling("A", 25, "DC")
         self.assertEqual(
             return_var,
             "InvalidChannelType",
@@ -814,7 +814,7 @@ class TestChannel(unittest.TestCase):
     def test_get_signal_coupling_non_analog(self):
         """Test get signal coupling of non analog channel"""
 
-        return_var = self.gen.ghs_get_signal_coupling("E", 1)
+        return_var = self.gen.ghs_get_signal_coupling("A", 25)
         self.assertEqual(
             return_var[0],
             "InvalidChannelType",
@@ -861,7 +861,7 @@ class TestChannel(unittest.TestCase):
         """Test set input coupling on non analog channel"""
 
         return_var = self.gen.ghs_set_input_coupling(
-            "E", 1, "SingleEndedPositive"
+            "A", 25, "SingleEndedPositive"
         )
         self.assertEqual(
             return_var,
@@ -977,7 +977,7 @@ class TestChannel(unittest.TestCase):
     def test_get_input_coupling_non_analog(self):
         """Test get input coupling of non analog channel"""
 
-        return_var = self.gen.ghs_get_input_coupling("E", 1)
+        return_var = self.gen.ghs_get_input_coupling("A", 25)
         self.assertEqual(
             return_var[0],
             "InvalidChannelType",
@@ -1024,7 +1024,7 @@ class TestChannel(unittest.TestCase):
     def test_set_span_offset_non_analog_channel(self):
         """Test set span and offset on non analog channel"""
 
-        return_var = self.gen.ghs_set_span_and_offset("E", 1, 10.0, 20.0)
+        return_var = self.gen.ghs_set_span_and_offset("A", 25, 10.0, 20.0)
         self.assertEqual(
             return_var,
             "InvalidChannelType",
@@ -1095,7 +1095,7 @@ class TestChannel(unittest.TestCase):
     def test_get_span_offset_non_analog(self):
         """Test get span and offset of non analog channel"""
 
-        return_var = self.gen.ghs_get_span_and_offset("E", 1)
+        return_var = self.gen.ghs_get_span_and_offset("A", 25)
         self.assertEqual(
             return_var[0],
             "InvalidChannelType",
@@ -1106,7 +1106,7 @@ class TestChannel(unittest.TestCase):
         """Test set and get filter type and frequency"""
 
         return_var = self.gen.ghs_set_filter_type_and_frequency(
-            "A", 1, "FIR", 1250.0
+            "A", 1, "Bessel_AA", 32000000.0
         )
         self.assertEqual(
             return_var,
@@ -1126,12 +1126,12 @@ class TestChannel(unittest.TestCase):
         )
         self.assertEqual(
             filter_type,
-            "FIR",
+            "Bessel_AA",
             "Failed to set filter type.",
         )
         self.assertEqual(
             frequency,
-            1250.0,
+            32000000.0,
             "Failed to set frequency.",
         )
 
@@ -1139,7 +1139,7 @@ class TestChannel(unittest.TestCase):
         """Test set filter type and frequency on invalid channel"""
 
         return_var = self.gen.ghs_set_filter_type_and_frequency(
-            "Z", 100, "FIR", 1250.0
+            "Z", 100, "Bessel_AA", 32000000.0
         )
         self.assertEqual(
             return_var,
@@ -1151,7 +1151,7 @@ class TestChannel(unittest.TestCase):
         """Test set filter type and frequency on non analog channel"""
 
         return_var = self.gen.ghs_set_filter_type_and_frequency(
-            "E", 1, "FIR", 1250.0
+            "A", 25, "Bessel_AA", 32000000.0
         )
         self.assertEqual(
             return_var,
@@ -1170,7 +1170,7 @@ class TestChannel(unittest.TestCase):
         )
 
         return_var = self.gen.ghs_set_filter_type_and_frequency(
-            "A", 1, "FIR", 1250.0
+            "A", 1, "Bessel_AA", 32000000.0
         )
         self.assertEqual(
             return_var,
@@ -1186,29 +1186,17 @@ class TestChannel(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on get filter type and frequency of disbaled recorder.",
+            "Failed on get filter type and frequency of disabled recorder.",
         )
         self.assertEqual(
             filter_type,
-            "FIR",
+            "Bessel_AA",
             "Failed to set filter type.",
         )
         self.assertEqual(
             frequency,
-            1250.0,
+            32000000.0,
             "Failed to set frequency.",
-        )
-
-    def test_set_filter_frequency_not_supported(self):
-        """Test set filter type and frequency with not supported type"""
-
-        return_var = self.gen.ghs_set_filter_type_and_frequency(
-            "A", 1, "Bessel_AA", 1500.0
-        )
-        self.assertEqual(
-            return_var,
-            "Adapted",
-            "Failed on set filter type and frequency with not supported type.",
         )
 
     def test_get_invalid_filter_frequency(self):
@@ -1241,7 +1229,7 @@ class TestChannel(unittest.TestCase):
     def test_get_filter_frequency_non_analog(self):
         """Test get filter type and frequency of non analog channel"""
 
-        return_var = self.gen.ghs_get_filter_type_and_frequency("E", 1)
+        return_var = self.gen.ghs_get_filter_type_and_frequency("A", 25)
         self.assertEqual(
             return_var[0],
             "InvalidChannelType",
@@ -1292,7 +1280,7 @@ class TestChannel(unittest.TestCase):
     def test_set_excitation_non_analog_channel(self):
         """Test set excitation type and value on non analog channel"""
 
-        return_var = self.gen.ghs_set_excitation("E", 1, "Voltage", 10.0)
+        return_var = self.gen.ghs_set_excitation("A", 25, "Voltage", 10.0)
         self.assertEqual(
             return_var,
             "InvalidChannelType",
@@ -1324,7 +1312,7 @@ class TestChannel(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on get excitation type and value of disbaled recorder.",
+            "Failed on get excitation type and value of disabled recorder.",
         )
         self.assertEqual(
             excitation_type,
@@ -1377,7 +1365,7 @@ class TestChannel(unittest.TestCase):
     def test_get_excitation_non_analog(self):
         """Test get excitation type and value of non analog channel"""
 
-        return_var = self.gen.ghs_get_excitation("E", 1)
+        return_var = self.gen.ghs_get_excitation("A", 25)
         self.assertEqual(
             return_var[0],
             "InvalidChannelType",
@@ -1422,7 +1410,7 @@ class TestChannel(unittest.TestCase):
     def test_set_amplifier_mode_non_analog_channel(self):
         """Test set amplifier mode on non analog channel"""
 
-        return_var = self.gen.ghs_set_amplifier_mode("E", 1, "Basic")
+        return_var = self.gen.ghs_set_amplifier_mode("A", 25, "Basic")
         self.assertEqual(
             return_var,
             "InvalidChannelType",
@@ -1453,7 +1441,7 @@ class TestChannel(unittest.TestCase):
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on get amplifier mode of disbaled recorder.",
+            "Failed on get amplifier mode of disabled recorder.",
         )
         self.assertEqual(
             amplifier_mode,
@@ -1491,7 +1479,7 @@ class TestChannel(unittest.TestCase):
     def test_get_amplifier_mode_non_analog(self):
         """Test get amplifier mode of non analog channel"""
 
-        return_var = self.gen.ghs_get_amplifier_mode("E", 1)
+        return_var = self.gen.ghs_get_amplifier_mode("A", 25)
         self.assertEqual(
             return_var[0],
             "InvalidChannelType",
@@ -1553,7 +1541,7 @@ class TestChannel(unittest.TestCase):
         """Test set technical units, unit multiplier and unit offset on non analog channel"""
 
         return_var = self.gen.ghs_set_technical_units(
-            "E", 1, "KGS", 10.0, 20.0
+            "A", 25, "KGS", 10.0, 20.0
         )
         self.assertEqual(
             return_var,
@@ -1637,7 +1625,7 @@ class TestChannel(unittest.TestCase):
     def test_get_technical_units_non_analog(self):
         """Test get technical units, unit multiplier and unit offset of non analog channel"""
 
-        return_var = self.gen.ghs_get_technical_units("E", 1)
+        return_var = self.gen.ghs_get_technical_units("A", 25)
         self.assertEqual(
             return_var[0],
             "InvalidChannelType",
@@ -1688,7 +1676,7 @@ class TestChannel(unittest.TestCase):
     def test_set_auto_range_non_analog_channel(self):
         """Test set auto range enable and time settings on non analog channel"""
 
-        return_var = self.gen.ghs_set_auto_range("E", 1, "Enable", 10.0)
+        return_var = self.gen.ghs_set_auto_range("A", 25, "Enable", 10.0)
         self.assertEqual(
             return_var,
             "InvalidChannelType",
@@ -1763,7 +1751,7 @@ class TestChannel(unittest.TestCase):
     def test_get_auto_range_non_analog(self):
         """Test get auto range enable and time settings of non analog channel"""
 
-        return_var = self.gen.ghs_get_auto_range("E", 1)
+        return_var = self.gen.ghs_get_auto_range("A", 25)
         self.assertEqual(
             return_var[0],
             "InvalidChannelType",
@@ -1793,7 +1781,7 @@ class TestChannel(unittest.TestCase):
     def test_cmd_auto_range_now_non_analog_channel(self):
         """Test command a single shot for auto range on non analog channel"""
 
-        return_var = self.gen.ghs_cmd_auto_range_now("E", 1, 20.0)
+        return_var = self.gen.ghs_cmd_auto_range_now("A", 25, 20.0)
         self.assertEqual(
             return_var,
             "InvalidChannelType",
@@ -1836,7 +1824,7 @@ class TestChannel(unittest.TestCase):
         (
             return_var,
             mode,
-        ) = self.gen.ghs_get_amplifier_mode("A", 25)
+        ) = self.gen.ghs_get_timer_counter_mode("A", 25)
         self.assertEqual(
             return_var,
             "OK",
@@ -1894,11 +1882,11 @@ class TestChannel(unittest.TestCase):
         (
             return_var,
             mode,
-        ) = self.gen.ghs_get_amplifier_mode("A", 25)
+        ) = self.gen.ghs_get_timer_counter_mode("A", 25)
         self.assertEqual(
             return_var,
             "OK",
-            "Failed on get timer/counter mode of disbaled recorder.",
+            "Failed on get timer/counter mode of disabled recorder.",
         )
         self.assertEqual(
             mode,
@@ -2098,7 +2086,7 @@ class TestChannel(unittest.TestCase):
             "Failed on set range for a timer/counter on invalid channel.",
         )
 
-    def test_set_timer_counter_range_non_analog_channel(self):
+    def test_set_range_non_timer_counter_channel(self):
         """Test set range on non timer/counter channel"""
 
         return_var = self.gen.ghs_set_timer_counter_range("A", 1, 10.0, 20.0)
