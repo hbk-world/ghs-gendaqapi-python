@@ -1819,6 +1819,370 @@ class TestChannel(unittest.TestCase):
             "Failed to get calibration information.",
         )
 
+    # Timer/Counter Module
+    ## NOTE: Enter valid timer/counter channel slot ID and index
+    def test_set_get_gate_mode(self):
+        """Test set and get timer/counter mode"""
+
+        return_var = self.gen.ghs_set_timer_counter_mode(
+            "A", 25, "CountQuadrature"
+        )
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set timer/counter mode.",
+        )
+
+        (
+            return_var,
+            mode,
+        ) = self.gen.ghs_get_amplifier_mode("A", 25)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get timer/counter mode.",
+        )
+        self.assertEqual(
+            mode,
+            "CountQuadrature",
+            "Failed to set timer/counter mode.",
+        )
+
+    def test_set_gate_mode_invalid_channel(self):
+        """Test set timer/counter mode on invalid channel"""
+
+        return_var = self.gen.ghs_set_timer_counter_mode(
+            "Z", 100, "CountQuadrature"
+        )
+        self.assertEqual(
+            return_var,
+            "InvalidSlotID",
+            "Failed on set timer/counter mode on invalid channel.",
+        )
+
+    def test_set_gate_mode_non_timer_counter_channel(self):
+        """Test set timer/counter mode on non timer/counter channel"""
+
+        return_var = self.gen.ghs_set_timer_counter_mode(
+            "A", 1, "CountQuadrature"
+        )
+        self.assertEqual(
+            return_var,
+            "InvalidChannelType",
+            "Failed on set timer/counter mode on non timer/counter channel.",
+        )
+
+    def test_set_gate_mode_disabled_recorder(self):
+        """Test set timer/counter mode of disabled recorder"""
+
+        return_var = self.gen.ghs_set_recorder_enabled("A", "Disable")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to disable recorder.",
+        )
+
+        return_var = self.gen.ghs_set_timer_counter_mode(
+            "A", 25, "CountQuadrature"
+        )
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set timer/counter mode of disabled recorder.",
+        )
+
+        (
+            return_var,
+            mode,
+        ) = self.gen.ghs_get_amplifier_mode("A", 25)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get timer/counter mode of disbaled recorder.",
+        )
+        self.assertEqual(
+            mode,
+            "CountQuadrature",
+            "Failed to set timer/counter mode.",
+        )
+
+    def test_get_invalid_gate_mode(self):
+        """Test get timer/counter mode of invalid channel"""
+
+        return_var = self.gen.ghs_get_timer_counter_mode("Z", 100)
+        self.assertEqual(
+            return_var[0],
+            "InvalidSlotID",
+            "Failed on get timer/counter mode of invalid channel.",
+        )
+
+    def test_get_gate_mode_disabled_recorder(self):
+        """Test get timer/counter mode of disabled recorder"""
+
+        return_var = self.gen.ghs_set_recorder_enabled("A", "Disable")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to disable recorder.",
+        )
+
+        return_var = self.gen.ghs_get_timer_counter_mode("A", 25)
+        self.assertEqual(
+            return_var[0],
+            "OK",
+            "Failed on get timer/counter mode of disabled recorder.",
+        )
+
+    def test_get_gate_mode_non_timer_counter(self):
+        """Test get timer/counter mode of non timer/counter channel"""
+
+        return_var = self.gen.ghs_get_timer_counter_mode("A", 1)
+        self.assertEqual(
+            return_var[0],
+            "InvalidChannelType",
+            "Failed on get timer/counter mode of non timer/counter channel.",
+        )
+
+    def test_set_get_gate_time(self):
+        """Test set and get gate time for a timer/counter channel"""
+
+        return_var = self.gen.ghs_set_timer_counter_gate_time("A", 25, 10.0)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set gate time for a timer/counter channel.",
+        )
+
+        (
+            return_var,
+            gate_time,
+        ) = self.gen.ghs_get_timer_counter_gate_time("A", 25)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get gate time for a timer/counter channel.",
+        )
+        self.assertEqual(
+            gate_time,
+            10.0,
+            "Failed to set time gate time.",
+        )
+
+    def test_gate_time_invalid_channel(self):
+        """Test set gate time for a timer/counter channel on invalid channel"""
+
+        return_var = self.gen.ghs_set_timer_counter_gate_time("Z", 100, 10.0)
+        self.assertEqual(
+            return_var,
+            "InvalidSlotID",
+            "Failed on set gate time for a timer/counter channel on invalid channel.",
+        )
+
+    def test_set_gate_time_non_timer_counter_channel(self):
+        """Test set gate time for a timer/counter channel on non timer/counter channel"""
+
+        return_var = self.gen.ghs_set_timer_counter_gate_time("A", 1, 10.0)
+        self.assertEqual(
+            return_var,
+            "InvalidChannelType",
+            "Failed on set gate time for a timer/counter channel on non timer/counter channel.",
+        )
+
+    def test_set_gate_time_disabled_recorder(self):
+        """Test set gate time for a timer/counter channel of disabled recorder"""
+
+        return_var = self.gen.ghs_set_recorder_enabled("A", "Disable")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to disable recorder.",
+        )
+
+        return_var = self.gen.ghs_set_timer_counter_gate_time("A", 25, 10.0)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set gate time for a timer/counter channel of disabled recorder.",
+        )
+
+        (
+            return_var,
+            gate_time,
+        ) = self.gen.ghs_get_timer_counter_gate_time("A", 25)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get gate time for a timer/counter channel of disabled recorder.",
+        )
+        self.assertEqual(
+            gate_time,
+            10.0,
+            "Failed to set gate time.",
+        )
+
+    def test_get_invalid_gate_time(self):
+        """Test get gate time for a timer/counter channel of invalid channel"""
+
+        return_var = self.gen.ghs_get_timer_counter_gate_time("Z", 100)
+        self.assertEqual(
+            return_var[0],
+            "InvalidSlotID",
+            "Failed on get gate time for a timer/counter channel of invalid channel.",
+        )
+
+    def test_get_gate_time_disabled_recorder(self):
+        """Test get gate time for a timer/counter channel of disabled recorder"""
+
+        return_var = self.gen.ghs_set_recorder_enabled("A", "Disable")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to disable recorder.",
+        )
+
+        return_var = self.gen.ghs_get_timer_counter_gate_time("A", 25)
+        self.assertEqual(
+            return_var[0],
+            "OK",
+            "Failed on get gate time for a timer/counter channel of disabled recorder.",
+        )
+
+    def test_get_gate_time_non_timer_counter(self):
+        """Test get gate time for a timer/counter channel of non timer/counter channel"""
+
+        return_var = self.gen.ghs_get_timer_counter_gate_time("A", 1)
+        self.assertEqual(
+            return_var[0],
+            "InvalidChannelType",
+            "Failed on get gate time for a timer/counter channel of non analog channel.",
+        )
+
+    def test_set_get_timer_counter_range(self):
+        """Test set and get range for a timer/counter channel"""
+
+        return_var = self.gen.ghs_set_timer_counter_range("A", 25, 10.0, 20.0)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set range for a timer/counter channel.",
+        )
+
+        (
+            return_var,
+            lower,
+            upper,
+        ) = self.gen.ghs_get_timer_counter_range("A", 25)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get range for a timer/counter channel.",
+        )
+        self.assertEqual(
+            lower,
+            10.0,
+            "Failed to set lower range.",
+        )
+        self.assertEqual(
+            upper,
+            20.0,
+            "Failed to set upper range.",
+        )
+
+    def test_set_timer_counter_range_invalid_channel(self):
+        """Test set range for a timer/counter on invalid channel"""
+
+        return_var = self.gen.ghs_set_timer_counter_range("Z", 100, 10.0, 20.0)
+        self.assertEqual(
+            return_var,
+            "InvalidSlotID",
+            "Failed on set range for a timer/counter on invalid channel.",
+        )
+
+    def test_set_timer_counter_range_non_analog_channel(self):
+        """Test set range on non timer/counter channel"""
+
+        return_var = self.gen.ghs_set_timer_counter_range("A", 1, 10.0, 20.0)
+        self.assertEqual(
+            return_var,
+            "InvalidChannelType",
+            "Failed on set range on non timer/counters channel.",
+        )
+
+    def test_set_timer_counter_range_disabled_recorder(self):
+        """Test set timer/counter range of disabled recorder"""
+
+        return_var = self.gen.ghs_set_recorder_enabled("A", "Disable")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to disable recorder.",
+        )
+
+        return_var = self.gen.ghs_set_timer_counter_range("A", 25, 10.0, 20.0)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on set timer/counter range of disabled recorder.",
+        )
+
+        (
+            return_var,
+            lower,
+            upper,
+        ) = self.gen.ghs_get_timer_counter_range("A", 25)
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed on get timer/counter range of disabled recorder.",
+        )
+        self.assertEqual(
+            lower,
+            10.0,
+            "Failed to set lower range.",
+        )
+        self.assertEqual(
+            upper,
+            20.0,
+            "Failed to set upper range.",
+        )
+
+    def test_get_invalid_timer_counter_range(self):
+        """Test get timer/counter range of invalid channel"""
+
+        return_var = self.gen.ghs_get_timer_counter_range("Z", 100)
+        self.assertEqual(
+            return_var[0],
+            "InvalidSlotID",
+            "Failed on get timer/counter range of invalid channel.",
+        )
+
+    def test_get_timer_counter_range_disabled_recorder(self):
+        """Test get timer/counter range of disabled recorder"""
+
+        return_var = self.gen.ghs_set_recorder_enabled("A", "Disable")
+        self.assertEqual(
+            return_var,
+            "OK",
+            "Failed to disable recorder.",
+        )
+
+        return_var = self.gen.ghs_get_timer_counter_range("A", 25)
+        self.assertEqual(
+            return_var[0],
+            "OK",
+            "Failed on get timer/counter range of disabled recorder.",
+        )
+
+    def test_get_range_non_timer_counter(self):
+        """Test get range of non timer/counter channel"""
+
+        return_var = self.gen.ghs_get_timer_counter_range("A", 1)
+        self.assertEqual(
+            return_var[0],
+            "InvalidChannelType",
+            "Failed on get range of non timer/counter channel.",
+        )
+
 
 if __name__ == "__main__":
     unittest.main(
