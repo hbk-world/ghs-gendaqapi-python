@@ -1726,8 +1726,8 @@ def get_timer_counter_range(
 
     return (
         to_string(response_json[RETURN_KEY], GHSReturnValue),
-        response_json["UpperValue"],
         response_json["LowerValue"],
+        response_json["UpperValue"],
     )
 
 
