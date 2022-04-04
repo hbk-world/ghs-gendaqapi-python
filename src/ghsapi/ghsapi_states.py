@@ -257,6 +257,8 @@ def to_string(value: int, ghs_dict: dict) -> str:
     for string_val, return_val in ghs_dict.items():
         if value == return_val:
             return string_val
+    if ghs_dict == "GHSChannelType":
+        return "Invalid"
     return "Reserved"
 
 

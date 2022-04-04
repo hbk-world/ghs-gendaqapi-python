@@ -33,6 +33,7 @@ Package Contents:
 """
 
 from . import acquisition_api as _acquisition
+from . import channel_api as _channel
 from . import connection_api as _connection
 from . import mainframe_api as _mainframe
 from . import manage_mainframe_settings as _manage_mainframe_settings
@@ -41,9 +42,13 @@ from . import recorder_api as _recorder
 from .connection import ConnectionHandler
 from .ghsapi_states import (
     RETURN_KEY,
+    GHSChannelType,
     GHSDigitalOutMode,
+    GHSDirection,
+    GHSEnableDisable,
     GHSReturnValue,
     GHSSyncStatus,
+    GHSTriggerMode,
     GHSUserMode,
 )
 
@@ -679,4 +684,928 @@ class GHS:
         """
         return _recorder.set_sample_rate(
             self._con_handle, slot_id, sample_rate
+        )
+
+    # Channel APIs
+
+    ## Functions
+
+    def ghs_get_channel_type(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, int | None]:
+        """Determine the type of a channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            GHSChannelType: Type of the channel
+        """
+
+        return _channel.get_channel_type(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_get_channel_name(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, int | None]:
+        """Determine the name of a channel.
+
+        *The channel name is UTF-8 encoded*
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            channel_name: The name of the channel
+        """
+
+        return _channel.get_channel_name(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_channel_name(
+        self, slot_id: str, channel_index: int, channel_name: str
+    ) -> str:
+        """Set the name for a channel.
+
+        *The channel name is UTF-8 encoded*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            channel_name: The name of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_channel_name(
+            self._con_handle, slot_id, channel_index, channel_name
+        )
+
+    def ghs_get_channel_storage_enabled(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, str | None]:
+        """Determine if storage is enabled or disabled for a channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            GHSEnableDisable: The storage enabled status for the
+            channel
+        """
+
+        return _channel.get_channel_storage_enabled(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_channel_storage_enabled(
+        self,
+        slot_id: str,
+        channel_index: int,
+        enabled: str | int,
+    ) -> str:
+        """Enable or disable storage for a channel.
+
+        *The system needs to be idle before calling this function.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            enabled: The desired storage enabled status for the channel
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_channel_storage_enabled(
+            self._con_handle, slot_id, channel_index, enabled
+        )
+
+    def ghs_cmd_zeroing(
+        self, slot_id: str, channel_index: int, ezeroing: str | int
+    ) -> str:
+        """Perform zeroing in a channel.
+
+        *The system needs to be idle before calling this function.*
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            ezeroing: Zero / Unzero the specific channel
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.cmd_zeroing(
+            self._con_handle, slot_id, channel_index, ezeroing
+        )
+
+    ## Analog Module
+
+    def ghs_get_trigger_settings(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[
+        str, str | None, float | None, float | None, float | None, str | None
+    ]:
+        """Determine the trigger settings for an analog channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            GHSTriggerMode: Trigger Mode
+            primary_level: The primary trigger level
+            secondary_level: The secondary trigger level
+            hysteresis: The trigger hysteresis
+            direction: The trigger direction
+        """
+
+        return _channel.get_trigger_settings(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_trigger_settings(
+        self,
+        slot_id: str,
+        channel_index: int,
+        trigger_mode: str | int,
+        primary_level: float,
+        secondary_level: float,
+        hysteresis: float,
+        direction: str | int,
+    ) -> str:
+        """Set the trigger settings for an analog channel.
+
+        *The system needs to be idle before calling this function.*
+
+        *This function overwrites any previously set trigger settings
+        for the specified recorder.*
+
+        *If the specified trigger mode or value is not supported by the
+        recorder, the trigger mode remains unchanged or the value is
+        rounded to the nearest supported value.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            trigger_mode: Trigger Mode. Default is TriggerMode_Basic
+            primary_level: The desired primary trigger level
+            secondary_level: The desired secondary trigger level
+            hysteresis: The desired trigger hysteresis
+            direction: The desired trigger direction
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_trigger_settings(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            trigger_mode,
+            primary_level,
+            secondary_level,
+            hysteresis,
+            direction,
+        )
+
+    def ghs_get_signal_coupling(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, str | None]:
+        """Determine the signal coupling for an analog channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            GHSSignalCoupling: The signal coupling
+        """
+
+        return _channel.get_signal_coupling(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_signal_coupling(
+        self,
+        slot_id: str,
+        channel_index: int,
+        signal_coupling: str | int,
+    ) -> str:
+        """Set the signal coupling for an analog channel.
+
+        *If the specified signal coupling mode is not supported by the
+        recorder, the signal coupling mode remains unchanged.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            signal_coupling: The desired signal coupling.
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_signal_coupling(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            signal_coupling,
+        )
+
+    def ghs_get_input_coupling(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, str | None]:
+        """Determine the input coupling for an analog channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            GHSInputCoupling: The input coupling
+        """
+
+        return _channel.get_input_coupling(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_input_coupling(
+        self,
+        slot_id: str,
+        channel_index: int,
+        input_coupling: str | int,
+    ) -> str:
+        """Set the input coupling for an analog channel.
+
+        *If the specified input coupling mode is not supported by the
+        recorder, the input coupling mode remains unchanged.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            input_coupling: The desired input coupling.
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_input_coupling(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            input_coupling,
+        )
+
+    def ghs_get_span_and_offset(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, float | None, float | None]:
+        """Determine the span and offset for an analog channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            span: The span in user units
+            offset: The offset in user units
+        """
+
+        return _channel.get_span_and_offset(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_span_and_offset(
+        self,
+        slot_id: str,
+        channel_index: int,
+        span: float,
+        offset: float,
+    ) -> str:
+        """Set Span and offset for analog channels.
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            span: The span in user units. The value is adapted to
+            available options.
+            offset: The offset in user units. The value is adapted to
+            available options.
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_span_and_offset(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            span,
+            offset,
+        )
+
+    def ghs_get_filter_type_and_frequency(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, str | None, float | None]:
+        """Determine the filter type and frequency for an analog channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            GHSFilterType: The filter type
+            frequency: The filter frequency in Hz
+        """
+
+        return _channel.get_filter_type_and_frequency(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_filter_type_and_frequency(
+        self,
+        slot_id: str,
+        channel_index: int,
+        filter_type: str | int,
+        frequency: float,
+    ) -> str:
+        """Set the filter type and frequency for an analog channel.
+
+        *This function overwrites any previously set filter settings
+        for the specified recorder.*
+
+        *If a specified filter type or value is not supported by the
+        recorder, the filter type remains the same or the value is rounded to
+        a supported vale.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            filter_type: The filter type. Default is
+            GHSFilterType_Bessel.
+            frequency: The filter frequency in Hz.
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_filter_type_and_frequency(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            filter_type,
+            frequency,
+        )
+
+    def ghs_get_excitation(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, str | None, float | None]:
+        """Determine the excitation type and value for an analog channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            GHSExcitationType: The excitation type
+            excitation_value: The excitation value in user units (voltage or
+            current).
+        """
+
+        return _channel.get_excitation(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_excitation(
+        self,
+        slot_id: str,
+        channel_index: int,
+        excitation_type: str | int,
+        excitation_value: float,
+    ) -> str:
+        """Set the excitation type and value for an analog channel.
+
+        *The system needs to be idle before calling this function.*
+
+        *If the specified excitation type or value is not supported by the
+        recorder, the excitation type remains unchanged or the value is
+        rounded to the nearest supported value.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            excitation_type: The desired excitation type. Default is
+            ExcitationType_Voltage.
+            excitation_value: The desired excitation value in user units
+            (voltage or current).
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_excitation(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            excitation_type,
+            excitation_value,
+        )
+
+    def ghs_get_amplifier_mode(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, str | None]:
+        """Determine the amplifier mode for an analog channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            GHSAmplifierMode: The amplifier mode
+        """
+
+        return _channel.get_amplifier_mode(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_amplifier_mode(
+        self,
+        slot_id: str,
+        channel_index: int,
+        amplifier_mode: str | int,
+    ) -> str:
+        """Set the amplifier mode for an analog channel.
+
+        *The system needs to be idle before calling this function.*
+
+        *If the specified amplifier mode is not supported by the recorder, the
+        amplifier mode remains unchanged.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            amplifier_mode: The desired amplifier mode
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_amplifier_mode(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            amplifier_mode,
+        )
+
+    def ghs_get_technical_units(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, str | None, float | None, float | None]:
+        """Determine the technical units, unit multiplier and unit offset for
+        an analog channel.
+
+        *The units parameter is UTF-8 encoded.*
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            units: The technical units (e.g. 'V' for Volt or 'Hz' for Hertz).
+            multiplier: The technical units multiplier value.
+            offset: The technical units offset value.
+        """
+
+        return _channel.get_technical_units(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_technical_units(
+        self,
+        slot_id: str,
+        channel_index: int,
+        units: str,
+        multiplier: float,
+        offset: float,
+    ) -> str:
+        """Set the technical units, unit multiplier and unit offset for an
+        analog channel.
+
+        *The units parameter must be UTF-8 encoded.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            units: The desired technical units (e.g. 'V' for Volt or 'Hz' for
+            Hertz).
+            multiplier: The desired technical units multiplier value.
+            offset: The desired technical units offset value.
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_technical_units(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            units,
+            multiplier,
+            offset,
+        )
+
+    def ghs_get_auto_range(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, str | None, float | None]:
+        """Determine the auto range enable and time settings.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            GHSEnableDisable: The auto range enabled setting.
+            auto_range_time: The time for auto range in seconds.
+        """
+
+        return _channel.get_auto_range(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_auto_range(
+        self,
+        slot_id: str,
+        channel_index: int,
+        auto_range_enabled: str | int,
+        auto_range_time: float,
+    ) -> str:
+        """Set Auto range settings for analog channels.
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            auto_range_enabled: The auto range enabled setting. The value is
+            adapted to available options.
+            auto_range_time: The time for auto range in seconds. The value is
+            adapted to available options.
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_auto_range(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            auto_range_enabled,
+            auto_range_time,
+        )
+
+    def ghs_cmd_auto_range_now(
+        self,
+        slot_id: str,
+        channel_index: int,
+        auto_range_time: float,
+    ) -> str:
+        """Command a single shot for auto range.
+
+        *The system needs to be acquiring for this function to have any
+        effect.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            auto_range_time: The time for auto range in seconds. The value is
+            adapted to available options.
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.cmd_auto_range_now(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            auto_range_time,
+        )
+
+    def ghs_get_channel_cal_info(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[
+        str,
+        str | None,
+        str | None,
+        str | None,
+        str | None,
+        str | None,
+        str | None,
+    ]:
+        """Retrieve calibration information for an analog channel.
+
+        *The calibrationDateTime, verificationDateTime,
+        powerVerificationDateTime, calibrationLab, verificationLab and
+        powerVerificationLab parameters are UTF-8 encoded.*
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            calibration_date_time: The date and time this analog channel has
+            been calibrated.
+            verification_date_time: The date and time the calibration for this
+            analog channel has been verified.
+            power_verification_date_time: The date and time the power
+            calibration for this analog channel has been verified (if applicable).
+            calibration_lab: The laboratory that conducted the calibration
+            for this analog channel.
+            verification_lab: The laboratory that verified the calibration for
+            this analog channel.
+            power_verification_lab: The laboratory that verified the power
+            calibration for this analog channel (if applicable).
+        """
+
+        return _channel.get_channel_cal_info(
+            self._con_handle, slot_id, channel_index
+        )
+
+    ## Timer/Counter Module
+
+    def ghs_get_timer_counter_gate_time(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, float | None]:
+        """Determine the gate time for a timer/counter channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            gate_time: The gate time in seconds
+        """
+
+        return _channel.get_timer_counter_gate_time(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_timer_counter_gate_time(
+        self,
+        slot_id: str,
+        channel_index: int,
+        gate_time: float,
+    ) -> str:
+        """Determine the gate time for a timer/counter channel.
+
+        The system needs to be idle before calling this function.
+
+        If the specified timer/counter gate time is not supported by the
+        recorder, the timer/counter gate time is rounded to the nearest
+        supported gate time.
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            gate_time: The desired gate time in seconds.
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_timer_counter_gate_time(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            gate_time,
+        )
+
+    def ghs_get_timer_counter_mode(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, str | None]:
+        """Determine the mode for a timer/counter channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            GHSTimerCounterMode: The timer/counter mode
+        """
+
+        return _channel.get_timer_counter_mode(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_timer_counter_mode(
+        self,
+        slot_id: str,
+        channel_index: int,
+        mode: str | int,
+    ) -> str:
+        """Set the mode for a timer/counter channel.
+
+        *The system needs to be idle before calling this function.*
+
+        *If the specified timer/counter mode is not supported by the recorder, the
+        timer/counter mode remains unchanged.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            mode: The desired timer/counter mode. Default is
+            TimerCounterMode_RPMUniDirectional.
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_timer_counter_mode(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            mode,
+        )
+
+    def ghs_get_timer_counter_range(
+        self, slot_id: str, channel_index: int
+    ) -> tuple[str, float | None, float | None]:
+        """Determine the range for a timer/counter channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            GHSReturnValue: API return values
+            lower_value: The lower range value.
+            upper_value: The upper range value.
+        """
+
+        return _channel.get_timer_counter_range(
+            self._con_handle, slot_id, channel_index
+        )
+
+    def ghs_set_timer_counter_range(
+        self,
+        slot_id: str,
+        channel_index: int,
+        lower_value: float,
+        upper_value: float,
+    ) -> str:
+        """Set the range for a timer/counter channel.
+
+        *The system needs to be idle before calling this function.*
+
+        *If the specified timer/counter range is illegal (i.e. upperValue <
+        lowerValue), the timer/counter range values are corrected to the
+        nearest possible values.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            lower_value: The desired lower range value.
+            upper_value: The desired upper range value.
+
+        Returns:
+            GHSReturnValue: API return values
+        """
+
+        return _channel.set_timer_counter_range(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            lower_value,
+            upper_value,
         )
