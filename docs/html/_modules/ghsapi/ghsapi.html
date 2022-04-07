@@ -36,8 +36,8 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../releasenotes.html">Release Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ghspyapi.html">API Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../releasenotes.html">Release Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../remarks.html">Remarks</a></li>
 </ul>
 
@@ -101,6 +101,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">acquisition_api</span> <span class="k">as</span> <span class="n">_acquisition</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">channel_api</span> <span class="k">as</span> <span class="n">_channel</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">connection_api</span> <span class="k">as</span> <span class="n">_connection</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">mainframe_api</span> <span class="k">as</span> <span class="n">_mainframe</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">manage_mainframe_settings</span> <span class="k">as</span> <span class="n">_manage_mainframe_settings</span>
@@ -109,9 +110,13 @@
 <span class="kn">from</span> <span class="nn">.connection</span> <span class="kn">import</span> <span class="n">ConnectionHandler</span>
 <span class="kn">from</span> <span class="nn">.ghsapi_states</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">RETURN_KEY</span><span class="p">,</span>
+    <span class="n">GHSChannelType</span><span class="p">,</span>
     <span class="n">GHSDigitalOutMode</span><span class="p">,</span>
+    <span class="n">GHSDirection</span><span class="p">,</span>
+    <span class="n">GHSEnableDisable</span><span class="p">,</span>
     <span class="n">GHSReturnValue</span><span class="p">,</span>
     <span class="n">GHSSyncStatus</span><span class="p">,</span>
+    <span class="n">GHSTriggerMode</span><span class="p">,</span>
     <span class="n">GHSUserMode</span><span class="p">,</span>
 <span class="p">)</span>
 
@@ -137,7 +142,7 @@
 <span class="sd">            port_num: TCP port number (currently defined as 8006).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Connect return status.</span>
+<span class="sd">            * GHSReturnValue - Connect return status.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_connection</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
@@ -151,7 +156,7 @@
 <span class="sd">        mainframe is not connected.*</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Disconnect return status.</span>
+<span class="sd">            * GHSReturnValue - Disconnect return status.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_connection</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
@@ -163,7 +168,7 @@
 <span class="sd">        GHSReturnValue_APIMismatch.*</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Version number of the client.</span>
+<span class="sd">            * CLIENT_API_VERSION - Version number of the client.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">CLIENT_API_VERSION</span></div>
@@ -181,7 +186,7 @@
 <span class="sd">        access.*</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Access permission.</span>
+<span class="sd">            * GHSAccess - Access permission.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_connection</span><span class="o">.</span><span class="n">get_current_access</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
@@ -193,7 +198,7 @@
 <span class="sd">        *The system needs to be idle before calling this function.*</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Start preview status.</span>
+<span class="sd">            * GHSReturnValue - Start preview status.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_acquisition</span><span class="o">.</span><span class="n">start_preview</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
@@ -205,7 +210,7 @@
 <span class="sd">        function.*</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Stop preview status.</span>
+<span class="sd">            * GHSReturnValue - Stop preview status.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_acquisition</span><span class="o">.</span><span class="n">stop_preview</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
@@ -219,7 +224,7 @@
 <span class="sd">        storage is set.*</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Start recording status.</span>
+<span class="sd">            * GHSReturnValue - Start recording status.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_acquisition</span><span class="o">.</span><span class="n">start_recording</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
@@ -230,7 +235,7 @@
 <span class="sd">        *The system needs to be recording before calling this function.*</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Pause recording status.</span>
+<span class="sd">            * GHSReturnValue - Pause recording status.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_acquisition</span><span class="o">.</span><span class="n">pause_recording</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
@@ -241,7 +246,7 @@
 <span class="sd">        *The system needs to be paused before calling this function.*</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Resume recording status.</span>
+<span class="sd">            * GHSReturnValue - Resume recording status.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_acquisition</span><span class="o">.</span><span class="n">resume_recording</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
@@ -252,7 +257,7 @@
 <span class="sd">        *The system needs to be recording before calling this function.*</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Stop recording status.</span>
+<span class="sd">            * GHSReturnValue - Stop recording status.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_acquisition</span><span class="o">.</span><span class="n">stop_recording</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
@@ -263,7 +268,7 @@
 <span class="sd">        Results in error when the trigger cannot be issued.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Trigger status.</span>
+<span class="sd">            * GHSReturnValue - Trigger status.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_acquisition</span><span class="o">.</span><span class="n">trigger</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
@@ -272,7 +277,8 @@
         <span class="sd">&quot;&quot;&quot;Returns the Acquisition State of the Mainframe.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Status and acquisition state of the mainframe.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
+<span class="sd">            * GHSAcquisitionState - acquisition state of the mainframe.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_acquisition</span><span class="o">.</span><span class="n">get_acquisition_state</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
@@ -283,8 +289,10 @@
         <span class="sd">&quot;&quot;&quot;Retrieves the absolute time of the start of acquisition.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Status and the absolute time of the start of</span>
-<span class="sd">            acquisition as year, days and seconds.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
+<span class="sd">            * year - The year</span>
+<span class="sd">            * day - The day number in the year</span>
+<span class="sd">            * seconds -The number of seconds since midnight.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_acquisition</span><span class="o">.</span><span class="n">get_acquisition_start_time</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
@@ -294,8 +302,8 @@
 <span class="sd">        of acquistion.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Status and current acquisition time relative to</span>
-<span class="sd">            the start of acquistion.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
+<span class="sd">            * acquisition_time - The acquisition time in seconds.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_acquisition</span><span class="o">.</span><span class="n">get_acquisition_time</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
@@ -310,7 +318,7 @@
 <span class="sd">            identity_flag: Enable or disable flag.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Identify API status.</span>
+<span class="sd">            * GHSReturnValue - Identify API status.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_mainframe</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">identity_flag</span><span class="p">)</span></div>
@@ -319,8 +327,9 @@
         <span class="sd">&quot;&quot;&quot;Get total and available mainframe internal disk space.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Status, total mainframe internal disk space in</span>
-<span class="sd">            GB, available internal disk space in GB.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
+<span class="sd">            * total - Total mainframe internal disk space in GB</span>
+<span class="sd">            * available - Available internal disk space in GB</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_mainframe</span><span class="o">.</span><span class="n">get_disk_space</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
@@ -329,7 +338,8 @@
         <span class="sd">&quot;&quot;&quot;Determine the mainframe sync status.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            API status and sync status.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
+<span class="sd">            * GHSSyncStatus - Sync status</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_mainframe</span><span class="o">.</span><span class="n">get_sync_status</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
@@ -338,7 +348,8 @@
         <span class="sd">&quot;&quot;&quot;Retrieve the number of slots in the mainframe.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Status and number of slots in the mainframe.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
+<span class="sd">            * slot_count - The number of slots in the mainframe</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_mainframe</span><span class="o">.</span><span class="n">get_slot_count</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
@@ -347,7 +358,8 @@
         <span class="sd">&quot;&quot;&quot;Retrieve the user mode.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            API status and user mode.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
+<span class="sd">            * GHSUserMode - The user mode</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_mainframe</span><span class="o">.</span><span class="n">get_user_mode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
@@ -361,7 +373,7 @@
 <span class="sd">            user_mode: The desired user mode.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            API status.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_mainframe</span><span class="o">.</span><span class="n">set_user_mode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">user_mode</span><span class="p">)</span></div>
@@ -376,8 +388,11 @@
 <span class="sd">        firmwareVersion parameters are UTF-8 encoded.*</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            API status and mainframe info as type, name, serial number</span>
-<span class="sd">            and firmware version.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
+<span class="sd">            * mainframe_type - The type of the mainframe</span>
+<span class="sd">            * mainframe_name - The name of the mainframe</span>
+<span class="sd">            * serial_number - The serial number of the mainframe</span>
+<span class="sd">            * firmware_version - The firmware version of the mainframe</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_mainframe</span><span class="o">.</span><span class="n">get_mainframe_info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
@@ -390,7 +405,7 @@
 <span class="sd">        *Recordings are deleted asynchronously.*</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            API status.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_manage_recordings</span><span class="o">.</span><span class="n">delete_all_recordings</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
@@ -402,7 +417,7 @@
 <span class="sd">        *Recordings are deleted asynchronously.*</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            API status.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_manage_recordings</span><span class="o">.</span><span class="n">delete_last_recording</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
@@ -414,8 +429,9 @@
 <span class="sd">        *The recording base name parameter is UTF-8 encoded.*</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Status, base name and index of the recording</span>
-<span class="sd">            file.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
+<span class="sd">            * recording_base_name - The base name of the recording file</span>
+<span class="sd">            * recording_index - The index of the recording file</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_manage_recordings</span><span class="o">.</span><span class="n">get_recording_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
@@ -424,7 +440,8 @@
         <span class="sd">&quot;&quot;&quot;Retrieve the storage location.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Status and storage location.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
+<span class="sd">            * GHSStorageLocation - The storage location</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_manage_recordings</span><span class="o">.</span><span class="n">get_storage_location</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
@@ -440,8 +457,9 @@
 <span class="sd">            slot_id: The slot containing the recorder</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Status, flag to indicate if high and low rate</span>
-<span class="sd">            data is stored.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
+<span class="sd">            * GHSEnableDisable - Flag to indicate if high rate data is stored</span>
+<span class="sd">            * GHSEnableDisable - Flag to indicate if low rate data is stored</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_manage_recordings</span><span class="o">.</span><span class="n">get_high_low_rate_storage_enabled</span><span class="p">(</span>
@@ -465,7 +483,7 @@
 <span class="sd">            low_rate_enabled: Enable/disable storage of low rate data.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            API status.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_manage_recordings</span><span class="o">.</span><span class="n">set_high_low_rate_storage_enabled</span><span class="p">(</span>
@@ -480,7 +498,7 @@
         <span class="bp">self</span><span class="p">,</span> <span class="n">recording_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">recording_index</span><span class="p">:</span> <span class="nb">int</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Set the recording base name and recording index for the next</span>
-<span class="sd">         recording file.</span>
+<span class="sd">        recording file.</span>
 
 <span class="sd">        *The system needs to be idle before calling this function.</span>
 <span class="sd">        The recording base name parameter must be UTF-8 encoded.*</span>
@@ -490,7 +508,7 @@
 <span class="sd">            recording_index: The desired index of the recording file</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            API status.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_manage_recordings</span><span class="o">.</span><span class="n">set_recording_name</span><span class="p">(</span>
@@ -506,7 +524,7 @@
 <span class="sd">            storage_location: The desired storage location.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            API status.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_manage_recordings</span><span class="o">.</span><span class="n">set_storage_location</span><span class="p">(</span>
@@ -539,7 +557,7 @@
 <span class="sd">        boot.*</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            API status.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_manage_mainframe_settings</span><span class="o">.</span><span class="n">persist_current_settings</span><span class="p">(</span>
@@ -554,8 +572,9 @@
 <span class="sd">        Memory for this blob is allocated by the API.*</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Status, base name and index of the recording</span>
-<span class="sd">            file.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
+<span class="sd">            * blob - Pointer to the settings blob</span>
+<span class="sd">            * blob_size - Size of the settings blob</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_manage_mainframe_settings</span><span class="o">.</span><span class="n">get_current_settings</span><span class="p">(</span>
@@ -573,7 +592,7 @@
 <span class="sd">            blob_size: Size of the settings blob.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            API status.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_manage_mainframe_settings</span><span class="o">.</span><span class="n">set_current_settings</span><span class="p">(</span>
@@ -592,7 +611,8 @@
 <span class="sd">            slot_id: The slot containing the recorder</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Status and number of channels for the recorder.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
+<span class="sd">            * channel_count - The number of channels for the recorder</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_recorder</span><span class="o">.</span><span class="n">get_channel_count</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">)</span></div>
@@ -611,7 +631,8 @@
 <span class="sd">            digital_output: The output number desired.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Status and digital output mode for that output.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
+<span class="sd">            * GHSDigitalOutMode - The digital output mode for that output</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_recorder</span><span class="o">.</span><span class="n">get_digital_output</span><span class="p">(</span>
@@ -628,7 +649,8 @@
 <span class="sd">            slot_id: The slot containing the recorder</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            API status and recorder enabled status.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
+<span class="sd">            * GHSEnableDisable - The recorder enabled status</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_recorder</span><span class="o">.</span><span class="n">get_recorder_enabled</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">)</span></div>
@@ -649,8 +671,11 @@
 <span class="sd">            slot_id: The slot containing the recorder</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Status and recorder information as type, name, serial</span>
-<span class="sd">            number and firmware version</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
+<span class="sd">            * recorder_type - The type of the recorder</span>
+<span class="sd">            * recorder_name - The name of the recorder</span>
+<span class="sd">            * serial_number - The serial number of the recorder</span>
+<span class="sd">            * firmware_version - The firmware version of the recorder</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_recorder</span><span class="o">.</span><span class="n">get_recorder_info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">)</span></div>
@@ -665,7 +690,8 @@
 <span class="sd">            slot_id: The slot containing the recorder</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Status and sample rate for a recorder.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
+<span class="sd">            * sample_rate - in samples per second</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_recorder</span><span class="o">.</span><span class="n">get_sample_rate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">)</span></div>
@@ -689,7 +715,7 @@
 <span class="sd">            digital_output_mode: The digital output mode to set</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            API status.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_recorder</span><span class="o">.</span><span class="n">set_digital_output</span><span class="p">(</span>
@@ -714,7 +740,7 @@
 <span class="sd">            enabled: Set to GHS_Enable/GHS_Disable to enable/disable</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            API status.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">_recorder</span><span class="o">.</span><span class="n">set_recorder_enabled</span><span class="p">(</span>
@@ -743,10 +769,916 @@
 <span class="sd">            sample_rate: In samples per second.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            API status.</span>
+<span class="sd">            * GHSReturnValue - API return status</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">_recorder</span><span class="o">.</span><span class="n">set_sample_rate</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">,</span> <span class="n">sample_rate</span>
+        <span class="p">)</span></div>
+
+    <span class="c1"># Channel APIs</span>
+
+    <span class="c1">## Functions</span>
+
+<div class="viewcode-block" id="GHS.ghs_get_channel_type"><a class="viewcode-back" href="../../channel.html#ghsapi.ghsapi.GHS.ghs_get_channel_type">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_channel_type</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Determine the type of a channel.</span>
+
+<span class="sd">        *Read - This method can be called by multiple connected clients at same</span>
+<span class="sd">        time.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">            * GHSChannelType - Type of the channel</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">get_channel_type</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">,</span> <span class="n">channel_index</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_channel_name"><a class="viewcode-back" href="../../channel.html#ghsapi.ghsapi.GHS.ghs_get_channel_name">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_channel_name</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Determine the name of a channel.</span>
+
+<span class="sd">        *The channel name is UTF-8 encoded*</span>
+
+<span class="sd">        *Read - This method can be called by multiple connected clients at same</span>
+<span class="sd">        time.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">            * channel_name - The name of the channel</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">get_channel_name</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">,</span> <span class="n">channel_index</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_set_channel_name"><a class="viewcode-back" href="../../channel.html#ghsapi.ghsapi.GHS.ghs_set_channel_name">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_set_channel_name</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">channel_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Set the name for a channel.</span>
+
+<span class="sd">        *The channel name is UTF-8 encoded*</span>
+
+<span class="sd">        *ReadWrite - This method will only process requests from the</span>
+<span class="sd">        connected client with the most privileges order (Privileges</span>
+<span class="sd">        order: 1- Perception, 2- GenDaq, 3- Other)*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+<span class="sd">            channel_name: The name of the channel</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">set_channel_name</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">,</span> <span class="n">channel_index</span><span class="p">,</span> <span class="n">channel_name</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_channel_storage_enabled"><a class="viewcode-back" href="../../channel.html#ghsapi.ghsapi.GHS.ghs_get_channel_storage_enabled">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_channel_storage_enabled</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Determine if storage is enabled or disabled for a channel.</span>
+
+<span class="sd">        *Read - This method can be called by multiple connected clients at same</span>
+<span class="sd">        time.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">            * GHSEnableDisable - The storage enabled status for the channel</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">get_channel_storage_enabled</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">,</span> <span class="n">channel_index</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_set_channel_storage_enabled"><a class="viewcode-back" href="../../channel.html#ghsapi.ghsapi.GHS.ghs_set_channel_storage_enabled">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_set_channel_storage_enabled</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">enabled</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Enable or disable storage for a channel.</span>
+
+<span class="sd">        *The system needs to be idle before calling this function.*</span>
+
+<span class="sd">        *ReadWrite - This method will only process requests from the</span>
+<span class="sd">        connected client with the most privileges order (Privileges</span>
+<span class="sd">        order: 1- Perception, 2- GenDaq, 3- Other)*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+<span class="sd">            enabled: The desired storage enabled status for the channel</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">set_channel_storage_enabled</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">,</span> <span class="n">channel_index</span><span class="p">,</span> <span class="n">enabled</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_cmd_zeroing"><a class="viewcode-back" href="../../channel.html#ghsapi.ghsapi.GHS.ghs_cmd_zeroing">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_cmd_zeroing</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ezeroing</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Perform zeroing in a channel.</span>
+
+<span class="sd">        *The system needs to be idle before calling this function.*</span>
+
+<span class="sd">        *Read - This method can be called by multiple connected clients at same</span>
+<span class="sd">        time.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+<span class="sd">            ezeroing: Zero / Unzero the specific channel</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">cmd_zeroing</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">,</span> <span class="n">channel_index</span><span class="p">,</span> <span class="n">ezeroing</span>
+        <span class="p">)</span></div>
+
+    <span class="c1">## Analog Module</span>
+
+<div class="viewcode-block" id="GHS.ghs_get_trigger_settings"><a class="viewcode-back" href="../../channelanalog.html#ghsapi.ghsapi.GHS.ghs_get_trigger_settings">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_trigger_settings</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span>
+        <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Determine the trigger settings for an analog channel.</span>
+
+<span class="sd">        *Read - This method can be called by multiple connected clients at same</span>
+<span class="sd">        time.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">            * GHSTriggerMode - Trigger Mode</span>
+<span class="sd">            * primary_level - The primary trigger level</span>
+<span class="sd">            * secondary_level - The secondary trigger level</span>
+<span class="sd">            * hysteresis - The trigger hysteresis</span>
+<span class="sd">            * direction - The trigger direction</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">get_trigger_settings</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">,</span> <span class="n">channel_index</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_set_trigger_settings"><a class="viewcode-back" href="../../channelanalog.html#ghsapi.ghsapi.GHS.ghs_set_trigger_settings">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_set_trigger_settings</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">trigger_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">primary_level</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">secondary_level</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">hysteresis</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">direction</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Set the trigger settings for an analog channel.</span>
+
+<span class="sd">        *The system needs to be idle before calling this function.*</span>
+
+<span class="sd">        *This function overwrites any previously set trigger settings</span>
+<span class="sd">        for the specified recorder.*</span>
+
+<span class="sd">        *If the specified trigger mode or value is not supported by the</span>
+<span class="sd">        recorder, the trigger mode remains unchanged or the value is</span>
+<span class="sd">        rounded to the nearest supported value.*</span>
+
+<span class="sd">        *ReadWrite - This method will only process requests from the</span>
+<span class="sd">        connected client with the most privileges order (Privileges</span>
+<span class="sd">        order: 1- Perception, 2- GenDaq, 3- Other)*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+<span class="sd">            trigger_mode: Trigger Mode. Default is Basic</span>
+<span class="sd">            primary_level: The desired primary trigger level</span>
+<span class="sd">            secondary_level: The desired secondary trigger level</span>
+<span class="sd">            hysteresis: The desired trigger hysteresis</span>
+<span class="sd">            direction: The desired trigger direction</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">set_trigger_settings</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span>
+            <span class="n">slot_id</span><span class="p">,</span>
+            <span class="n">channel_index</span><span class="p">,</span>
+            <span class="n">trigger_mode</span><span class="p">,</span>
+            <span class="n">primary_level</span><span class="p">,</span>
+            <span class="n">secondary_level</span><span class="p">,</span>
+            <span class="n">hysteresis</span><span class="p">,</span>
+            <span class="n">direction</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_signal_coupling"><a class="viewcode-back" href="../../channelanalog.html#ghsapi.ghsapi.GHS.ghs_get_signal_coupling">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_signal_coupling</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Determine the signal coupling for an analog channel.</span>
+
+<span class="sd">        *Read - This method can be called by multiple connected clients at same</span>
+<span class="sd">        time.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">            * GHSSignalCoupling - The signal coupling</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">get_signal_coupling</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">,</span> <span class="n">channel_index</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_set_signal_coupling"><a class="viewcode-back" href="../../channelanalog.html#ghsapi.ghsapi.GHS.ghs_set_signal_coupling">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_set_signal_coupling</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">signal_coupling</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Set the signal coupling for an analog channel.</span>
+
+<span class="sd">        *If the specified signal coupling mode is not supported by the</span>
+<span class="sd">        recorder, the signal coupling mode remains unchanged.*</span>
+
+<span class="sd">        *ReadWrite - This method will only process requests from the</span>
+<span class="sd">        connected client with the most privileges order (Privileges</span>
+<span class="sd">        order: 1- Perception, 2- GenDaq, 3- Other)*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+<span class="sd">            signal_coupling: The desired signal coupling.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">set_signal_coupling</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span>
+            <span class="n">slot_id</span><span class="p">,</span>
+            <span class="n">channel_index</span><span class="p">,</span>
+            <span class="n">signal_coupling</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_input_coupling"><a class="viewcode-back" href="../../channelanalog.html#ghsapi.ghsapi.GHS.ghs_get_input_coupling">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_input_coupling</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Determine the input coupling for an analog channel.</span>
+
+<span class="sd">        *Read - This method can be called by multiple connected clients at same</span>
+<span class="sd">        time.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">            * GHSInputCoupling - The input coupling</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">get_input_coupling</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">,</span> <span class="n">channel_index</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_set_input_coupling"><a class="viewcode-back" href="../../channelanalog.html#ghsapi.ghsapi.GHS.ghs_set_input_coupling">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_set_input_coupling</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">input_coupling</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Set the input coupling for an analog channel.</span>
+
+<span class="sd">        *If the specified input coupling mode is not supported by the</span>
+<span class="sd">        recorder, the input coupling mode remains unchanged.*</span>
+
+<span class="sd">        *ReadWrite - This method will only process requests from the</span>
+<span class="sd">        connected client with the most privileges order (Privileges</span>
+<span class="sd">        order: 1- Perception, 2- GenDaq, 3- Other)*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+<span class="sd">            input_coupling: The desired input coupling.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">set_input_coupling</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span>
+            <span class="n">slot_id</span><span class="p">,</span>
+            <span class="n">channel_index</span><span class="p">,</span>
+            <span class="n">input_coupling</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_span_and_offset"><a class="viewcode-back" href="../../channelanalog.html#ghsapi.ghsapi.GHS.ghs_get_span_and_offset">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_span_and_offset</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Determine the span and offset for an analog channel.</span>
+
+<span class="sd">        *Read - This method can be called by multiple connected clients at same</span>
+<span class="sd">        time.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">            * span - The span in user units</span>
+<span class="sd">            * offset - The offset in user units</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">get_span_and_offset</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">,</span> <span class="n">channel_index</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_set_span_and_offset"><a class="viewcode-back" href="../../channelanalog.html#ghsapi.ghsapi.GHS.ghs_set_span_and_offset">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_set_span_and_offset</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">span</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">offset</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Set Span and offset for analog channels.</span>
+
+<span class="sd">        *ReadWrite - This method will only process requests from the</span>
+<span class="sd">        connected client with the most privileges order (Privileges</span>
+<span class="sd">        order: 1- Perception, 2- GenDaq, 3- Other)*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+<span class="sd">            span: The span in user units. The value is adapted to available options.</span>
+<span class="sd">            offset: The offset in user units. The value is adapted to available options.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">set_span_and_offset</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span>
+            <span class="n">slot_id</span><span class="p">,</span>
+            <span class="n">channel_index</span><span class="p">,</span>
+            <span class="n">span</span><span class="p">,</span>
+            <span class="n">offset</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_filter_type_and_frequency"><a class="viewcode-back" href="../../channelanalog.html#ghsapi.ghsapi.GHS.ghs_get_filter_type_and_frequency">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_filter_type_and_frequency</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Determine the filter type and frequency for an analog channel.</span>
+
+<span class="sd">        *Read - This method can be called by multiple connected clients at same</span>
+<span class="sd">        time.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">            * GHSFilterType - The filter type</span>
+<span class="sd">            * frequency - The filter frequency in Hz</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">get_filter_type_and_frequency</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">,</span> <span class="n">channel_index</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_set_filter_type_and_frequency"><a class="viewcode-back" href="../../channelanalog.html#ghsapi.ghsapi.GHS.ghs_set_filter_type_and_frequency">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_set_filter_type_and_frequency</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">filter_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">frequency</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Set the filter type and frequency for an analog channel.</span>
+
+<span class="sd">        *This function overwrites any previously set filter settings</span>
+<span class="sd">        for the specified recorder.*</span>
+
+<span class="sd">        *If a specified filter type or value is not supported by the</span>
+<span class="sd">        recorder, the filter type remains the same or the value is rounded to</span>
+<span class="sd">        a supported vale.*</span>
+
+<span class="sd">        *ReadWrite - This method will only process requests from the</span>
+<span class="sd">        connected client with the most privileges order (Privileges</span>
+<span class="sd">        order: 1- Perception, 2- GenDaq, 3- Other)*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+<span class="sd">            filter_type: The filter type. Default is Bessel.</span>
+<span class="sd">            frequency: The filter frequency in Hz.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">set_filter_type_and_frequency</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span>
+            <span class="n">slot_id</span><span class="p">,</span>
+            <span class="n">channel_index</span><span class="p">,</span>
+            <span class="n">filter_type</span><span class="p">,</span>
+            <span class="n">frequency</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_excitation"><a class="viewcode-back" href="../../channelanalog.html#ghsapi.ghsapi.GHS.ghs_get_excitation">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_excitation</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Determine the excitation type and value for an analog channel.</span>
+
+<span class="sd">        *Read - This method can be called by multiple connected clients at same</span>
+<span class="sd">        time.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">            * GHSExcitationType - The excitation type</span>
+<span class="sd">            * excitation_value - The excitation value in user units (voltage or current).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">get_excitation</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">,</span> <span class="n">channel_index</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_set_excitation"><a class="viewcode-back" href="../../channelanalog.html#ghsapi.ghsapi.GHS.ghs_set_excitation">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_set_excitation</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">excitation_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">excitation_value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Set the excitation type and value for an analog channel.</span>
+
+<span class="sd">        *The system needs to be idle before calling this function.*</span>
+
+<span class="sd">        *If the specified excitation type or value is not supported by the</span>
+<span class="sd">        recorder, the excitation type remains unchanged or the value is</span>
+<span class="sd">        rounded to the nearest supported value.*</span>
+
+<span class="sd">        *ReadWrite - This method will only process requests from the</span>
+<span class="sd">        connected client with the most privileges order (Privileges</span>
+<span class="sd">        order: 1- Perception, 2- GenDaq, 3- Other)*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+<span class="sd">            excitation_type: The desired excitation type. Default is Voltage.</span>
+<span class="sd">            excitation_value: The desired excitation value in user units (voltage or current).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">set_excitation</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span>
+            <span class="n">slot_id</span><span class="p">,</span>
+            <span class="n">channel_index</span><span class="p">,</span>
+            <span class="n">excitation_type</span><span class="p">,</span>
+            <span class="n">excitation_value</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_amplifier_mode"><a class="viewcode-back" href="../../channelanalog.html#ghsapi.ghsapi.GHS.ghs_get_amplifier_mode">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_amplifier_mode</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Determine the amplifier mode for an analog channel.</span>
+
+<span class="sd">        *Read - This method can be called by multiple connected clients at same</span>
+<span class="sd">        time.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">            * GHSAmplifierMode - The amplifier mode</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">get_amplifier_mode</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">,</span> <span class="n">channel_index</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_set_amplifier_mode"><a class="viewcode-back" href="../../channelanalog.html#ghsapi.ghsapi.GHS.ghs_set_amplifier_mode">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_set_amplifier_mode</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">amplifier_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Set the amplifier mode for an analog channel.</span>
+
+<span class="sd">        *The system needs to be idle before calling this function.*</span>
+
+<span class="sd">        *If the specified amplifier mode is not supported by the recorder, the</span>
+<span class="sd">        amplifier mode remains unchanged.*</span>
+
+<span class="sd">        *ReadWrite - This method will only process requests from the</span>
+<span class="sd">        connected client with the most privileges order (Privileges</span>
+<span class="sd">        order: 1- Perception, 2- GenDaq, 3- Other)*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+<span class="sd">            amplifier_mode: The desired amplifier mode</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">set_amplifier_mode</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span>
+            <span class="n">slot_id</span><span class="p">,</span>
+            <span class="n">channel_index</span><span class="p">,</span>
+            <span class="n">amplifier_mode</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_technical_units"><a class="viewcode-back" href="../../channelanalog.html#ghsapi.ghsapi.GHS.ghs_get_technical_units">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_technical_units</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Determine the technical units, unit multiplier and unit offset for</span>
+<span class="sd">        an analog channel.</span>
+
+<span class="sd">        *The units parameter is UTF-8 encoded.*</span>
+
+<span class="sd">        *Read - This method can be called by multiple connected clients at same</span>
+<span class="sd">        time.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">            * units - The technical units (e.g. &#39;V&#39; for Volt or &#39;Hz&#39; for Hertz).</span>
+<span class="sd">            * multiplier - The technical units multiplier value.</span>
+<span class="sd">            * offset - The technical units offset value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">get_technical_units</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">,</span> <span class="n">channel_index</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_set_technical_units"><a class="viewcode-back" href="../../channelanalog.html#ghsapi.ghsapi.GHS.ghs_set_technical_units">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_set_technical_units</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">units</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">multiplier</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">offset</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Set the technical units, unit multiplier and unit offset for an</span>
+<span class="sd">        analog channel.</span>
+
+<span class="sd">        *The units parameter must be UTF-8 encoded.*</span>
+
+<span class="sd">        *ReadWrite - This method will only process requests from the</span>
+<span class="sd">        connected client with the most privileges order (Privileges</span>
+<span class="sd">        order: 1- Perception, 2- GenDaq, 3- Other)*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+<span class="sd">            units: The desired technical units (e.g. &#39;V&#39; for Volt or &#39;Hz&#39; for Hertz).</span>
+<span class="sd">            multiplier: The desired technical units multiplier value.</span>
+<span class="sd">            offset: The desired technical units offset value.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">set_technical_units</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span>
+            <span class="n">slot_id</span><span class="p">,</span>
+            <span class="n">channel_index</span><span class="p">,</span>
+            <span class="n">units</span><span class="p">,</span>
+            <span class="n">multiplier</span><span class="p">,</span>
+            <span class="n">offset</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_auto_range"><a class="viewcode-back" href="../../channelanalog.html#ghsapi.ghsapi.GHS.ghs_get_auto_range">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_auto_range</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Determine the auto range enable and time settings.</span>
+
+<span class="sd">        *Read - This method can be called by multiple connected clients at same</span>
+<span class="sd">        time.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">            * GHSEnableDisable - The auto range enabled setting.</span>
+<span class="sd">            * auto_range_time - The time for auto range in seconds.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">get_auto_range</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">,</span> <span class="n">channel_index</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_set_auto_range"><a class="viewcode-back" href="../../channelanalog.html#ghsapi.ghsapi.GHS.ghs_set_auto_range">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_set_auto_range</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">auto_range_enabled</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">auto_range_time</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Set Auto range settings for analog channels.</span>
+
+<span class="sd">        *ReadWrite - This method will only process requests from the</span>
+<span class="sd">        connected client with the most privileges order (Privileges</span>
+<span class="sd">        order: 1- Perception, 2- GenDaq, 3- Other)*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+<span class="sd">            auto_range_enabled: The auto range enabled setting. The value is adapted to available options.</span>
+<span class="sd">            auto_range_time: The time for auto range in seconds. The value is adapted to available options.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">set_auto_range</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span>
+            <span class="n">slot_id</span><span class="p">,</span>
+            <span class="n">channel_index</span><span class="p">,</span>
+            <span class="n">auto_range_enabled</span><span class="p">,</span>
+            <span class="n">auto_range_time</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_cmd_auto_range_now"><a class="viewcode-back" href="../../channelanalog.html#ghsapi.ghsapi.GHS.ghs_cmd_auto_range_now">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_cmd_auto_range_now</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">auto_range_time</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Command a single shot for auto range.</span>
+
+<span class="sd">        *The system needs to be acquiring for this function to have any</span>
+<span class="sd">        effect.*</span>
+
+<span class="sd">        *ReadWrite - This method will only process requests from the</span>
+<span class="sd">        connected client with the most privileges order (Privileges</span>
+<span class="sd">        order: 1- Perception, 2- GenDaq, 3- Other)*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+<span class="sd">            auto_range_time: The time for auto range in seconds. The value is adapted to available options.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">cmd_auto_range_now</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span>
+            <span class="n">slot_id</span><span class="p">,</span>
+            <span class="n">channel_index</span><span class="p">,</span>
+            <span class="n">auto_range_time</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_channel_cal_info"><a class="viewcode-back" href="../../channelanalog.html#ghsapi.ghsapi.GHS.ghs_get_channel_cal_info">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_channel_cal_info</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span>
+        <span class="nb">str</span><span class="p">,</span>
+        <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Retrieve calibration information for an analog channel.</span>
+
+<span class="sd">        *The calibrationDateTime, verificationDateTime,</span>
+<span class="sd">        powerVerificationDateTime, calibrationLab, verificationLab and</span>
+<span class="sd">        powerVerificationLab parameters are UTF-8 encoded.*</span>
+
+<span class="sd">        *Read - This method can be called by multiple connected clients at same</span>
+<span class="sd">        time.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">            * calibration_date_time - The date and time this analog channel has been calibrated.</span>
+<span class="sd">            * verification_date_time - The date and time the calibration for this analog channel has been verified.</span>
+<span class="sd">            * power_verification_date_time - The date and time the power calibration for this analog channel has been verified (if applicable).</span>
+<span class="sd">            * calibration_lab - The laboratory that conducted the calibration for this analog channel.</span>
+<span class="sd">            * verification_lab - The laboratory that verified the calibration for this analog channel.</span>
+<span class="sd">            * power_verification_lab - The laboratory that verified the power calibration for this analog channel (if applicable).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">get_channel_cal_info</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">,</span> <span class="n">channel_index</span>
+        <span class="p">)</span></div>
+
+    <span class="c1">## Timer/Counter Module</span>
+
+<div class="viewcode-block" id="GHS.ghs_get_timer_counter_gate_time"><a class="viewcode-back" href="../../channeltimer.html#ghsapi.ghsapi.GHS.ghs_get_timer_counter_gate_time">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_timer_counter_gate_time</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Determine the gate time for a timer/counter channel.</span>
+
+<span class="sd">        *Read - This method can be called by multiple connected clients at same</span>
+<span class="sd">        time.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">            * gate_time - The gate time in seconds</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">get_timer_counter_gate_time</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">,</span> <span class="n">channel_index</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_set_timer_counter_gate_time"><a class="viewcode-back" href="../../channeltimer.html#ghsapi.ghsapi.GHS.ghs_set_timer_counter_gate_time">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_set_timer_counter_gate_time</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">gate_time</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Determine the gate time for a timer/counter channel.</span>
+
+<span class="sd">        The system needs to be idle before calling this function.</span>
+
+<span class="sd">        If the specified timer/counter gate time is not supported by the</span>
+<span class="sd">        recorder, the timer/counter gate time is rounded to the nearest</span>
+<span class="sd">        supported gate time.</span>
+
+<span class="sd">        *ReadWrite - This method will only process requests from the</span>
+<span class="sd">        connected client with the most privileges order (Privileges</span>
+<span class="sd">        order: 1- Perception, 2- GenDaq, 3- Other)*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+<span class="sd">            gate_time: The desired gate time in seconds.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">set_timer_counter_gate_time</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span>
+            <span class="n">slot_id</span><span class="p">,</span>
+            <span class="n">channel_index</span><span class="p">,</span>
+            <span class="n">gate_time</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_timer_counter_mode"><a class="viewcode-back" href="../../channeltimer.html#ghsapi.ghsapi.GHS.ghs_get_timer_counter_mode">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_timer_counter_mode</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Determine the mode for a timer/counter channel.</span>
+
+<span class="sd">        *Read - This method can be called by multiple connected clients at same</span>
+<span class="sd">        time.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">            * GHSTimerCounterMode - The timer/counter mode</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">get_timer_counter_mode</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">,</span> <span class="n">channel_index</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_set_timer_counter_mode"><a class="viewcode-back" href="../../channeltimer.html#ghsapi.ghsapi.GHS.ghs_set_timer_counter_mode">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_set_timer_counter_mode</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Set the mode for a timer/counter channel.</span>
+
+<span class="sd">        *The system needs to be idle before calling this function.*</span>
+
+<span class="sd">        *If the specified timer/counter mode is not supported by the recorder, the</span>
+<span class="sd">        timer/counter mode remains unchanged.*</span>
+
+<span class="sd">        *ReadWrite - This method will only process requests from the</span>
+<span class="sd">        connected client with the most privileges order (Privileges</span>
+<span class="sd">        order: 1- Perception, 2- GenDaq, 3- Other)*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+<span class="sd">            mode: The desired timer/counter mode. Default is RPMUniDirectional.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">set_timer_counter_mode</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span>
+            <span class="n">slot_id</span><span class="p">,</span>
+            <span class="n">channel_index</span><span class="p">,</span>
+            <span class="n">mode</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_get_timer_counter_range"><a class="viewcode-back" href="../../channeltimer.html#ghsapi.ghsapi.GHS.ghs_get_timer_counter_range">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_timer_counter_range</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Determine the range for a timer/counter channel.</span>
+
+<span class="sd">        *Read - This method can be called by multiple connected clients at same</span>
+<span class="sd">        time.*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">            * lower_value - The lower range value.</span>
+<span class="sd">            * upper_value - The upper range value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">get_timer_counter_range</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">,</span> <span class="n">channel_index</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GHS.ghs_set_timer_counter_range"><a class="viewcode-back" href="../../channeltimer.html#ghsapi.ghsapi.GHS.ghs_set_timer_counter_range">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_set_timer_counter_range</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">slot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">lower_value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">upper_value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Set the range for a timer/counter channel.</span>
+
+<span class="sd">        *The system needs to be idle before calling this function.*</span>
+
+<span class="sd">        *If the specified timer/counter range is illegal (i.e. upperValue &lt;</span>
+<span class="sd">        lowerValue), the timer/counter range values are corrected to the</span>
+<span class="sd">        nearest possible values.*</span>
+
+<span class="sd">        *ReadWrite - This method will only process requests from the</span>
+<span class="sd">        connected client with the most privileges order (Privileges</span>
+<span class="sd">        order: 1- Perception, 2- GenDaq, 3- Other)*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot_id: The slot containing the recorder</span>
+<span class="sd">            channel_index: The zero-based index of the channel</span>
+<span class="sd">            lower_value: The desired lower range value.</span>
+<span class="sd">            upper_value: The desired upper range value.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - API return values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">set_timer_counter_range</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span>
+            <span class="n">slot_id</span><span class="p">,</span>
+            <span class="n">channel_index</span><span class="p">,</span>
+            <span class="n">lower_value</span><span class="p">,</span>
+            <span class="n">upper_value</span><span class="p">,</span>
         <span class="p">)</span></div>
 </pre></div>
 

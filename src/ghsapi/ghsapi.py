@@ -74,7 +74,7 @@ class GHS:
             port_num: TCP port number (currently defined as 8006).
 
         Returns:
-            Connect return status.
+            * GHSReturnValue - Connect return status.
         """
 
         return _connection.connect(
@@ -88,7 +88,7 @@ class GHS:
         mainframe is not connected.*
 
         Returns:
-            Disconnect return status.
+            * GHSReturnValue - Disconnect return status.
         """
 
         return _connection.disconnect(self._con_handle)
@@ -100,7 +100,7 @@ class GHS:
         GHSReturnValue_APIMismatch.*
 
         Returns:
-            Version number of the client.
+            * CLIENT_API_VERSION - Version number of the client.
         """
 
         return CLIENT_API_VERSION
@@ -118,7 +118,7 @@ class GHS:
         access.*
 
         Returns:
-            Access permission.
+            * GHSAccess - Access permission.
         """
 
         return _connection.get_current_access(self._con_handle)
@@ -130,7 +130,7 @@ class GHS:
         *The system needs to be idle before calling this function.*
 
         Returns:
-            Start preview status.
+            * GHSReturnValue - Start preview status.
         """
 
         return _acquisition.start_preview(self._con_handle)
@@ -142,7 +142,7 @@ class GHS:
         function.*
 
         Returns:
-            Stop preview status.
+            * GHSReturnValue - Stop preview status.
         """
 
         return _acquisition.stop_preview(self._con_handle)
@@ -156,7 +156,7 @@ class GHS:
         storage is set.*
 
         Returns:
-            Start recording status.
+            * GHSReturnValue - Start recording status.
         """
 
         return _acquisition.start_recording(self._con_handle)
@@ -167,7 +167,7 @@ class GHS:
         *The system needs to be recording before calling this function.*
 
         Returns:
-            Pause recording status.
+            * GHSReturnValue - Pause recording status.
         """
 
         return _acquisition.pause_recording(self._con_handle)
@@ -178,7 +178,7 @@ class GHS:
         *The system needs to be paused before calling this function.*
 
         Returns:
-            Resume recording status.
+            * GHSReturnValue - Resume recording status.
         """
 
         return _acquisition.resume_recording(self._con_handle)
@@ -189,7 +189,7 @@ class GHS:
         *The system needs to be recording before calling this function.*
 
         Returns:
-            Stop recording status.
+            * GHSReturnValue - Stop recording status.
         """
 
         return _acquisition.stop_recording(self._con_handle)
@@ -200,7 +200,7 @@ class GHS:
         Results in error when the trigger cannot be issued.
 
         Returns:
-            Trigger status.
+            * GHSReturnValue - Trigger status.
         """
 
         return _acquisition.trigger(self._con_handle)
@@ -209,7 +209,8 @@ class GHS:
         """Returns the Acquisition State of the Mainframe.
 
         Returns:
-            Status and acquisition state of the mainframe.
+            * GHSReturnValue - API return status
+            * GHSAcquisitionState - acquisition state of the mainframe.
         """
 
         return _acquisition.get_acquisition_state(self._con_handle)
@@ -220,8 +221,10 @@ class GHS:
         """Retrieves the absolute time of the start of acquisition.
 
         Returns:
-            Status and the absolute time of the start of
-            acquisition as year, days and seconds.
+            * GHSReturnValue - API return status
+            * year - The year
+            * day - The day number in the year
+            * seconds -The number of seconds since midnight.
         """
 
         return _acquisition.get_acquisition_start_time(self._con_handle)
@@ -231,8 +234,8 @@ class GHS:
         of acquistion.
 
         Returns:
-            Status and current acquisition time relative to
-            the start of acquistion.
+            * GHSReturnValue - API return status
+            * acquisition_time - The acquisition time in seconds.
         """
 
         return _acquisition.get_acquisition_time(self._con_handle)
@@ -247,7 +250,7 @@ class GHS:
             identity_flag: Enable or disable flag.
 
         Returns:
-            Identify API status.
+            * GHSReturnValue - Identify API status.
         """
 
         return _mainframe.identity(self._con_handle, identity_flag)
@@ -256,8 +259,9 @@ class GHS:
         """Get total and available mainframe internal disk space.
 
         Returns:
-            Status, total mainframe internal disk space in
-            GB, available internal disk space in GB.
+            * GHSReturnValue - API return status
+            * total - Total mainframe internal disk space in GB
+            * available - Available internal disk space in GB
         """
 
         return _mainframe.get_disk_space(self._con_handle)
@@ -266,7 +270,8 @@ class GHS:
         """Determine the mainframe sync status.
 
         Returns:
-            API status and sync status.
+            * GHSReturnValue - API return status
+            * GHSSyncStatus - Sync status
         """
 
         return _mainframe.get_sync_status(self._con_handle)
@@ -275,7 +280,8 @@ class GHS:
         """Retrieve the number of slots in the mainframe.
 
         Returns:
-            Status and number of slots in the mainframe.
+            * GHSReturnValue - API return status
+            * slot_count - The number of slots in the mainframe
         """
 
         return _mainframe.get_slot_count(self._con_handle)
@@ -284,7 +290,8 @@ class GHS:
         """Retrieve the user mode.
 
         Returns:
-            API status and user mode.
+            * GHSReturnValue - API return status
+            * GHSUserMode - The user mode
         """
 
         return _mainframe.get_user_mode(self._con_handle)
@@ -298,7 +305,7 @@ class GHS:
             user_mode: The desired user mode.
 
         Returns:
-            API status.
+            * GHSReturnValue - API return status
         """
 
         return _mainframe.set_user_mode(self._con_handle, user_mode)
@@ -313,8 +320,11 @@ class GHS:
         firmwareVersion parameters are UTF-8 encoded.*
 
         Returns:
-            API status and mainframe info as type, name, serial number
-            and firmware version.
+            * GHSReturnValue - API return status
+            * mainframe_type - The type of the mainframe
+            * mainframe_name - The name of the mainframe
+            * serial_number - The serial number of the mainframe
+            * firmware_version - The firmware version of the mainframe
         """
 
         return _mainframe.get_mainframe_info(self._con_handle)
@@ -327,7 +337,7 @@ class GHS:
         *Recordings are deleted asynchronously.*
 
         Returns:
-            API status.
+            * GHSReturnValue - API return status
         """
 
         return _manage_recordings.delete_all_recordings(self._con_handle)
@@ -339,7 +349,7 @@ class GHS:
         *Recordings are deleted asynchronously.*
 
         Returns:
-            API status.
+            * GHSReturnValue - API return status
         """
 
         return _manage_recordings.delete_last_recording(self._con_handle)
@@ -351,8 +361,9 @@ class GHS:
         *The recording base name parameter is UTF-8 encoded.*
 
         Returns:
-            Status, base name and index of the recording
-            file.
+            * GHSReturnValue - API return status
+            * recording_base_name - The base name of the recording file
+            * recording_index - The index of the recording file
         """
 
         return _manage_recordings.get_recording_name(self._con_handle)
@@ -361,7 +372,8 @@ class GHS:
         """Retrieve the storage location.
 
         Returns:
-            Status and storage location.
+            * GHSReturnValue - API return status
+            * GHSStorageLocation - The storage location
         """
 
         return _manage_recordings.get_storage_location(self._con_handle)
@@ -377,8 +389,9 @@ class GHS:
             slot_id: The slot containing the recorder
 
         Returns:
-            Status, flag to indicate if high and low rate
-            data is stored.
+            * GHSReturnValue - API return status
+            * GHSEnableDisable - Flag to indicate if high rate data is stored
+            * GHSEnableDisable - Flag to indicate if low rate data is stored
         """
 
         return _manage_recordings.get_high_low_rate_storage_enabled(
@@ -402,7 +415,7 @@ class GHS:
             low_rate_enabled: Enable/disable storage of low rate data.
 
         Returns:
-            API status.
+            * GHSReturnValue - API return status
         """
 
         return _manage_recordings.set_high_low_rate_storage_enabled(
@@ -417,7 +430,7 @@ class GHS:
         self, recording_name: str, recording_index: int
     ) -> str:
         """Set the recording base name and recording index for the next
-         recording file.
+        recording file.
 
         *The system needs to be idle before calling this function.
         The recording base name parameter must be UTF-8 encoded.*
@@ -427,7 +440,7 @@ class GHS:
             recording_index: The desired index of the recording file
 
         Returns:
-            API status.
+            * GHSReturnValue - API return status
         """
 
         return _manage_recordings.set_recording_name(
@@ -443,7 +456,7 @@ class GHS:
             storage_location: The desired storage location.
 
         Returns:
-            API status.
+            * GHSReturnValue - API return status
         """
 
         return _manage_recordings.set_storage_location(
@@ -476,7 +489,7 @@ class GHS:
         boot.*
 
         Returns:
-            API status.
+            * GHSReturnValue - API return status
         """
 
         return _manage_mainframe_settings.persist_current_settings(
@@ -491,8 +504,9 @@ class GHS:
         Memory for this blob is allocated by the API.*
 
         Returns:
-            Status, base name and index of the recording
-            file.
+            * GHSReturnValue - API return status
+            * blob - Pointer to the settings blob
+            * blob_size - Size of the settings blob
         """
 
         return _manage_mainframe_settings.get_current_settings(
@@ -510,7 +524,7 @@ class GHS:
             blob_size: Size of the settings blob.
 
         Returns:
-            API status.
+            * GHSReturnValue - API return status
         """
 
         return _manage_mainframe_settings.set_current_settings(
@@ -529,7 +543,8 @@ class GHS:
             slot_id: The slot containing the recorder
 
         Returns:
-            Status and number of channels for the recorder.
+            * GHSReturnValue - API return status
+            * channel_count - The number of channels for the recorder
         """
 
         return _recorder.get_channel_count(self._con_handle, slot_id)
@@ -548,7 +563,8 @@ class GHS:
             digital_output: The output number desired.
 
         Returns:
-            Status and digital output mode for that output.
+            * GHSReturnValue - API return status
+            * GHSDigitalOutMode - The digital output mode for that output
         """
 
         return _recorder.get_digital_output(
@@ -565,7 +581,8 @@ class GHS:
             slot_id: The slot containing the recorder
 
         Returns:
-            API status and recorder enabled status.
+            * GHSReturnValue - API return status
+            * GHSEnableDisable - The recorder enabled status
         """
 
         return _recorder.get_recorder_enabled(self._con_handle, slot_id)
@@ -586,8 +603,11 @@ class GHS:
             slot_id: The slot containing the recorder
 
         Returns:
-            Status and recorder information as type, name, serial
-            number and firmware version
+            * GHSReturnValue - API return status
+            * recorder_type - The type of the recorder
+            * recorder_name - The name of the recorder
+            * serial_number - The serial number of the recorder
+            * firmware_version - The firmware version of the recorder
         """
 
         return _recorder.get_recorder_info(self._con_handle, slot_id)
@@ -602,7 +622,8 @@ class GHS:
             slot_id: The slot containing the recorder
 
         Returns:
-            Status and sample rate for a recorder.
+            * GHSReturnValue - API return status
+            * sample_rate - in samples per second
         """
 
         return _recorder.get_sample_rate(self._con_handle, slot_id)
@@ -626,7 +647,7 @@ class GHS:
             digital_output_mode: The digital output mode to set
 
         Returns:
-            API status.
+            * GHSReturnValue - API return status
         """
 
         return _recorder.set_digital_output(
@@ -651,7 +672,7 @@ class GHS:
             enabled: Set to GHS_Enable/GHS_Disable to enable/disable
 
         Returns:
-            API status.
+            * GHSReturnValue - API return status
         """
 
         return _recorder.set_recorder_enabled(
@@ -680,7 +701,7 @@ class GHS:
             sample_rate: In samples per second.
 
         Returns:
-            API status.
+            * GHSReturnValue - API return status
         """
         return _recorder.set_sample_rate(
             self._con_handle, slot_id, sample_rate
@@ -703,8 +724,8 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
-            GHSReturnValue: API return values
-            GHSChannelType: Type of the channel
+            * GHSReturnValue - API return values
+            * GHSChannelType - Type of the channel
         """
 
         return _channel.get_channel_type(
@@ -726,8 +747,8 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
-            GHSReturnValue: API return values
-            channel_name: The name of the channel
+            * GHSReturnValue - API return values
+            * channel_name - The name of the channel
         """
 
         return _channel.get_channel_name(
@@ -751,7 +772,7 @@ class GHS:
             channel_name: The name of the channel
 
         Returns:
-            GHSReturnValue: API return values
+            * GHSReturnValue - API return values
         """
 
         return _channel.set_channel_name(
@@ -771,9 +792,8 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
-            GHSReturnValue: API return values
-            GHSEnableDisable: The storage enabled status for the
-            channel
+            * GHSReturnValue - API return values
+            * GHSEnableDisable - The storage enabled status for the channel
         """
 
         return _channel.get_channel_storage_enabled(
@@ -800,7 +820,7 @@ class GHS:
             enabled: The desired storage enabled status for the channel
 
         Returns:
-            GHSReturnValue: API return values
+            * GHSReturnValue - API return values
         """
 
         return _channel.set_channel_storage_enabled(
@@ -823,7 +843,7 @@ class GHS:
             ezeroing: Zero / Unzero the specific channel
 
         Returns:
-            GHSReturnValue: API return values
+            * GHSReturnValue - API return values
         """
 
         return _channel.cmd_zeroing(
@@ -847,12 +867,12 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
-            GHSReturnValue: API return values
-            GHSTriggerMode: Trigger Mode
-            primary_level: The primary trigger level
-            secondary_level: The secondary trigger level
-            hysteresis: The trigger hysteresis
-            direction: The trigger direction
+            * GHSReturnValue - API return values
+            * GHSTriggerMode - Trigger Mode
+            * primary_level - The primary trigger level
+            * secondary_level - The secondary trigger level
+            * hysteresis - The trigger hysteresis
+            * direction - The trigger direction
         """
 
         return _channel.get_trigger_settings(
@@ -887,14 +907,14 @@ class GHS:
         Args:
             slot_id: The slot containing the recorder
             channel_index: The zero-based index of the channel
-            trigger_mode: Trigger Mode. Default is TriggerMode_Basic
+            trigger_mode: Trigger Mode. Default is Basic
             primary_level: The desired primary trigger level
             secondary_level: The desired secondary trigger level
             hysteresis: The desired trigger hysteresis
             direction: The desired trigger direction
 
         Returns:
-            GHSReturnValue: API return values
+            * GHSReturnValue - API return values
         """
 
         return _channel.set_trigger_settings(
@@ -921,8 +941,8 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
-            GHSReturnValue: API return values
-            GHSSignalCoupling: The signal coupling
+            * GHSReturnValue - API return values
+            * GHSSignalCoupling - The signal coupling
         """
 
         return _channel.get_signal_coupling(
@@ -950,7 +970,7 @@ class GHS:
             signal_coupling: The desired signal coupling.
 
         Returns:
-            GHSReturnValue: API return values
+            * GHSReturnValue - API return values
         """
 
         return _channel.set_signal_coupling(
@@ -973,8 +993,8 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
-            GHSReturnValue: API return values
-            GHSInputCoupling: The input coupling
+            * GHSReturnValue - API return values
+            * GHSInputCoupling - The input coupling
         """
 
         return _channel.get_input_coupling(
@@ -1002,7 +1022,7 @@ class GHS:
             input_coupling: The desired input coupling.
 
         Returns:
-            GHSReturnValue: API return values
+            * GHSReturnValue - API return values
         """
 
         return _channel.set_input_coupling(
@@ -1025,9 +1045,9 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
-            GHSReturnValue: API return values
-            span: The span in user units
-            offset: The offset in user units
+            * GHSReturnValue - API return values
+            * span - The span in user units
+            * offset - The offset in user units
         """
 
         return _channel.get_span_and_offset(
@@ -1050,13 +1070,11 @@ class GHS:
         Args:
             slot_id: The slot containing the recorder
             channel_index: The zero-based index of the channel
-            span: The span in user units. The value is adapted to
-            available options.
-            offset: The offset in user units. The value is adapted to
-            available options.
+            span: The span in user units. The value is adapted to available options.
+            offset: The offset in user units. The value is adapted to available options.
 
         Returns:
-            GHSReturnValue: API return values
+            * GHSReturnValue - API return values
         """
 
         return _channel.set_span_and_offset(
@@ -1080,9 +1098,9 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
-            GHSReturnValue: API return values
-            GHSFilterType: The filter type
-            frequency: The filter frequency in Hz
+            * GHSReturnValue - API return values
+            * GHSFilterType - The filter type
+            * frequency - The filter frequency in Hz
         """
 
         return _channel.get_filter_type_and_frequency(
@@ -1112,12 +1130,11 @@ class GHS:
         Args:
             slot_id: The slot containing the recorder
             channel_index: The zero-based index of the channel
-            filter_type: The filter type. Default is
-            GHSFilterType_Bessel.
+            filter_type: The filter type. Default is Bessel.
             frequency: The filter frequency in Hz.
 
         Returns:
-            GHSReturnValue: API return values
+            * GHSReturnValue - API return values
         """
 
         return _channel.set_filter_type_and_frequency(
@@ -1141,10 +1158,9 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
-            GHSReturnValue: API return values
-            GHSExcitationType: The excitation type
-            excitation_value: The excitation value in user units (voltage or
-            current).
+            * GHSReturnValue - API return values
+            * GHSExcitationType - The excitation type
+            * excitation_value - The excitation value in user units (voltage or current).
         """
 
         return _channel.get_excitation(
@@ -1173,13 +1189,11 @@ class GHS:
         Args:
             slot_id: The slot containing the recorder
             channel_index: The zero-based index of the channel
-            excitation_type: The desired excitation type. Default is
-            ExcitationType_Voltage.
-            excitation_value: The desired excitation value in user units
-            (voltage or current).
+            excitation_type: The desired excitation type. Default is Voltage.
+            excitation_value: The desired excitation value in user units (voltage or current).
 
         Returns:
-            GHSReturnValue: API return values
+            * GHSReturnValue - API return values
         """
 
         return _channel.set_excitation(
@@ -1203,8 +1217,8 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
-            GHSReturnValue: API return values
-            GHSAmplifierMode: The amplifier mode
+            * GHSReturnValue - API return values
+            * GHSAmplifierMode - The amplifier mode
         """
 
         return _channel.get_amplifier_mode(
@@ -1234,7 +1248,7 @@ class GHS:
             amplifier_mode: The desired amplifier mode
 
         Returns:
-            GHSReturnValue: API return values
+            * GHSReturnValue - API return values
         """
 
         return _channel.set_amplifier_mode(
@@ -1260,10 +1274,10 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
-            GHSReturnValue: API return values
-            units: The technical units (e.g. 'V' for Volt or 'Hz' for Hertz).
-            multiplier: The technical units multiplier value.
-            offset: The technical units offset value.
+            * GHSReturnValue - API return values
+            * units - The technical units (e.g. 'V' for Volt or 'Hz' for Hertz).
+            * multiplier - The technical units multiplier value.
+            * offset - The technical units offset value.
         """
 
         return _channel.get_technical_units(
@@ -1290,13 +1304,12 @@ class GHS:
         Args:
             slot_id: The slot containing the recorder
             channel_index: The zero-based index of the channel
-            units: The desired technical units (e.g. 'V' for Volt or 'Hz' for
-            Hertz).
+            units: The desired technical units (e.g. 'V' for Volt or 'Hz' for Hertz).
             multiplier: The desired technical units multiplier value.
             offset: The desired technical units offset value.
 
         Returns:
-            GHSReturnValue: API return values
+            * GHSReturnValue - API return values
         """
 
         return _channel.set_technical_units(
@@ -1321,9 +1334,9 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
-            GHSReturnValue: API return values
-            GHSEnableDisable: The auto range enabled setting.
-            auto_range_time: The time for auto range in seconds.
+            * GHSReturnValue - API return values
+            * GHSEnableDisable - The auto range enabled setting.
+            * auto_range_time - The time for auto range in seconds.
         """
 
         return _channel.get_auto_range(
@@ -1346,13 +1359,11 @@ class GHS:
         Args:
             slot_id: The slot containing the recorder
             channel_index: The zero-based index of the channel
-            auto_range_enabled: The auto range enabled setting. The value is
-            adapted to available options.
-            auto_range_time: The time for auto range in seconds. The value is
-            adapted to available options.
+            auto_range_enabled: The auto range enabled setting. The value is adapted to available options.
+            auto_range_time: The time for auto range in seconds. The value is adapted to available options.
 
         Returns:
-            GHSReturnValue: API return values
+            * GHSReturnValue - API return values
         """
 
         return _channel.set_auto_range(
@@ -1381,11 +1392,10 @@ class GHS:
         Args:
             slot_id: The slot containing the recorder
             channel_index: The zero-based index of the channel
-            auto_range_time: The time for auto range in seconds. The value is
-            adapted to available options.
+            auto_range_time: The time for auto range in seconds. The value is adapted to available options.
 
         Returns:
-            GHSReturnValue: API return values
+            * GHSReturnValue - API return values
         """
 
         return _channel.cmd_auto_range_now(
@@ -1420,19 +1430,13 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
-            GHSReturnValue: API return values
-            calibration_date_time: The date and time this analog channel has
-            been calibrated.
-            verification_date_time: The date and time the calibration for this
-            analog channel has been verified.
-            power_verification_date_time: The date and time the power
-            calibration for this analog channel has been verified (if applicable).
-            calibration_lab: The laboratory that conducted the calibration
-            for this analog channel.
-            verification_lab: The laboratory that verified the calibration for
-            this analog channel.
-            power_verification_lab: The laboratory that verified the power
-            calibration for this analog channel (if applicable).
+            * GHSReturnValue - API return values
+            * calibration_date_time - The date and time this analog channel has been calibrated.
+            * verification_date_time - The date and time the calibration for this analog channel has been verified.
+            * power_verification_date_time - The date and time the power calibration for this analog channel has been verified (if applicable).
+            * calibration_lab - The laboratory that conducted the calibration for this analog channel.
+            * verification_lab - The laboratory that verified the calibration for this analog channel.
+            * power_verification_lab - The laboratory that verified the power calibration for this analog channel (if applicable).
         """
 
         return _channel.get_channel_cal_info(
@@ -1454,8 +1458,8 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
-            GHSReturnValue: API return values
-            gate_time: The gate time in seconds
+            * GHSReturnValue - API return values
+            * gate_time - The gate time in seconds
         """
 
         return _channel.get_timer_counter_gate_time(
@@ -1486,7 +1490,7 @@ class GHS:
             gate_time: The desired gate time in seconds.
 
         Returns:
-            GHSReturnValue: API return values
+            * GHSReturnValue - API return values
         """
 
         return _channel.set_timer_counter_gate_time(
@@ -1509,8 +1513,8 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
-            GHSReturnValue: API return values
-            GHSTimerCounterMode: The timer/counter mode
+            * GHSReturnValue - API return values
+            * GHSTimerCounterMode - The timer/counter mode
         """
 
         return _channel.get_timer_counter_mode(
@@ -1537,11 +1541,10 @@ class GHS:
         Args:
             slot_id: The slot containing the recorder
             channel_index: The zero-based index of the channel
-            mode: The desired timer/counter mode. Default is
-            TimerCounterMode_RPMUniDirectional.
+            mode: The desired timer/counter mode. Default is RPMUniDirectional.
 
         Returns:
-            GHSReturnValue: API return values
+            * GHSReturnValue - API return values
         """
 
         return _channel.set_timer_counter_mode(
@@ -1564,9 +1567,9 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
-            GHSReturnValue: API return values
-            lower_value: The lower range value.
-            upper_value: The upper range value.
+            * GHSReturnValue - API return values
+            * lower_value - The lower range value.
+            * upper_value - The upper range value.
         """
 
         return _channel.get_timer_counter_range(
@@ -1599,7 +1602,7 @@ class GHS:
             upper_value: The desired upper range value.
 
         Returns:
-            GHSReturnValue: API return values
+            * GHSReturnValue - API return values
         """
 
         return _channel.set_timer_counter_range(
