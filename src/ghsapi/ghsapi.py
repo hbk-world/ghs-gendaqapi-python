@@ -724,8 +724,13 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
             * GHSChannelType - Type of the channel
+=======
+            GHSReturnValue: API return values
+            GHSChannelType: Type of the channel
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.get_channel_type(
@@ -747,8 +752,13 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
             * channel_name - The name of the channel
+=======
+            GHSReturnValue: API return values
+            channel_name: The name of the channel
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.get_channel_name(
@@ -772,7 +782,11 @@ class GHS:
             channel_name: The name of the channel
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
+=======
+            GHSReturnValue: API return values
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.set_channel_name(
@@ -792,8 +806,14 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
             * GHSEnableDisable - The storage enabled status for the channel
+=======
+            GHSReturnValue: API return values
+            GHSEnableDisable: The storage enabled status for the
+            channel
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.get_channel_storage_enabled(
@@ -820,7 +840,11 @@ class GHS:
             enabled: The desired storage enabled status for the channel
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
+=======
+            GHSReturnValue: API return values
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.set_channel_storage_enabled(
@@ -843,7 +867,11 @@ class GHS:
             ezeroing: Zero / Unzero the specific channel
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
+=======
+            GHSReturnValue: API return values
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.cmd_zeroing(
@@ -867,12 +895,21 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
             * GHSTriggerMode - Trigger Mode
             * primary_level - The primary trigger level
             * secondary_level - The secondary trigger level
             * hysteresis - The trigger hysteresis
             * direction - The trigger direction
+=======
+            GHSReturnValue: API return values
+            GHSTriggerMode: Trigger Mode
+            primary_level: The primary trigger level
+            secondary_level: The secondary trigger level
+            hysteresis: The trigger hysteresis
+            direction: The trigger direction
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.get_trigger_settings(
@@ -907,14 +944,22 @@ class GHS:
         Args:
             slot_id: The slot containing the recorder
             channel_index: The zero-based index of the channel
+<<<<<<< HEAD
             trigger_mode: Trigger Mode. Default is Basic
+=======
+            trigger_mode: Trigger Mode. Default is TriggerMode_Basic
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
             primary_level: The desired primary trigger level
             secondary_level: The desired secondary trigger level
             hysteresis: The desired trigger hysteresis
             direction: The desired trigger direction
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
+=======
+            GHSReturnValue: API return values
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.set_trigger_settings(
@@ -941,8 +986,13 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
             * GHSSignalCoupling - The signal coupling
+=======
+            GHSReturnValue: API return values
+            GHSSignalCoupling: The signal coupling
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.get_signal_coupling(
@@ -970,7 +1020,11 @@ class GHS:
             signal_coupling: The desired signal coupling.
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
+=======
+            GHSReturnValue: API return values
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.set_signal_coupling(
@@ -993,8 +1047,13 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
             * GHSInputCoupling - The input coupling
+=======
+            GHSReturnValue: API return values
+            GHSInputCoupling: The input coupling
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.get_input_coupling(
@@ -1022,7 +1081,11 @@ class GHS:
             input_coupling: The desired input coupling.
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
+=======
+            GHSReturnValue: API return values
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.set_input_coupling(
@@ -1045,9 +1108,15 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
             * span - The span in user units
             * offset - The offset in user units
+=======
+            GHSReturnValue: API return values
+            span: The span in user units
+            offset: The offset in user units
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.get_span_and_offset(
@@ -1070,11 +1139,21 @@ class GHS:
         Args:
             slot_id: The slot containing the recorder
             channel_index: The zero-based index of the channel
+<<<<<<< HEAD
             span: The span in user units. The value is adapted to available options.
             offset: The offset in user units. The value is adapted to available options.
 
         Returns:
             * GHSReturnValue - API return values
+=======
+            span: The span in user units. The value is adapted to
+            available options.
+            offset: The offset in user units. The value is adapted to
+            available options.
+
+        Returns:
+            GHSReturnValue: API return values
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.set_span_and_offset(
@@ -1098,9 +1177,15 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
             * GHSFilterType - The filter type
             * frequency - The filter frequency in Hz
+=======
+            GHSReturnValue: API return values
+            GHSFilterType: The filter type
+            frequency: The filter frequency in Hz
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.get_filter_type_and_frequency(
@@ -1130,11 +1215,20 @@ class GHS:
         Args:
             slot_id: The slot containing the recorder
             channel_index: The zero-based index of the channel
+<<<<<<< HEAD
             filter_type: The filter type. Default is Bessel.
             frequency: The filter frequency in Hz.
 
         Returns:
             * GHSReturnValue - API return values
+=======
+            filter_type: The filter type. Default is
+            GHSFilterType_Bessel.
+            frequency: The filter frequency in Hz.
+
+        Returns:
+            GHSReturnValue: API return values
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.set_filter_type_and_frequency(
@@ -1158,9 +1252,16 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
             * GHSExcitationType - The excitation type
             * excitation_value - The excitation value in user units (voltage or current).
+=======
+            GHSReturnValue: API return values
+            GHSExcitationType: The excitation type
+            excitation_value: The excitation value in user units (voltage or
+            current).
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.get_excitation(
@@ -1189,11 +1290,21 @@ class GHS:
         Args:
             slot_id: The slot containing the recorder
             channel_index: The zero-based index of the channel
+<<<<<<< HEAD
             excitation_type: The desired excitation type. Default is Voltage.
             excitation_value: The desired excitation value in user units (voltage or current).
 
         Returns:
             * GHSReturnValue - API return values
+=======
+            excitation_type: The desired excitation type. Default is
+            ExcitationType_Voltage.
+            excitation_value: The desired excitation value in user units
+            (voltage or current).
+
+        Returns:
+            GHSReturnValue: API return values
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.set_excitation(
@@ -1217,8 +1328,13 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
             * GHSAmplifierMode - The amplifier mode
+=======
+            GHSReturnValue: API return values
+            GHSAmplifierMode: The amplifier mode
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.get_amplifier_mode(
@@ -1248,7 +1364,11 @@ class GHS:
             amplifier_mode: The desired amplifier mode
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
+=======
+            GHSReturnValue: API return values
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.set_amplifier_mode(
@@ -1274,10 +1394,17 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
             * units - The technical units (e.g. 'V' for Volt or 'Hz' for Hertz).
             * multiplier - The technical units multiplier value.
             * offset - The technical units offset value.
+=======
+            GHSReturnValue: API return values
+            units: The technical units (e.g. 'V' for Volt or 'Hz' for Hertz).
+            multiplier: The technical units multiplier value.
+            offset: The technical units offset value.
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.get_technical_units(
@@ -1304,12 +1431,21 @@ class GHS:
         Args:
             slot_id: The slot containing the recorder
             channel_index: The zero-based index of the channel
+<<<<<<< HEAD
             units: The desired technical units (e.g. 'V' for Volt or 'Hz' for Hertz).
+=======
+            units: The desired technical units (e.g. 'V' for Volt or 'Hz' for
+            Hertz).
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
             multiplier: The desired technical units multiplier value.
             offset: The desired technical units offset value.
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
+=======
+            GHSReturnValue: API return values
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.set_technical_units(
@@ -1334,9 +1470,15 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
             * GHSEnableDisable - The auto range enabled setting.
             * auto_range_time - The time for auto range in seconds.
+=======
+            GHSReturnValue: API return values
+            GHSEnableDisable: The auto range enabled setting.
+            auto_range_time: The time for auto range in seconds.
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.get_auto_range(
@@ -1359,11 +1501,21 @@ class GHS:
         Args:
             slot_id: The slot containing the recorder
             channel_index: The zero-based index of the channel
+<<<<<<< HEAD
             auto_range_enabled: The auto range enabled setting. The value is adapted to available options.
             auto_range_time: The time for auto range in seconds. The value is adapted to available options.
 
         Returns:
             * GHSReturnValue - API return values
+=======
+            auto_range_enabled: The auto range enabled setting. The value is
+            adapted to available options.
+            auto_range_time: The time for auto range in seconds. The value is
+            adapted to available options.
+
+        Returns:
+            GHSReturnValue: API return values
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.set_auto_range(
@@ -1392,10 +1544,18 @@ class GHS:
         Args:
             slot_id: The slot containing the recorder
             channel_index: The zero-based index of the channel
+<<<<<<< HEAD
             auto_range_time: The time for auto range in seconds. The value is adapted to available options.
 
         Returns:
             * GHSReturnValue - API return values
+=======
+            auto_range_time: The time for auto range in seconds. The value is
+            adapted to available options.
+
+        Returns:
+            GHSReturnValue: API return values
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.cmd_auto_range_now(
@@ -1430,6 +1590,7 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
             * calibration_date_time - The date and time this analog channel has been calibrated.
             * verification_date_time - The date and time the calibration for this analog channel has been verified.
@@ -1437,6 +1598,21 @@ class GHS:
             * calibration_lab - The laboratory that conducted the calibration for this analog channel.
             * verification_lab - The laboratory that verified the calibration for this analog channel.
             * power_verification_lab - The laboratory that verified the power calibration for this analog channel (if applicable).
+=======
+            GHSReturnValue: API return values
+            calibration_date_time: The date and time this analog channel has
+            been calibrated.
+            verification_date_time: The date and time the calibration for this
+            analog channel has been verified.
+            power_verification_date_time: The date and time the power
+            calibration for this analog channel has been verified (if applicable).
+            calibration_lab: The laboratory that conducted the calibration
+            for this analog channel.
+            verification_lab: The laboratory that verified the calibration for
+            this analog channel.
+            power_verification_lab: The laboratory that verified the power
+            calibration for this analog channel (if applicable).
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.get_channel_cal_info(
@@ -1458,8 +1634,13 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
             * gate_time - The gate time in seconds
+=======
+            GHSReturnValue: API return values
+            gate_time: The gate time in seconds
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.get_timer_counter_gate_time(
@@ -1490,7 +1671,11 @@ class GHS:
             gate_time: The desired gate time in seconds.
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
+=======
+            GHSReturnValue: API return values
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.set_timer_counter_gate_time(
@@ -1513,8 +1698,13 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
             * GHSTimerCounterMode - The timer/counter mode
+=======
+            GHSReturnValue: API return values
+            GHSTimerCounterMode: The timer/counter mode
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.get_timer_counter_mode(
@@ -1541,10 +1731,18 @@ class GHS:
         Args:
             slot_id: The slot containing the recorder
             channel_index: The zero-based index of the channel
+<<<<<<< HEAD
             mode: The desired timer/counter mode. Default is RPMUniDirectional.
 
         Returns:
             * GHSReturnValue - API return values
+=======
+            mode: The desired timer/counter mode. Default is
+            TimerCounterMode_RPMUniDirectional.
+
+        Returns:
+            GHSReturnValue: API return values
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.set_timer_counter_mode(
@@ -1567,9 +1765,15 @@ class GHS:
             channel_index: The zero-based index of the channel
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
             * lower_value - The lower range value.
             * upper_value - The upper range value.
+=======
+            GHSReturnValue: API return values
+            lower_value: The lower range value.
+            upper_value: The upper range value.
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.get_timer_counter_range(
@@ -1602,7 +1806,11 @@ class GHS:
             upper_value: The desired upper range value.
 
         Returns:
+<<<<<<< HEAD
             * GHSReturnValue - API return values
+=======
+            GHSReturnValue: API return values
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
         """
 
         return _channel.set_timer_counter_range(

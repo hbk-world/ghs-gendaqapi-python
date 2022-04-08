@@ -255,7 +255,13 @@ class TestChannelAPI(unittest.TestCase):
                     "Enabled": 1,
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.get_channel_storage_enabled(self.con_handle, "A", 1),
+=======
+                    channel_api.get_channel_storage_enabled(
+                        self.con_handle, "A", 1
+                    ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     (
                         "OK",
                         "Enable",
@@ -279,7 +285,13 @@ class TestChannelAPI(unittest.TestCase):
                     "Enabled": 1,
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.get_channel_storage_enabled(self.con_handle, "A", 1),
+=======
+                    channel_api.get_channel_storage_enabled(
+                        self.con_handle, "A", 1
+                    ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     ("NOK", None),
                     "get_channel_storage_enabled failure response test failed.",
                 )
@@ -287,7 +299,13 @@ class TestChannelAPI(unittest.TestCase):
                     self.RETURN_KEY: self.GHSReturnValue["NOK"],
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.get_channel_storage_enabled(self.con_handle, "A", 1),
+=======
+                    channel_api.get_channel_storage_enabled(
+                        self.con_handle, "A", 1
+                    ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     ("NOK", None),
                     "get_channel_storage_enabled failure response test failed.",
                 )
@@ -296,7 +314,13 @@ class TestChannelAPI(unittest.TestCase):
                     self.RETURN_KEY: self.GHSReturnValue["OK"],
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.get_channel_storage_enabled(self.con_handle, "A", 1),
+=======
+                    channel_api.get_channel_storage_enabled(
+                        self.con_handle, "A", 1
+                    ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     ("OK", None),
                     "get_channel_storage_enabled failure response test failed.",
                 )
@@ -310,7 +334,13 @@ class TestChannelAPI(unittest.TestCase):
             mock_con_est.return_value = self.GHSReturnValue["OK"]
 
         self.assertEqual(
+<<<<<<< HEAD
             channel_api.get_channel_storage_enabled(self.con_handle, None, None),
+=======
+            channel_api.get_channel_storage_enabled(
+                self.con_handle, None, None
+            ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
             ("NullPtrArgument", None),
             "get_channel_storage_enabled null argument check failed.",
         )
@@ -346,7 +376,13 @@ class TestChannelAPI(unittest.TestCase):
             mock_con_est.return_value = self.GHSReturnValue["OK"]
 
         self.assertEqual(
+<<<<<<< HEAD
             channel_api.set_channel_storage_enabled(self.con_handle, None, None, None),
+=======
+            channel_api.set_channel_storage_enabled(
+                self.con_handle, None, None, None
+            ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
             "NullPtrArgument",
             "set_channel_storage_enabled null argument check failed.",
         )
@@ -360,7 +396,13 @@ class TestChannelAPI(unittest.TestCase):
             mock_con_est.return_value = self.GHSReturnValue["OK"]
 
         self.assertEqual(
+<<<<<<< HEAD
             channel_api.set_channel_storage_enabled(self.con_handle, "A", 1, "On"),
+=======
+            channel_api.set_channel_storage_enabled(
+                self.con_handle, "A", 1, "On"
+            ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
             "InvalidDataType",
             "set_channel_storage_enabled invalid argument check failed.",
         )
@@ -661,7 +703,13 @@ class TestChannelAPI(unittest.TestCase):
                     self.RETURN_KEY: self.GHSReturnValue["OK"],
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.set_signal_coupling(self.con_handle, "A", 1, "DC"),
+=======
+                    channel_api.set_signal_coupling(
+                        self.con_handle, "A", 1, "DC"
+                    ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     "OK",
                     "set_signal_coupling success response test failed.",
                 )
@@ -785,7 +833,13 @@ class TestChannelAPI(unittest.TestCase):
                     self.RETURN_KEY: self.GHSReturnValue["OK"],
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.set_input_coupling(self.con_handle, "A", 1, "Current"),
+=======
+                    channel_api.set_input_coupling(
+                        self.con_handle, "A", 1, "Current"
+                    ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     "OK",
                     "set_input_coupling success response test failed.",
                 )
@@ -924,7 +978,13 @@ class TestChannelAPI(unittest.TestCase):
             mock_con_est.return_value = self.GHSReturnValue["OK"]
 
         self.assertEqual(
+<<<<<<< HEAD
             channel_api.set_span_and_offset(self.con_handle, None, None, None, None),
+=======
+            channel_api.set_span_and_offset(
+                self.con_handle, None, None, None, None
+            ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
             "NullPtrArgument",
             "set_span_and_offset null argument check failed.",
         )
@@ -960,7 +1020,13 @@ class TestChannelAPI(unittest.TestCase):
                     "Frequency": 25.0,
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.get_filter_type_and_frequency(self.con_handle, "A", 1),
+=======
+                    channel_api.get_filter_type_and_frequency(
+                        self.con_handle, "A", 1
+                    ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     ("OK", "Bessel_AA", 25.0),
                     "get_filter_type_and_frequency success response test failed.",
                 )
@@ -982,7 +1048,13 @@ class TestChannelAPI(unittest.TestCase):
                     "Frequency": 25.0,
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.get_filter_type_and_frequency(self.con_handle, "A", 1),
+=======
+                    channel_api.get_filter_type_and_frequency(
+                        self.con_handle, "A", 1
+                    ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     ("NOK", None, None),
                     "get_filter_type_and_frequency failure response test failed.",
                 )
@@ -990,7 +1062,13 @@ class TestChannelAPI(unittest.TestCase):
                     self.RETURN_KEY: self.GHSReturnValue["NOK"],
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.get_filter_type_and_frequency(self.con_handle, "A", 1),
+=======
+                    channel_api.get_filter_type_and_frequency(
+                        self.con_handle, "A", 1
+                    ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     ("NOK", None, None),
                     "get_filter_type_and_frequency failure response test failed.",
                 )
@@ -999,7 +1077,13 @@ class TestChannelAPI(unittest.TestCase):
                     self.RETURN_KEY: self.GHSReturnValue["OK"],
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.get_filter_type_and_frequency(self.con_handle, "A", 1),
+=======
+                    channel_api.get_filter_type_and_frequency(
+                        self.con_handle, "A", 1
+                    ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     ("OK", None, None),
                     "get_filter_type_and_frequency failure response test failed.",
                 )
@@ -1013,7 +1097,13 @@ class TestChannelAPI(unittest.TestCase):
             mock_con_est.return_value = self.GHSReturnValue["OK"]
 
         self.assertEqual(
+<<<<<<< HEAD
             channel_api.get_filter_type_and_frequency(self.con_handle, None, None),
+=======
+            channel_api.get_filter_type_and_frequency(
+                self.con_handle, None, None
+            ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
             ("NullPtrArgument", None, None),
             "get_filter_type_and_frequency null argument check failed.",
         )
@@ -1185,7 +1275,13 @@ class TestChannelAPI(unittest.TestCase):
             mock_con_est.return_value = self.GHSReturnValue["OK"]
 
         self.assertEqual(
+<<<<<<< HEAD
             channel_api.set_excitation(self.con_handle, None, None, None, None),
+=======
+            channel_api.set_excitation(
+                self.con_handle, None, None, None, None
+            ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
             "NullPtrArgument",
             "set_excitation null argument check failed.",
         )
@@ -1297,7 +1393,13 @@ class TestChannelAPI(unittest.TestCase):
                     self.RETURN_KEY: self.GHSReturnValue["OK"],
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.set_amplifier_mode(self.con_handle, "A", 1, "Basic"),
+=======
+                    channel_api.set_amplifier_mode(
+                        self.con_handle, "A", 1, "Basic"
+                    ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     "OK",
                     "set_amplifier_mode success response test failed.",
                 )
@@ -1454,17 +1556,35 @@ class TestChannelAPI(unittest.TestCase):
             mock_con_est.return_value = self.GHSReturnValue["OK"]
 
         self.assertEqual(
+<<<<<<< HEAD
             channel_api.set_technical_units(self.con_handle, "A", 1, 10, 10.0, 20.0),
+=======
+            channel_api.set_technical_units(
+                self.con_handle, "A", 1, 10, 10.0, 20.0
+            ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
             "InvalidDataType",
             "set_technical_units invalid argument check failed.",
         )
         self.assertEqual(
+<<<<<<< HEAD
             channel_api.set_technical_units(self.con_handle, "A", 1, 10, 10, 20.0),
+=======
+            channel_api.set_technical_units(
+                self.con_handle, "A", 1, 10, 10, 20.0
+            ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
             "InvalidDataType",
             "set_technical_units invalid argument check failed.",
         )
         self.assertEqual(
+<<<<<<< HEAD
             channel_api.set_technical_units(self.con_handle, "A", 1, "KGS", 10.0, 20),
+=======
+            channel_api.set_technical_units(
+                self.con_handle, "A", 1, "KGS", 10.0, 20
+            ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
             "InvalidDataType",
             "set_technical_units invalid argument check failed.",
         )
@@ -1559,7 +1679,13 @@ class TestChannelAPI(unittest.TestCase):
                     self.RETURN_KEY: self.GHSReturnValue["OK"],
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.set_auto_range(self.con_handle, "A", 1, "Enable", 10.0),
+=======
+                    channel_api.set_auto_range(
+                        self.con_handle, "A", 1, "Enable", 10.0
+                    ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     "OK",
                     "set_auto_range success response test failed.",
                 )
@@ -1573,7 +1699,13 @@ class TestChannelAPI(unittest.TestCase):
             mock_con_est.return_value = self.GHSReturnValue["OK"]
 
         self.assertEqual(
+<<<<<<< HEAD
             channel_api.set_auto_range(self.con_handle, None, None, None, None),
+=======
+            channel_api.set_auto_range(
+                self.con_handle, None, None, None, None
+            ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
             "NullPtrArgument",
             "set_auto_range null argument check failed.",
         )
@@ -1612,7 +1744,13 @@ class TestChannelAPI(unittest.TestCase):
                     self.RETURN_KEY: self.GHSReturnValue["OK"],
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.cmd_auto_range_now(self.con_handle, "A", 1, 10.0),
+=======
+                    channel_api.cmd_auto_range_now(
+                        self.con_handle, "A", 1, 10.0
+                    ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     "OK",
                     "cmd_auto_range_now success response test failed.",
                 )
@@ -1754,7 +1892,13 @@ class TestChannelAPI(unittest.TestCase):
                     "GateTime": 23.0,
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.get_timer_counter_gate_time(self.con_handle, "A", 11),
+=======
+                    channel_api.get_timer_counter_gate_time(
+                        self.con_handle, "A", 11
+                    ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     ("OK", 23.0),
                     "get_timer_counter_gate_time success response test failed.",
                 )
@@ -1775,7 +1919,13 @@ class TestChannelAPI(unittest.TestCase):
                     "GateTime": 23.0,
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.get_timer_counter_gate_time(self.con_handle, "A", 11),
+=======
+                    channel_api.get_timer_counter_gate_time(
+                        self.con_handle, "A", 11
+                    ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     ("NOK", None),
                     "get_timer_counter_gate_time failure response test failed.",
                 )
@@ -1783,7 +1933,13 @@ class TestChannelAPI(unittest.TestCase):
                     self.RETURN_KEY: self.GHSReturnValue["NOK"],
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.get_timer_counter_gate_time(self.con_handle, "A", 11),
+=======
+                    channel_api.get_timer_counter_gate_time(
+                        self.con_handle, "A", 11
+                    ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     ("NOK", None),
                     "get_timer_counter_gate_time failure response test failed.",
                 )
@@ -1792,7 +1948,13 @@ class TestChannelAPI(unittest.TestCase):
                     self.RETURN_KEY: self.GHSReturnValue["OK"],
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.get_timer_counter_gate_time(self.con_handle, "A", 11),
+=======
+                    channel_api.get_timer_counter_gate_time(
+                        self.con_handle, "A", 11
+                    ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     ("OK", None),
                     "get_timer_counter_gate_time failure response test failed.",
                 )
@@ -1806,7 +1968,13 @@ class TestChannelAPI(unittest.TestCase):
             mock_con_est.return_value = self.GHSReturnValue["OK"]
 
         self.assertEqual(
+<<<<<<< HEAD
             channel_api.get_timer_counter_gate_time(self.con_handle, None, None),
+=======
+            channel_api.get_timer_counter_gate_time(
+                self.con_handle, None, None
+            ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
             ("NullPtrArgument", None),
             "get_timer_counter_gate_time null argument check failed.",
         )
@@ -1842,7 +2010,13 @@ class TestChannelAPI(unittest.TestCase):
             mock_con_est.return_value = self.GHSReturnValue["OK"]
 
         self.assertEqual(
+<<<<<<< HEAD
             channel_api.set_timer_counter_gate_time(self.con_handle, None, None, None),
+=======
+            channel_api.set_timer_counter_gate_time(
+                self.con_handle, None, None, None
+            ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
             "NullPtrArgument",
             "set_timer_counter_gate_time null argument check failed.",
         )
@@ -1856,7 +2030,13 @@ class TestChannelAPI(unittest.TestCase):
             mock_con_est.return_value = self.GHSReturnValue["OK"]
 
         self.assertEqual(
+<<<<<<< HEAD
             channel_api.set_timer_counter_gate_time(self.con_handle, "A", 11, 20),
+=======
+            channel_api.set_timer_counter_gate_time(
+                self.con_handle, "A", 11, 20
+            ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
             "InvalidDataType",
             "set_timer_counter_gate_time invalid argument check failed.",
         )
@@ -1877,7 +2057,13 @@ class TestChannelAPI(unittest.TestCase):
                     "TimerCounterMode": 8,
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.get_timer_counter_mode(self.con_handle, "A", 11),
+=======
+                    channel_api.get_timer_counter_mode(
+                        self.con_handle, "A", 11
+                    ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     ("OK", "CountQuadrature"),
                     "get_timer_counter_mode success response test failed.",
                 )
@@ -1898,7 +2084,13 @@ class TestChannelAPI(unittest.TestCase):
                     "TimerCounterMode": 8,
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.get_timer_counter_mode(self.con_handle, "A", 11),
+=======
+                    channel_api.get_timer_counter_mode(
+                        self.con_handle, "A", 11
+                    ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     ("NOK", None),
                     "get_timer_counter_mode failure response test failed.",
                 )
@@ -1906,7 +2098,13 @@ class TestChannelAPI(unittest.TestCase):
                     self.RETURN_KEY: self.GHSReturnValue["NOK"],
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.get_timer_counter_mode(self.con_handle, "A", 11),
+=======
+                    channel_api.get_timer_counter_mode(
+                        self.con_handle, "A", 11
+                    ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     ("NOK", None),
                     "get_timer_counter_mode failure response test failed.",
                 )
@@ -1915,7 +2113,13 @@ class TestChannelAPI(unittest.TestCase):
                     self.RETURN_KEY: self.GHSReturnValue["OK"],
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.get_timer_counter_mode(self.con_handle, "A", 11),
+=======
+                    channel_api.get_timer_counter_mode(
+                        self.con_handle, "A", 11
+                    ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     ("OK", None),
                     "get_timer_counter_mode failure response test failed.",
                 )
@@ -1965,7 +2169,13 @@ class TestChannelAPI(unittest.TestCase):
             mock_con_est.return_value = self.GHSReturnValue["OK"]
 
         self.assertEqual(
+<<<<<<< HEAD
             channel_api.set_timer_counter_mode(self.con_handle, None, None, None),
+=======
+            channel_api.set_timer_counter_mode(
+                self.con_handle, None, None, None
+            ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
             "NullPtrArgument",
             "set_timer_counter_mode null argument check failed.",
         )
@@ -1979,7 +2189,13 @@ class TestChannelAPI(unittest.TestCase):
             mock_con_est.return_value = self.GHSReturnValue["OK"]
 
         self.assertEqual(
+<<<<<<< HEAD
             channel_api.set_timer_counter_mode(self.con_handle, "A", 11, "Base"),
+=======
+            channel_api.set_timer_counter_mode(
+                self.con_handle, "A", 11, "Base"
+            ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
             "InvalidDataType",
             "set_timer_counter_mode invalid argument check failed.",
         )
@@ -2001,8 +2217,15 @@ class TestChannelAPI(unittest.TestCase):
                     "UpperValue": 20.0,
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.get_timer_counter_range(self.con_handle, "A", 11),
                     ("OK", 10.0, 20.0),
+=======
+                    channel_api.get_timer_counter_range(
+                        self.con_handle, "A", 11
+                    ),
+                    ("OK", 20.0, 10.0),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     "get_timer_counter_range success response test failed.",
                 )
 
@@ -2023,7 +2246,13 @@ class TestChannelAPI(unittest.TestCase):
                     "UpperValue": 20.0,
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.get_timer_counter_range(self.con_handle, "A", 11),
+=======
+                    channel_api.get_timer_counter_range(
+                        self.con_handle, "A", 11
+                    ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     ("NOK", None, None),
                     "get_timer_counter_range failure response test failed.",
                 )
@@ -2031,7 +2260,13 @@ class TestChannelAPI(unittest.TestCase):
                     self.RETURN_KEY: self.GHSReturnValue["NOK"],
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.get_timer_counter_range(self.con_handle, "A", 11),
+=======
+                    channel_api.get_timer_counter_range(
+                        self.con_handle, "A", 11
+                    ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     ("NOK", None, None),
                     "get_timer_counter_range failure response test failed.",
                 )
@@ -2040,7 +2275,13 @@ class TestChannelAPI(unittest.TestCase):
                     self.RETURN_KEY: self.GHSReturnValue["OK"],
                 }
                 self.assertEqual(
+<<<<<<< HEAD
                     channel_api.get_timer_counter_range(self.con_handle, "A", 11),
+=======
+                    channel_api.get_timer_counter_range(
+                        self.con_handle, "A", 11
+                    ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
                     ("OK", None, None),
                     "get_timer_counter_range failure response test failed.",
                 )
@@ -2106,12 +2347,24 @@ class TestChannelAPI(unittest.TestCase):
             mock_con_est.return_value = self.GHSReturnValue["OK"]
 
         self.assertEqual(
+<<<<<<< HEAD
             channel_api.set_timer_counter_range(self.con_handle, "A", 11, 10, 20.0),
+=======
+            channel_api.set_timer_counter_range(
+                self.con_handle, "A", 11, 10, 20.0
+            ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
             "InvalidDataType",
             "set_timer_counter_range invalid argument check failed.",
         )
         self.assertEqual(
+<<<<<<< HEAD
             channel_api.set_timer_counter_range(self.con_handle, "A", 11, 10.0, 20),
+=======
+            channel_api.set_timer_counter_range(
+                self.con_handle, "A", 11, 10.0, 20
+            ),
+>>>>>>> e532bd274940e074e5c821c5240c7d35d3c7e88a
             "InvalidDataType",
             "set_timer_counter_range invalid argument check failed.",
         )
