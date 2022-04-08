@@ -23,7 +23,7 @@ copyright = "2022, Hottinger Bruel and Kjaer Benelux B.V."
 author = "Hottinger Bruel and Kjaer Benelux B.V."
 
 # The full version, including alpha/beta/rc tags
-release = "1.0"
+release = "1.1"
 
 
 # -- General configuration ---------------------------------------------------
