@@ -39,6 +39,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ghspyapi.html">API Functions</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="releasenotes.html">Release Notes</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="releasenotes.html#version-1-0">Version 1.0</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="connections.html">Connections</a></li>
@@ -49,9 +50,9 @@
 <li class="toctree-l3"><a class="reference internal" href="recorder.html">Recorder</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-1-1">Version 1.1</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="ghspyapi.html">API Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="remarks.html">Remarks</a></li>
 </ul>
 
@@ -69,7 +70,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="releasenotes.html">Release Notes</a> &raquo;</li>
+          <li><a href="ghspyapi.html">API Functions</a> &raquo;</li>
       <li>Manage recordings</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/managerecording.rst.txt" rel="nofollow"> View page source</a>
@@ -89,7 +90,11 @@
 <dd><p>Retrieve the storage location.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Status and storage location.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - API return status</p></li>
+<li><p>GHSStorageLocation - The storage location</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -104,7 +109,10 @@
 <dd class="field-odd"><p><strong>storage_location</strong> – The desired storage location.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>API status.</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p>GHSReturnValue - API return status</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -117,8 +125,12 @@ last recording file.</p>
 <p><em>The recording base name parameter is UTF-8 encoded.</em></p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Status, base name and index of the recording
-file.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - API return status</p></li>
+<li><p>recording_base_name - The base name of the recording file</p></li>
+<li><p>recording_index - The index of the recording file</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -126,10 +138,8 @@ file.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_set_recording_name">
 <span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_set_recording_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recording_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recording_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_set_recording_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_set_recording_name" title="Permalink to this definition"></a></dt>
-<dd><dl class="simple">
-<dt>Set the recording base name and recording index for the next</dt><dd><p>recording file.</p>
-</dd>
-</dl>
+<dd><p>Set the recording base name and recording index for the next
+recording file.</p>
 <p><em>The system needs to be idle before calling this function.
 The recording base name parameter must be UTF-8 encoded.</em></p>
 <dl class="field-list simple">
@@ -140,7 +150,10 @@ The recording base name parameter must be UTF-8 encoded.</em></p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>API status.</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p>GHSReturnValue - API return status</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -153,7 +166,10 @@ storage.</p>
 <p><em>Recordings are deleted asynchronously.</em></p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>API status.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - API return status</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -165,7 +181,10 @@ storage.</p>
 <p><em>Recordings are deleted asynchronously.</em></p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>API status.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - API return status</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -183,8 +202,12 @@ for the specified recording data source.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Status, flag to indicate if high and low rate
-data is stored.</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p>GHSReturnValue - API return status</p></li>
+<li><p>GHSEnableDisable - Flag to indicate if high rate data is stored</p></li>
+<li><p>GHSEnableDisable - Flag to indicate if low rate data is stored</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -204,7 +227,10 @@ specified recording data source.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>API status.</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p>GHSReturnValue - API return status</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>

@@ -39,6 +39,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ghspyapi.html">API Functions</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="releasenotes.html">Release Notes</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="releasenotes.html#version-1-0">Version 1.0</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="connections.html">Connections</a></li>
@@ -49,9 +50,9 @@
 <li class="toctree-l3"><a class="reference internal" href="recorder.html">Recorder</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-1-1">Version 1.1</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="ghspyapi.html">API Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="remarks.html">Remarks</a></li>
 </ul>
 
@@ -69,7 +70,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="releasenotes.html">Release Notes</a> &raquo;</li>
+          <li><a href="ghspyapi.html">API Functions</a> &raquo;</li>
       <li>Manage mainframe settings</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/managemainframe.rst.txt" rel="nofollow"> View page source</a>
@@ -92,8 +93,12 @@ ensure reading the correct amount of memory.
 Memory for this blob is allocated by the API.</em></p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Status, base name and index of the recording
-file.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - API return status</p></li>
+<li><p>blob - Pointer to the settings blob</p></li>
+<li><p>blob_size - Size of the settings blob</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -112,7 +117,10 @@ boot.</em></p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>API status.</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p>GHSReturnValue - API return status</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -125,7 +133,10 @@ boot.</em></p>
 boot.</em></p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>API status.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - API return status</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>

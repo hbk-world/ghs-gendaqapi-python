@@ -4,7 +4,7 @@ API Functions
 All available API functions:
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
 
    connections
    acquisition
@@ -12,3 +12,4 @@ All available API functions:
    managerecording
    managemainframe
    recorder
+   channel

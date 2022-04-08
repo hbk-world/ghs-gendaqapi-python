@@ -36,8 +36,8 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ghspyapi.html">API Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="remarks.html">Remarks</a></li>
 </ul>
 
@@ -76,6 +76,10 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="managemainframe.html#ghsapi.ghsapi.GHS.ghs_apply_persisted_settings">ghs_apply_persisted_settings() (ghsapi.ghsapi.GHS method)</a>
 </li>
+      <li><a href="channelanalog.html#ghsapi.ghsapi.GHS.ghs_cmd_auto_range_now">ghs_cmd_auto_range_now() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="channel.html#ghsapi.ghsapi.GHS.ghs_cmd_zeroing">ghs_cmd_zeroing() (ghsapi.ghsapi.GHS method)</a>
+</li>
       <li><a href="connections.html#ghsapi.ghsapi.GHS.ghs_connect">ghs_connect() (ghsapi.ghsapi.GHS method)</a>
 </li>
       <li><a href="managerecording.html#ghsapi.ghsapi.GHS.ghs_delete_all_recordings">ghs_delete_all_recordings() (ghsapi.ghsapi.GHS method)</a>
@@ -90,7 +94,19 @@
 </li>
       <li><a href="acquisition.html#ghsapi.ghsapi.GHS.ghs_get_acquisition_time">ghs_get_acquisition_time() (ghsapi.ghsapi.GHS method)</a>
 </li>
+      <li><a href="channelanalog.html#ghsapi.ghsapi.GHS.ghs_get_amplifier_mode">ghs_get_amplifier_mode() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="channelanalog.html#ghsapi.ghsapi.GHS.ghs_get_auto_range">ghs_get_auto_range() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="channelanalog.html#ghsapi.ghsapi.GHS.ghs_get_channel_cal_info">ghs_get_channel_cal_info() (ghsapi.ghsapi.GHS method)</a>
+</li>
       <li><a href="recorder.html#ghsapi.ghsapi.GHS.ghs_get_channel_count">ghs_get_channel_count() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="channel.html#ghsapi.ghsapi.GHS.ghs_get_channel_name">ghs_get_channel_name() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="channel.html#ghsapi.ghsapi.GHS.ghs_get_channel_storage_enabled">ghs_get_channel_storage_enabled() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="channel.html#ghsapi.ghsapi.GHS.ghs_get_channel_type">ghs_get_channel_type() (ghsapi.ghsapi.GHS method)</a>
 </li>
       <li><a href="connections.html#ghsapi.ghsapi.GHS.ghs_get_client_api_version">ghs_get_client_api_version() (ghsapi.ghsapi.GHS method)</a>
 </li>
@@ -102,7 +118,13 @@
 </li>
       <li><a href="mainframe.html#ghsapi.ghsapi.GHS.ghs_get_disk_space">ghs_get_disk_space() (ghsapi.ghsapi.GHS method)</a>
 </li>
+      <li><a href="channelanalog.html#ghsapi.ghsapi.GHS.ghs_get_excitation">ghs_get_excitation() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="channelanalog.html#ghsapi.ghsapi.GHS.ghs_get_filter_type_and_frequency">ghs_get_filter_type_and_frequency() (ghsapi.ghsapi.GHS method)</a>
+</li>
       <li><a href="managerecording.html#ghsapi.ghsapi.GHS.ghs_get_high_low_rate_storage_enabled">ghs_get_high_low_rate_storage_enabled() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="channelanalog.html#ghsapi.ghsapi.GHS.ghs_get_input_coupling">ghs_get_input_coupling() (ghsapi.ghsapi.GHS method)</a>
 </li>
       <li><a href="mainframe.html#ghsapi.ghsapi.GHS.ghs_get_mainframe_info">ghs_get_mainframe_info() (ghsapi.ghsapi.GHS method)</a>
 </li>
@@ -114,13 +136,27 @@
 </li>
       <li><a href="recorder.html#ghsapi.ghsapi.GHS.ghs_get_sample_rate">ghs_get_sample_rate() (ghsapi.ghsapi.GHS method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="channelanalog.html#ghsapi.ghsapi.GHS.ghs_get_signal_coupling">ghs_get_signal_coupling() (ghsapi.ghsapi.GHS method)</a>
+</li>
       <li><a href="mainframe.html#ghsapi.ghsapi.GHS.ghs_get_slot_count">ghs_get_slot_count() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="channelanalog.html#ghsapi.ghsapi.GHS.ghs_get_span_and_offset">ghs_get_span_and_offset() (ghsapi.ghsapi.GHS method)</a>
 </li>
       <li><a href="managerecording.html#ghsapi.ghsapi.GHS.ghs_get_storage_location">ghs_get_storage_location() (ghsapi.ghsapi.GHS method)</a>
 </li>
       <li><a href="mainframe.html#ghsapi.ghsapi.GHS.ghs_get_sync_status">ghs_get_sync_status() (ghsapi.ghsapi.GHS method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="channelanalog.html#ghsapi.ghsapi.GHS.ghs_get_technical_units">ghs_get_technical_units() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="channeltimer.html#ghsapi.ghsapi.GHS.ghs_get_timer_counter_gate_time">ghs_get_timer_counter_gate_time() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="channeltimer.html#ghsapi.ghsapi.GHS.ghs_get_timer_counter_mode">ghs_get_timer_counter_mode() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="channeltimer.html#ghsapi.ghsapi.GHS.ghs_get_timer_counter_range">ghs_get_timer_counter_range() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="channelanalog.html#ghsapi.ghsapi.GHS.ghs_get_trigger_settings">ghs_get_trigger_settings() (ghsapi.ghsapi.GHS method)</a>
 </li>
       <li><a href="mainframe.html#ghsapi.ghsapi.GHS.ghs_get_user_mode">ghs_get_user_mode() (ghsapi.ghsapi.GHS method)</a>
 </li>
@@ -132,11 +168,25 @@
 </li>
       <li><a href="acquisition.html#ghsapi.ghsapi.GHS.ghs_resume_recording">ghs_resume_recording() (ghsapi.ghsapi.GHS method)</a>
 </li>
+      <li><a href="channelanalog.html#ghsapi.ghsapi.GHS.ghs_set_amplifier_mode">ghs_set_amplifier_mode() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="channelanalog.html#ghsapi.ghsapi.GHS.ghs_set_auto_range">ghs_set_auto_range() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="channel.html#ghsapi.ghsapi.GHS.ghs_set_channel_name">ghs_set_channel_name() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="channel.html#ghsapi.ghsapi.GHS.ghs_set_channel_storage_enabled">ghs_set_channel_storage_enabled() (ghsapi.ghsapi.GHS method)</a>
+</li>
       <li><a href="managemainframe.html#ghsapi.ghsapi.GHS.ghs_set_current_settings">ghs_set_current_settings() (ghsapi.ghsapi.GHS method)</a>
 </li>
       <li><a href="recorder.html#ghsapi.ghsapi.GHS.ghs_set_digital_output">ghs_set_digital_output() (ghsapi.ghsapi.GHS method)</a>
 </li>
+      <li><a href="channelanalog.html#ghsapi.ghsapi.GHS.ghs_set_excitation">ghs_set_excitation() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="channelanalog.html#ghsapi.ghsapi.GHS.ghs_set_filter_type_and_frequency">ghs_set_filter_type_and_frequency() (ghsapi.ghsapi.GHS method)</a>
+</li>
       <li><a href="managerecording.html#ghsapi.ghsapi.GHS.ghs_set_high_low_rate_storage_enabled">ghs_set_high_low_rate_storage_enabled() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="channelanalog.html#ghsapi.ghsapi.GHS.ghs_set_input_coupling">ghs_set_input_coupling() (ghsapi.ghsapi.GHS method)</a>
 </li>
       <li><a href="recorder.html#ghsapi.ghsapi.GHS.ghs_set_recorder_enabled">ghs_set_recorder_enabled() (ghsapi.ghsapi.GHS method)</a>
 </li>
@@ -144,7 +194,21 @@
 </li>
       <li><a href="recorder.html#ghsapi.ghsapi.GHS.ghs_set_sample_rate">ghs_set_sample_rate() (ghsapi.ghsapi.GHS method)</a>
 </li>
+      <li><a href="channelanalog.html#ghsapi.ghsapi.GHS.ghs_set_signal_coupling">ghs_set_signal_coupling() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="channelanalog.html#ghsapi.ghsapi.GHS.ghs_set_span_and_offset">ghs_set_span_and_offset() (ghsapi.ghsapi.GHS method)</a>
+</li>
       <li><a href="managerecording.html#ghsapi.ghsapi.GHS.ghs_set_storage_location">ghs_set_storage_location() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="channelanalog.html#ghsapi.ghsapi.GHS.ghs_set_technical_units">ghs_set_technical_units() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="channeltimer.html#ghsapi.ghsapi.GHS.ghs_set_timer_counter_gate_time">ghs_set_timer_counter_gate_time() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="channeltimer.html#ghsapi.ghsapi.GHS.ghs_set_timer_counter_mode">ghs_set_timer_counter_mode() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="channeltimer.html#ghsapi.ghsapi.GHS.ghs_set_timer_counter_range">ghs_set_timer_counter_range() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="channelanalog.html#ghsapi.ghsapi.GHS.ghs_set_trigger_settings">ghs_set_trigger_settings() (ghsapi.ghsapi.GHS method)</a>
 </li>
       <li><a href="mainframe.html#ghsapi.ghsapi.GHS.ghs_set_user_mode">ghs_set_user_mode() (ghsapi.ghsapi.GHS method)</a>
 </li>

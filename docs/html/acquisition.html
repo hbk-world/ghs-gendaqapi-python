@@ -39,6 +39,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ghspyapi.html">API Functions</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="releasenotes.html">Release Notes</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="releasenotes.html#version-1-0">Version 1.0</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="connections.html">Connections</a></li>
@@ -49,9 +50,9 @@
 <li class="toctree-l3"><a class="reference internal" href="recorder.html">Recorder</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-1-1">Version 1.1</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="ghspyapi.html">API Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="remarks.html">Remarks</a></li>
 </ul>
 
@@ -69,7 +70,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="releasenotes.html">Release Notes</a> &raquo;</li>
+          <li><a href="ghspyapi.html">API Functions</a> &raquo;</li>
       <li>Acquisition control</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/acquisition.rst.txt" rel="nofollow"> View page source</a>
@@ -90,7 +91,10 @@
 <p><em>The system needs to be idle before calling this function.</em></p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Start preview status.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - Start preview status.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -103,7 +107,10 @@
 function.</em></p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Stop preview status.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - Stop preview status.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -118,7 +125,10 @@ This command can be executed only successfully when the local
 storage is set.</em></p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Start recording status.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - Start recording status.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -130,7 +140,10 @@ storage is set.</em></p>
 <p><em>The system needs to be recording before calling this function.</em></p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Pause recording status.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - Pause recording status.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -142,7 +155,10 @@ storage is set.</em></p>
 <p><em>The system needs to be paused before calling this function.</em></p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Resume recording status.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - Resume recording status.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -154,7 +170,10 @@ storage is set.</em></p>
 <p><em>The system needs to be recording before calling this function.</em></p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Stop recording status.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - Stop recording status.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -166,7 +185,10 @@ storage is set.</em></p>
 <p>Results in error when the trigger cannot be issued.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Trigger status.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - Trigger status.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -177,7 +199,11 @@ storage is set.</em></p>
 <dd><p>Returns the Acquisition State of the Mainframe.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Status and acquisition state of the mainframe.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - API return status</p></li>
+<li><p>GHSAcquisitionState - acquisition state of the mainframe.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -189,8 +215,11 @@ storage is set.</em></p>
 of acquistion.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Status and current acquisition time relative to
-the start of acquistion.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - API return status</p></li>
+<li><p>acquisition_time - The acquisition time in seconds.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -201,8 +230,13 @@ the start of acquistion.</p>
 <dd><p>Retrieves the absolute time of the start of acquisition.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Status and the absolute time of the start of
-acquisition as year, days and seconds.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - API return status</p></li>
+<li><p>year - The year</p></li>
+<li><p>day - The day number in the year</p></li>
+<li><p>seconds -The number of seconds since midnight.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>

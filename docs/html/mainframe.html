@@ -39,6 +39,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ghspyapi.html">API Functions</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="releasenotes.html">Release Notes</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="releasenotes.html#version-1-0">Version 1.0</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="connections.html">Connections</a></li>
@@ -49,9 +50,9 @@
 <li class="toctree-l3"><a class="reference internal" href="recorder.html">Recorder</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-1-1">Version 1.1</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="ghspyapi.html">API Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="remarks.html">Remarks</a></li>
 </ul>
 
@@ -69,7 +70,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="releasenotes.html">Release Notes</a> &raquo;</li>
+          <li><a href="ghspyapi.html">API Functions</a> &raquo;</li>
       <li>Mainframe</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/mainframe.rst.txt" rel="nofollow"> View page source</a>
@@ -93,7 +94,10 @@ mainframe.</p>
 <dd class="field-odd"><p><strong>identity_flag</strong> – Enable or disable flag.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Identify API status.</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p>GHSReturnValue - Identify API status.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -104,8 +108,12 @@ mainframe.</p>
 <dd><p>Get total and available mainframe internal disk space.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Status, total mainframe internal disk space in
-GB, available internal disk space in GB.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - API return status</p></li>
+<li><p>total - Total mainframe internal disk space in GB</p></li>
+<li><p>available - Available internal disk space in GB</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -116,7 +124,11 @@ GB, available internal disk space in GB.</p>
 <dd><p>Determine the mainframe sync status.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>API status and sync status.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - API return status</p></li>
+<li><p>GHSSyncStatus - Sync status</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -127,7 +139,11 @@ GB, available internal disk space in GB.</p>
 <dd><p>Retrieve the number of slots in the mainframe.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Status and number of slots in the mainframe.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - API return status</p></li>
+<li><p>slot_count - The number of slots in the mainframe</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -138,7 +154,11 @@ GB, available internal disk space in GB.</p>
 <dd><p>Retrieve the user mode.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>API status and user mode.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - API return status</p></li>
+<li><p>GHSUserMode - The user mode</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -153,7 +173,10 @@ GB, available internal disk space in GB.</p>
 <dd class="field-odd"><p><strong>user_mode</strong> – The desired user mode.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>API status.</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p>GHSReturnValue - API return status</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -167,8 +190,14 @@ information for the connected mainframe.</p>
 firmwareVersion parameters are UTF-8 encoded.</em></p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>API status and mainframe info as type, name, serial number
-and firmware version.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - API return status</p></li>
+<li><p>mainframe_type - The type of the mainframe</p></li>
+<li><p>mainframe_name - The name of the mainframe</p></li>
+<li><p>serial_number - The serial number of the mainframe</p></li>
+<li><p>firmware_version - The firmware version of the mainframe</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>

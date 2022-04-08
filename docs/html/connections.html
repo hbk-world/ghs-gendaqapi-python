@@ -19,7 +19,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Acquisition control" href="acquisition.html" />
-    <link rel="prev" title="Release Notes" href="releasenotes.html" /> 
+    <link rel="prev" title="API Functions" href="ghspyapi.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -39,6 +39,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ghspyapi.html">API Functions</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="releasenotes.html">Release Notes</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="releasenotes.html#version-1-0">Version 1.0</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Connections</a></li>
@@ -49,9 +50,9 @@
 <li class="toctree-l3"><a class="reference internal" href="recorder.html">Recorder</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-1-1">Version 1.1</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="ghspyapi.html">API Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="remarks.html">Remarks</a></li>
 </ul>
 
@@ -69,7 +70,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="releasenotes.html">Release Notes</a> &raquo;</li>
+          <li><a href="ghspyapi.html">API Functions</a> &raquo;</li>
       <li>Connections</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/connections.rst.txt" rel="nofollow"> View page source</a>
@@ -95,7 +96,10 @@
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Connect return status.</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p>GHSReturnValue - Connect return status.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -108,7 +112,10 @@
 mainframe is not connected.</em></p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Disconnect return status.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - Disconnect return status.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -121,7 +128,10 @@ mainframe is not connected.</em></p>
 GHSReturnValue_APIMismatch.</em></p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Version number of the client.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>CLIENT_API_VERSION - Version number of the client.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -140,7 +150,10 @@ WriteAccessBlocked in case this client currently has no write
 access.</em></p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Access permission.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSAccess - Access permission.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -151,7 +164,7 @@ access.</em></p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="releasenotes.html" class="btn btn-neutral float-left" title="Release Notes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ghspyapi.html" class="btn btn-neutral float-left" title="API Functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="acquisition.html" class="btn btn-neutral float-right" title="Acquisition control" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
