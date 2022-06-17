@@ -35,6 +35,7 @@ Package Contents:
 from . import acquisition_api as _acquisition
 from . import channel_api as _channel
 from . import connection_api as _connection
+from . import fieldbus_api as _fieldbus
 from . import mainframe_api as _mainframe
 from . import manage_mainframe_settings as _manage_mainframe_settings
 from . import manage_recordings_api as _manage_recordings
@@ -1611,4 +1612,123 @@ class GHS:
             channel_index,
             lower_value,
             upper_value,
+        )
+
+    # FieldBus API
+
+    def ghs_initiate_fieldbus_data_transfer(
+        self,
+        update_rate: int,
+    ) -> tuple[str, int | None, int | None]:
+        """Opens a new connection for the field bus data, and waits for client
+        to connect. Once the client connects, if the acquisition state is
+        active, data is sent to the client. Otherwise nothing is sent.
+
+        *If no formulas are present then you get error code
+        back:GHSReturnValue_FieldBusError_NotConfigured if the field bus is
+        already initiated then an error code is
+        returned:GHSReturnValue_FieldBusError_FieldBusEnabled. To change the
+        update rate the field bus needs to be stoped and inititate again with
+        a new update rate.*
+
+        Args:
+            update_rate: (in Hz) The update rate should be a part of the list
+            containing the supported update rates
+
+        Returns:
+            * GHSReturnValue - API return values
+            * update_rate - If the update rate selected by the user is not
+            supported, the mainframe will adjust the update rate, based on a
+            minimum distance from the supported rates and returns back to the
+            client.
+            * data_count - The number of published data on the setup.Timestamp
+            is not included in this count.
+        """
+
+        return _fieldbus.initiate_fieldbus_data_transfer(
+            self._con_handle,
+            update_rate,
+        )
+
+    def ghs_stop_fieldbus_data_transfer(
+        self,
+    ) -> str:
+        """Closes the socket dedicated for the field bus data and stops
+        transfering data. The ring buffer allocated for the transfer data is
+        deleted.
+
+        *Field bus data transfer must have been initiated before calling this
+        function*
+
+        Returns:
+            * GHSReturnValue - API return values
+        """
+
+        return _fieldbus.stop_fieldbus_data_transfer(
+            self._con_handle,
+        )
+
+    def ghs_get_fieldbus_data_count(
+        self,
+    ) -> tuple[str, int | None]:
+        """Gets the number of data that are configured to be sent through the
+        field bus, excluding the timestamp.
+
+        Returns:
+            * GHSReturnValue - API return values
+            * data_count - The number of data that are selected to be
+            published, excluding timestamp.
+        """
+
+        return _fieldbus.get_fieldbus_data_count(
+            self._con_handle,
+        )
+
+    def ghs_get_fieldbus_data_name_and_unit(
+        self,
+        data_index: int,
+    ) -> tuple[str, str | None, str | None]:
+        """Gets the name of specific field bus data value, by giving the index
+        of the data value. The number of data values can be retrieved by
+        GHSGetFieldBusDataCount(). In case of no formulas (or reserved values
+        acquisition state and latency) published, an error code is returned:
+        GHSReturnValue_FieldBusError_NoFormulasDeployed.
+
+        Args:
+            data_index: Zero-based index of the data value.
+
+        Returns:
+            * GHSReturnValue - API return values
+            * data_name - Name of the data value.
+            * data_unit - Unit of the data value.
+        """
+
+        return _fieldbus.get_fieldbus_data_name_and_unit(
+            self._con_handle,
+            data_index,
+        )
+
+    def ghs_request_fieldbus_snapshot(
+        self,
+    ) -> tuple[str, float | None, int | None, tuple[float] | None]:
+        """Request a single snapshot of the field bus data. In this case the
+        timestamp received is not grid aligned. If the system is not acquiring
+        the method returns an error code:GHSReturnValue_SystemNotRecording In
+        case of no formulas you get the error return code
+        back:GHSReturnValue_FieldBusError_NotConfigured if the field bus is
+        already enabled then this method is not allowed.An error return code
+        is returned:FieldBusError_UnavailableFunctionality.
+
+        Returns:
+            * GHSReturnValue - API return values
+            * timestamp - of the FieldBus data relative to start of
+            acquisition (not grid aligned) GHSGetAcquisitionStartTime
+            * data_count - Actuall number of elements(formulas) in the data
+            parameter. If number of elements allocated by the customer are
+            less than the actual formulas number, then we return an error code.
+            * data - Array of floats that contains the data
+        """
+
+        return _fieldbus.request_fieldbus_snapshot(
+            self._con_handle,
         )
