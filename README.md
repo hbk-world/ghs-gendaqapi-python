@@ -7,6 +7,7 @@ The GEN DAQ API can be used to control the HBM GEN Series tethered mainframes.
 
 ## Requirements
 
+
 Python 3.10+
 
 ## Installation
