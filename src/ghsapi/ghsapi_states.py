@@ -250,6 +250,12 @@ GHSDigitalOutMode = {
     "Alarm": 4,
 }
 
+GHSChannelType = {
+    "Invalid": 0,
+    "Analog": 1,
+    "Event": 2,
+    "TimerCounter": 3
+}
 
 def to_string(value: int, ghs_dict: dict) -> str:
     """Get status key by value from dictionary."""

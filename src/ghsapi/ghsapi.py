@@ -733,7 +733,10 @@ class GHS:
         )
 
     def ghs_get_channel_name(
-        self, slot_id: str, channel_index: int
+        self,
+        slot_id: str,
+        channel_index: int,
+        channel_type: str | int,
     ) -> tuple[str, int | None]:
         """Determine the name of a channel.
 
@@ -744,7 +747,8 @@ class GHS:
 
         Args:
             slot_id: The slot containing the recorder
-            channel_index: The zero-based index of the channel
+            channel_index: The one-based index of the specified channel type
+            channel_type: The specific channel type
 
         Returns:
             * GHSReturnValue - API return values
@@ -752,11 +756,15 @@ class GHS:
         """
 
         return _channel.get_channel_name(
-            self._con_handle, slot_id, channel_index
+            self._con_handle, slot_id, channel_index, channel_type
         )
 
     def ghs_set_channel_name(
-        self, slot_id: str, channel_index: int, channel_name: str
+        self,
+        slot_id: str,
+        channel_index: int,
+        channel_type: str | int,
+        channel_name: str
     ) -> str:
         """Set the name for a channel.
 
@@ -768,7 +776,8 @@ class GHS:
 
         Args:
             slot_id: The slot containing the recorder
-            channel_index: The zero-based index of the channel
+            channel_index: The one-based index of the specified channel type
+            channel_type: The specific channel type
             channel_name: The name of the channel
 
         Returns:
@@ -776,11 +785,14 @@ class GHS:
         """
 
         return _channel.set_channel_name(
-            self._con_handle, slot_id, channel_index, channel_name
+            self._con_handle, slot_id, channel_index, channel_type, channel_name
         )
 
     def ghs_get_channel_storage_enabled(
-        self, slot_id: str, channel_index: int
+        self,
+        slot_id: str,
+        channel_index: int,
+        channel_type: str | int,
     ) -> tuple[str, str | None]:
         """Determine if storage is enabled or disabled for a channel.
 
@@ -789,7 +801,8 @@ class GHS:
 
         Args:
             slot_id: The slot containing the recorder
-            channel_index: The zero-based index of the channel
+            channel_index: The one-based index of the channel
+            channel_type: The specific channel type
 
         Returns:
             * GHSReturnValue - API return values
@@ -797,13 +810,14 @@ class GHS:
         """
 
         return _channel.get_channel_storage_enabled(
-            self._con_handle, slot_id, channel_index
+            self._con_handle, slot_id, channel_index, channel_type
         )
 
     def ghs_set_channel_storage_enabled(
         self,
         slot_id: str,
         channel_index: int,
+        channel_type: str | int,
         enabled: str | int,
     ) -> str:
         """Enable or disable storage for a channel.
@@ -816,7 +830,8 @@ class GHS:
 
         Args:
             slot_id: The slot containing the recorder
-            channel_index: The zero-based index of the channel
+            channel_index: The one-based index of the channel
+            channel_type: The specific channel type
             enabled: The desired storage enabled status for the channel
 
         Returns:
@@ -824,11 +839,15 @@ class GHS:
         """
 
         return _channel.set_channel_storage_enabled(
-            self._con_handle, slot_id, channel_index, enabled
+            self._con_handle, slot_id, channel_index, channel_type, enabled
         )
 
     def ghs_cmd_zeroing(
-        self, slot_id: str, channel_index: int, ezeroing: str | int
+        self,
+        slot_id: str,
+        channel_index: int,
+        channel_type: str | int,
+        ezeroing: str | int
     ) -> str:
         """Perform zeroing in a channel.
 
@@ -839,7 +858,8 @@ class GHS:
 
         Args:
             slot_id: The slot containing the recorder
-            channel_index: The zero-based index of the channel
+            channel_index: The one-based index of the channel
+            channel_type: The specific channel type
             ezeroing: Zero / Unzero the specific channel
 
         Returns:
@@ -847,7 +867,7 @@ class GHS:
         """
 
         return _channel.cmd_zeroing(
-            self._con_handle, slot_id, channel_index, ezeroing
+            self._con_handle, slot_id, channel_index, channel_type, ezeroing
         )
 
     ## Analog Module

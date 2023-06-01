@@ -56,14 +56,14 @@ def main():
     print(f"GHSConnect - Return Status: {return_var}")
 
     # Set channel name
-    return_var = gen.ghs_set_channel_name("A", 1, "NewChannelName")
+    return_var = gen.ghs_set_channel_name("A", 1, "Analog", "NewChannelName")
     if return_var != "OK":
         print(f"Failed on GHSSetChannelName. Return Status: {return_var}")
         sys.exit()
     print(f"GHSSetChannelName - Return Status: {return_var}")
 
     # Get channel name
-    return_var, channel_name = gen.ghs_get_channel_name("A", 1)
+    return_var, channel_name = gen.ghs_get_channel_name("A", 1, "Analog")
     if return_var != "OK":
         print(f"Failed on GHSGetChannelName. Return Status: {return_var}")
         sys.exit()
@@ -73,7 +73,7 @@ def main():
     )
 
     # Enable or disable storage for a channel
-    return_var = gen.ghs_set_channel_storage_enabled("A", 1, "Enable")
+    return_var = gen.ghs_set_channel_storage_enabled("A", 1, "Analog", "Enable")
     if return_var != "OK":
         print(
             f"Failed on GHSSetChannelStorageEnabled. Return Status: {return_var}"
@@ -82,7 +82,7 @@ def main():
     print(f"GHSSetChannelStorageEnabled - Return Status: {return_var}")
 
     # Determine if storage is enabled or disabled for a channel
-    return_var, enabled = gen.ghs_get_channel_storage_enabled("A", 1)
+    return_var, enabled = gen.ghs_get_channel_storage_enabled("A", 1, "Analog")
     if return_var != "OK":
         print(
             f"Failed on GHSGetChannelStorageEnabled. Return Status: {return_var}"
@@ -104,7 +104,7 @@ def main():
     )
 
     # Perform zeroing in a channel
-    return_var = gen.ghs_cmd_zeroing("A", 1, "Enable")
+    return_var = gen.ghs_cmd_zeroing("A", 1, "Analog", "Enable")
     if return_var != "OK":
         print(f"Failed on GHSCmdZeroing. Return Status: {return_var}")
         sys.exit()
