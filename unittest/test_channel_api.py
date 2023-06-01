@@ -143,7 +143,7 @@ class TestChannelAPI(unittest.TestCase):
                     "ChannelName": "NewChannelName",
                 }
                 self.assertEqual(
-                    channel_api.get_channel_name(self.con_handle, "A", 1),
+                    channel_api.get_channel_name(self.con_handle, "A", 1, "Analog"),
                     (
                         "OK",
                         "NewChannelName",
@@ -167,7 +167,7 @@ class TestChannelAPI(unittest.TestCase):
                     "ChannelName": "NewChannelName",
                 }
                 self.assertEqual(
-                    channel_api.get_channel_name(self.con_handle, "A", 1),
+                    channel_api.get_channel_name(self.con_handle, "A", 1, "Analog"),
                     ("NOK", None),
                     "get_channel_name failure response test failed.",
                 )
@@ -175,7 +175,7 @@ class TestChannelAPI(unittest.TestCase):
                     self.RETURN_KEY: self.GHSReturnValue["NOK"],
                 }
                 self.assertEqual(
-                    channel_api.get_channel_name(self.con_handle, "A", 1),
+                    channel_api.get_channel_name(self.con_handle, "A", 1 , "Analog"),
                     ("NOK", None),
                     "get_channel_name failure response test failed.",
                 )
@@ -184,7 +184,7 @@ class TestChannelAPI(unittest.TestCase):
                     self.RETURN_KEY: self.GHSReturnValue["OK"],
                 }
                 self.assertEqual(
-                    channel_api.get_channel_name(self.con_handle, "A", 1),
+                    channel_api.get_channel_name(self.con_handle, "A", 1, "Analog"),
                     ("OK", None),
                     "get_channel_name failure response test failed.",
                 )
@@ -198,7 +198,7 @@ class TestChannelAPI(unittest.TestCase):
             mock_con_est.return_value = self.GHSReturnValue["OK"]
 
         self.assertEqual(
-            channel_api.get_channel_name(self.con_handle, None, None),
+            channel_api.get_channel_name(self.con_handle, None, None, None),
             ("NullPtrArgument", None),
             "get_channel_name null argument check failed.",
         )
@@ -219,7 +219,7 @@ class TestChannelAPI(unittest.TestCase):
                 }
                 self.assertEqual(
                     channel_api.set_channel_name(
-                        self.con_handle, "A", 1, "NewChannelName"
+                        self.con_handle, "A", 1, "Analog","NewChannelName"
                     ),
                     "OK",
                     "set_channel_name success response test failed.",
@@ -234,7 +234,7 @@ class TestChannelAPI(unittest.TestCase):
             mock_con_est.return_value = self.GHSReturnValue["OK"]
 
         self.assertEqual(
-            channel_api.set_channel_name(self.con_handle, None, None, None),
+            channel_api.set_channel_name(self.con_handle, None, None, None, None),
             "NullPtrArgument",
             "set_channel_name null argument check failed.",
         )
@@ -256,7 +256,7 @@ class TestChannelAPI(unittest.TestCase):
                 }
                 self.assertEqual(
                     channel_api.get_channel_storage_enabled(
-                        self.con_handle, "A", 1
+                        self.con_handle, "A", 1, "Analog"
                     ),
                     (
                         "OK",
@@ -282,7 +282,7 @@ class TestChannelAPI(unittest.TestCase):
                 }
                 self.assertEqual(
                     channel_api.get_channel_storage_enabled(
-                        self.con_handle, "A", 1
+                        self.con_handle, "A", 1, "Analog"
                     ),
                     ("NOK", None),
                     "get_channel_storage_enabled failure response test failed.",
@@ -292,7 +292,7 @@ class TestChannelAPI(unittest.TestCase):
                 }
                 self.assertEqual(
                     channel_api.get_channel_storage_enabled(
-                        self.con_handle, "A", 1
+                        self.con_handle, "A", 1, "Analog"
                     ),
                     ("NOK", None),
                     "get_channel_storage_enabled failure response test failed.",
@@ -303,7 +303,7 @@ class TestChannelAPI(unittest.TestCase):
                 }
                 self.assertEqual(
                     channel_api.get_channel_storage_enabled(
-                        self.con_handle, "A", 1
+                        self.con_handle, "A", 1, "Analog"
                     ),
                     ("OK", None),
                     "get_channel_storage_enabled failure response test failed.",
@@ -319,7 +319,7 @@ class TestChannelAPI(unittest.TestCase):
 
         self.assertEqual(
             channel_api.get_channel_storage_enabled(
-                self.con_handle, None, None
+                self.con_handle, None, None, None
             ),
             ("NullPtrArgument", None),
             "get_channel_storage_enabled null argument check failed.",
@@ -341,7 +341,7 @@ class TestChannelAPI(unittest.TestCase):
                 }
                 self.assertEqual(
                     channel_api.set_channel_storage_enabled(
-                        self.con_handle, "A", 1, "Enable"
+                        self.con_handle, "A", 1, "Analog", "Enable"
                     ),
                     "OK",
                     "set_channel_storage_enabled success response test failed.",
@@ -357,7 +357,7 @@ class TestChannelAPI(unittest.TestCase):
 
         self.assertEqual(
             channel_api.set_channel_storage_enabled(
-                self.con_handle, None, None, None
+                self.con_handle, None, None, None, None
             ),
             "NullPtrArgument",
             "set_channel_storage_enabled null argument check failed.",
@@ -373,7 +373,7 @@ class TestChannelAPI(unittest.TestCase):
 
         self.assertEqual(
             channel_api.set_channel_storage_enabled(
-                self.con_handle, "A", 1, "On"
+                self.con_handle, "A", 1, "Analog", "On"
             ),
             "InvalidDataType",
             "set_channel_storage_enabled invalid argument check failed.",
@@ -394,7 +394,7 @@ class TestChannelAPI(unittest.TestCase):
                     self.RETURN_KEY: self.GHSReturnValue["OK"],
                 }
                 self.assertEqual(
-                    channel_api.cmd_zeroing(self.con_handle, "A", 1, "Enable"),
+                    channel_api.cmd_zeroing(self.con_handle, "A", 1, "Analog", "Enable"),
                     "OK",
                     "cmd_zeroing success response test failed.",
                 )
@@ -408,7 +408,7 @@ class TestChannelAPI(unittest.TestCase):
             mock_con_est.return_value = self.GHSReturnValue["OK"]
 
         self.assertEqual(
-            channel_api.cmd_zeroing(self.con_handle, None, None, None),
+            channel_api.cmd_zeroing(self.con_handle, None, None, None, None),
             "NullPtrArgument",
             "cmd_zeroing null argument check failed.",
         )
@@ -422,7 +422,7 @@ class TestChannelAPI(unittest.TestCase):
             mock_con_est.return_value = self.GHSReturnValue["OK"]
 
         self.assertEqual(
-            channel_api.cmd_zeroing(self.con_handle, "A", 1, "Zero"),
+            channel_api.cmd_zeroing(self.con_handle, "A", 1, "Analog", "Zero"),
             "InvalidDataType",
             "cmd_zeroing invalid argument check failed.",
         )
