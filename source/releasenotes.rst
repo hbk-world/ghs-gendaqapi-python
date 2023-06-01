@@ -30,3 +30,15 @@ This is the release 1.1 of the GEN DAQ API - Python Driver
    :maxdepth: 2
 
    channel
+
+Version 1.2
+============
+
+This is the release 1.2 of the GEN DAQ API - Python Driver
+
+**Features included:**
+
+.. toctree::
+   :maxdepth: 2
+
+   fieldbus

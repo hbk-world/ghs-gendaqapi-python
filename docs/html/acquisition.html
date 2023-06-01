@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Acquisition control &mdash; GEN DAQ API - Python Driver 1.1 documentation</title>
@@ -11,10 +11,11 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -27,11 +28,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> GEN DAQ API - Python Driver
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            GEN DAQ API - Python Driver
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -43,7 +48,19 @@
 <li class="toctree-l1 current"><a class="reference internal" href="releasenotes.html">Release Notes</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="releasenotes.html#version-1-0">Version 1.0</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="connections.html">Connections</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Acquisition control</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Acquisition control</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_start_preview"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_start_preview()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_stop_preview"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_stop_preview()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_start_recording"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_start_recording()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_pause_recording"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_pause_recording()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_resume_recording"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_resume_recording()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_stop_recording"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_stop_recording()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_trigger"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_trigger()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_get_acquisition_state"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_acquisition_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_get_acquisition_time"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_acquisition_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_get_acquisition_start_time"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_acquisition_start_time()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="mainframe.html">Mainframe</a></li>
 <li class="toctree-l3"><a class="reference internal" href="managerecording.html">Manage recordings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="managemainframe.html">Manage mainframe settings</a></li>
@@ -51,6 +68,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-1-1">Version 1.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-1-2">Version 1.2</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="remarks.html">Remarks</a></li>
@@ -69,9 +87,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="ghspyapi.html">API Functions</a> &raquo;</li>
-      <li>Acquisition control</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="ghspyapi.html">API Functions</a></li>
+      <li class="breadcrumb-item active">Acquisition control</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/acquisition.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -82,7 +100,7 @@
            <div itemprop="articleBody">
              
   <section id="acquisition-control">
-<h1>Acquisition control<a class="headerlink" href="#acquisition-control" title="Permalink to this headline"></a></h1>
+<h1>Acquisition control<a class="headerlink" href="#acquisition-control" title="Permalink to this heading"></a></h1>
 <p>Acquisition control related API functions.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_start_preview">
@@ -90,7 +108,7 @@
 <dd><p>Starts preview mode.</p>
 <p><em>The system needs to be idle before calling this function.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p>GHSReturnValue - Start preview status.</p></li>
 </ul>
@@ -106,7 +124,7 @@
 <p><em>The system needs to be in preview mode before calling this
 function.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p>GHSReturnValue - Stop preview status.</p></li>
 </ul>
@@ -124,7 +142,7 @@ that the connected mainframe will generate a recording name.
 This command can be executed only successfully when the local
 storage is set.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p>GHSReturnValue - Start recording status.</p></li>
 </ul>
@@ -139,7 +157,7 @@ storage is set.</em></p>
 <dd><p>Pauses a started recording.</p>
 <p><em>The system needs to be recording before calling this function.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p>GHSReturnValue - Pause recording status.</p></li>
 </ul>
@@ -154,7 +172,7 @@ storage is set.</em></p>
 <dd><p>Resumes a paused recording.</p>
 <p><em>The system needs to be paused before calling this function.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p>GHSReturnValue - Resume recording status.</p></li>
 </ul>
@@ -169,7 +187,7 @@ storage is set.</em></p>
 <dd><p>Stops a started recording.</p>
 <p><em>The system needs to be recording before calling this function.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p>GHSReturnValue - Stop recording status.</p></li>
 </ul>
@@ -184,7 +202,7 @@ storage is set.</em></p>
 <dd><p>Issues a trigger.</p>
 <p>Results in error when the trigger cannot be issued.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p>GHSReturnValue - Trigger status.</p></li>
 </ul>
@@ -198,7 +216,7 @@ storage is set.</em></p>
 <span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_get_acquisition_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_get_acquisition_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_get_acquisition_state" title="Permalink to this definition"></a></dt>
 <dd><p>Returns the Acquisition State of the Mainframe.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p>GHSReturnValue - API return status</p></li>
 <li><p>GHSAcquisitionState - acquisition state of the mainframe.</p></li>
@@ -214,7 +232,7 @@ storage is set.</em></p>
 <dd><p>Retrieves the current acquisition time relative to the start
 of acquistion.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p>GHSReturnValue - API return status</p></li>
 <li><p>acquisition_time - The acquisition time in seconds.</p></li>
@@ -229,7 +247,7 @@ of acquistion.</p>
 <span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_get_acquisition_start_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_get_acquisition_start_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_get_acquisition_start_time" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieves the absolute time of the start of acquisition.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p>GHSReturnValue - API return status</p></li>
 <li><p>year - The year</p></li>

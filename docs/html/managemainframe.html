@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Manage mainframe settings &mdash; GEN DAQ API - Python Driver 1.1 documentation</title>
@@ -11,10 +11,11 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -27,11 +28,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> GEN DAQ API - Python Driver
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            GEN DAQ API - Python Driver
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -46,11 +51,18 @@
 <li class="toctree-l3"><a class="reference internal" href="acquisition.html">Acquisition control</a></li>
 <li class="toctree-l3"><a class="reference internal" href="mainframe.html">Mainframe</a></li>
 <li class="toctree-l3"><a class="reference internal" href="managerecording.html">Manage recordings</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Manage mainframe settings</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Manage mainframe settings</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_get_current_settings"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_current_settings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_set_current_settings"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_set_current_settings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_persist_current_settings"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_persist_current_settings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_apply_persisted_settings"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_apply_persisted_settings()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="recorder.html">Recorder</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-1-1">Version 1.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-1-2">Version 1.2</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="remarks.html">Remarks</a></li>
@@ -69,9 +81,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="ghspyapi.html">API Functions</a> &raquo;</li>
-      <li>Manage mainframe settings</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="ghspyapi.html">API Functions</a></li>
+      <li class="breadcrumb-item active">Manage mainframe settings</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/managemainframe.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -82,7 +94,7 @@
            <div itemprop="articleBody">
              
   <section id="manage-mainframe-settings">
-<h1>Manage mainframe settings<a class="headerlink" href="#manage-mainframe-settings" title="Permalink to this headline"></a></h1>
+<h1>Manage mainframe settings<a class="headerlink" href="#manage-mainframe-settings" title="Permalink to this heading"></a></h1>
 <p>Settings management related API functions.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_get_current_settings">
@@ -92,7 +104,7 @@
 ensure reading the correct amount of memory.
 Memory for this blob is allocated by the API.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p>GHSReturnValue - API return status</p></li>
 <li><p>blob - Pointer to the settings blob</p></li>
@@ -110,13 +122,13 @@ Memory for this blob is allocated by the API.</em></p>
 <p><em>The persisted mainframe settings are applied upon a mainframe
 boot.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>blob</strong> – Settings blob.</p></li>
 <li><p><strong>blob_size</strong> – Size of the settings blob.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return status</p></li>
 </ul>
@@ -132,7 +144,7 @@ boot.</em></p>
 <p><em>The persisted mainframe settings are applied upon a mainframe
 boot.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p>GHSReturnValue - API return status</p></li>
 </ul>
@@ -151,7 +163,7 @@ maps on the ‘Configured boot’ feature.</p>
 This function overwrites any previously set settings and / or
 persisted settings.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>API status.</p>
 </dd>
 </dl>

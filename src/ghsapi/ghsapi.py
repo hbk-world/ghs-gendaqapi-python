@@ -35,6 +35,7 @@ Package Contents:
 from . import acquisition_api as _acquisition
 from . import channel_api as _channel
 from . import connection_api as _connection
+from . import fieldbus_api as _fieldbus
 from . import mainframe_api as _mainframe
 from . import manage_mainframe_settings as _manage_mainframe_settings
 from . import manage_recordings_api as _manage_recordings
@@ -51,6 +52,7 @@ from .ghsapi_states import (
     GHSTriggerMode,
     GHSUserMode,
 )
+
 
 CLIENT_API_VERSION = 4
 
@@ -1611,4 +1613,88 @@ class GHS:
             channel_index,
             lower_value,
             upper_value,
+        )
+
+    ## Fieldbus
+
+    def ghs_get_fieldbus_data_name_and_unit(
+        self,
+        data_index: int,
+    ) -> tuple[str, str | None, str | None]:
+        """Gets the name of specific field bus data value, by giving the index of the data value.
+
+        *The number of data values can be retrieved by ghs_get_fieldbus_data_count().*
+
+        *In case of no formulas (or reserved values acquisition state and latency) published,
+        an error code is returned: FieldBusError_NoFormulasDeployed.*
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            data_index: Zero-based index of the data value.
+
+        Returns:
+            * GHSReturnValue - API return values
+            * data_name - Name of the data value.
+            * data_unit - Unit of the data value.
+        """
+
+        return _fieldbus.get_fieldbus_data_name_and_unit(
+            self._con_handle,
+            data_index,
+        )
+
+    def ghs_get_fieldbus_data_count(
+        self,
+    ) -> tuple[str, int | None]:
+        """Gets the number of data that are configured to be sent through the field bus, excluding the timestamp.
+
+        *The number of data values can be retrieved by ghs_get_fieldbus_data_count().*
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Returns:
+            * GHSReturnValue - API return values
+            * data_count - The number of data that are selected to be published, excluding timestamp.
+        """
+
+        return _fieldbus.get_fieldbus_data_count(
+            self._con_handle,
+        )
+
+    def ghs_get_fieldbus_request_snapshot(
+        self,
+        data_count: int,
+    ) -> tuple[str, list[float] | None, int | None, list[float] | None]:
+        """Request a single snapshot of the field bus data.
+
+        *In this case the timestamp received is not grid aligned.*
+
+        *If the system is not acquiring the method returns an error code: SystemNotRecording*
+
+        *In case of no formulas you get the error return code back: FieldBusError_NotConfigured*
+
+        *If the field bus is already enabled then this method is not allowed. 
+        An error return code is returned: FieldBusError_FieldBusAlready_Enabled*
+
+        *If number of elements allocated by the customer are less than the actual formulas number, 
+        then we return an error code.*
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            data_count: The number of data that are selected to be published, excluding timestamp. 
+        Returns:
+            * GHSReturnValue - API return values
+            * timestamp -  Timestamp of the FieldBus data relative to start of acquisition (not grid aligned)
+            * data_count - The number of data that are selected to be published, excluding timestamp.
+            * data - Array of floats that contains the data
+        """
+
+        return _fieldbus.get_fieldbus_request_snapshot(
+            self._con_handle,
+            data_count
         )

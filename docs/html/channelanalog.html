@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Analog &mdash; GEN DAQ API - Python Driver 1.1 documentation</title>
@@ -11,10 +11,11 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -27,11 +28,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> GEN DAQ API - Python Driver
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            GEN DAQ API - Python Driver
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -50,6 +55,7 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-1-2">Version 1.2</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="remarks.html">Remarks</a></li>
@@ -68,10 +74,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="ghspyapi.html">API Functions</a> &raquo;</li>
-          <li><a href="channel.html">Channel</a> &raquo;</li>
-      <li>Analog</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="ghspyapi.html">API Functions</a></li>
+          <li class="breadcrumb-item"><a href="channel.html">Channel</a></li>
+      <li class="breadcrumb-item active">Analog</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/channelanalog.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -82,7 +88,7 @@
            <div itemprop="articleBody">
              
   <section id="analog">
-<h1>Analog<a class="headerlink" href="#analog" title="Permalink to this headline"></a></h1>
+<h1>Analog<a class="headerlink" href="#analog" title="Permalink to this heading"></a></h1>
 <p>Analog channel related API functions.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_get_trigger_settings">
@@ -91,13 +97,13 @@
 <p><em>Read - This method can be called by multiple connected clients at same
 time.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 <li><p>GHSTriggerMode - Trigger Mode</p></li>
@@ -125,7 +131,7 @@ rounded to the nearest supported value.</em></p>
 connected client with the most privileges order (Privileges
 order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
@@ -136,7 +142,7 @@ order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <li><p><strong>direction</strong> – The desired trigger direction</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 </ul>
@@ -152,13 +158,13 @@ order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <p><em>Read - This method can be called by multiple connected clients at same
 time.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 <li><p>GHSSignalCoupling - The signal coupling</p></li>
@@ -178,14 +184,14 @@ recorder, the signal coupling mode remains unchanged.</em></p>
 connected client with the most privileges order (Privileges
 order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
 <li><p><strong>signal_coupling</strong> – The desired signal coupling.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 </ul>
@@ -201,13 +207,13 @@ order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <p><em>Read - This method can be called by multiple connected clients at same
 time.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 <li><p>GHSInputCoupling - The input coupling</p></li>
@@ -227,14 +233,14 @@ recorder, the input coupling mode remains unchanged.</em></p>
 connected client with the most privileges order (Privileges
 order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
 <li><p><strong>input_coupling</strong> – The desired input coupling.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 </ul>
@@ -250,13 +256,13 @@ order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <p><em>Read - This method can be called by multiple connected clients at same
 time.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 <li><p>span - The span in user units</p></li>
@@ -275,7 +281,7 @@ time.</em></p>
 connected client with the most privileges order (Privileges
 order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
@@ -283,7 +289,7 @@ order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <li><p><strong>offset</strong> – The offset in user units. The value is adapted to available options.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 </ul>
@@ -299,13 +305,13 @@ order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <p><em>Read - This method can be called by multiple connected clients at same
 time.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 <li><p>GHSFilterType - The filter type</p></li>
@@ -329,7 +335,7 @@ a supported vale.</em></p>
 connected client with the most privileges order (Privileges
 order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
@@ -337,7 +343,7 @@ order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <li><p><strong>frequency</strong> – The filter frequency in Hz.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 </ul>
@@ -353,13 +359,13 @@ order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <p><em>Read - This method can be called by multiple connected clients at same
 time.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 <li><p>GHSExcitationType - The excitation type</p></li>
@@ -382,7 +388,7 @@ rounded to the nearest supported value.</em></p>
 connected client with the most privileges order (Privileges
 order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
@@ -390,7 +396,7 @@ order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <li><p><strong>excitation_value</strong> – The desired excitation value in user units (voltage or current).</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 </ul>
@@ -406,13 +412,13 @@ order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <p><em>Read - This method can be called by multiple connected clients at same
 time.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 <li><p>GHSAmplifierMode - The amplifier mode</p></li>
@@ -433,14 +439,14 @@ amplifier mode remains unchanged.</em></p>
 connected client with the most privileges order (Privileges
 order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
 <li><p><strong>amplifier_mode</strong> – The desired amplifier mode</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 </ul>
@@ -458,13 +464,13 @@ an analog channel.</p>
 <p><em>Read - This method can be called by multiple connected clients at same
 time.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 <li><p>units - The technical units (e.g. ‘V’ for Volt or ‘Hz’ for Hertz).</p></li>
@@ -486,7 +492,7 @@ analog channel.</p>
 connected client with the most privileges order (Privileges
 order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
@@ -495,7 +501,7 @@ order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <li><p><strong>offset</strong> – The desired technical units offset value.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 </ul>
@@ -511,13 +517,13 @@ order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <p><em>Read - This method can be called by multiple connected clients at same
 time.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 <li><p>GHSEnableDisable - The auto range enabled setting.</p></li>
@@ -536,7 +542,7 @@ time.</em></p>
 connected client with the most privileges order (Privileges
 order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
@@ -544,7 +550,7 @@ order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <li><p><strong>auto_range_time</strong> – The time for auto range in seconds. The value is adapted to available options.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 </ul>
@@ -563,14 +569,14 @@ effect.</em></p>
 connected client with the most privileges order (Privileges
 order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
 <li><p><strong>auto_range_time</strong> – The time for auto range in seconds. The value is adapted to available options.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 </ul>
@@ -589,13 +595,13 @@ powerVerificationLab parameters are UTF-8 encoded.</em></p>
 <p><em>Read - This method can be called by multiple connected clients at same
 time.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 <li><p>calibration_date_time - The date and time this analog channel has been calibrated.</p></li>
