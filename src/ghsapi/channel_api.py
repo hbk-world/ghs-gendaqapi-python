@@ -46,7 +46,9 @@ from .ghsapi_states import (
 
 
 def get_channel_type(
-    con_handle: ConnectionHandler, slot_id: str, channel_index: int
+    con_handle: ConnectionHandler,
+    slot_id: str,
+    channel_index: int
 ) -> tuple[str, str | None]:
     """Determine the type of a channel.
 
@@ -88,7 +90,10 @@ def get_channel_type(
 
 
 def get_channel_name(
-    con_handle: ConnectionHandler, slot_id: str, channel_index: int
+    con_handle: ConnectionHandler,
+    slot_id: str,
+    channel_index: int,
+    channel_type: str | int,
 ) -> tuple[str, str | None]:
     """Determine the name of a channel.
 
@@ -103,17 +108,19 @@ def get_channel_name(
         channels for (e.g. 'A' for the first slot).
         channel_index: The zero-based index of the channel to determine
         the type for.
+        channel_type: The specific channel type.
 
     Returns:
        Tuple with status and name of the channel.
     """
 
-    if not slot_id or not channel_index:
+    if not slot_id or not channel_index or not channel_type:
         return "NullPtrArgument", None
 
     channel_name_dict = {
         "SlotId": slot_id,
         "ChannelIndex": channel_index,
+        "ChannelType": channel_type,
     }
 
     response_json = con_handle.send_request_wait_response(
@@ -135,6 +142,7 @@ def set_channel_name(
     con_handle: ConnectionHandler,
     slot_id: str,
     channel_index: int,
+    channel_type: str | int,
     channel_name: str,
 ) -> str:
     """Set the name of a channel.
@@ -151,6 +159,7 @@ def set_channel_name(
         channels for (e.g. 'A' for the first slot).
         channel_index: The zero-based index of the channel to determine
         the type for.
+        channel_type: The specific channel type.
         channel_name: The desired channel name.
 
     Returns:
@@ -163,6 +172,7 @@ def set_channel_name(
     channel_name_dict = {
         "SlotId": slot_id,
         "ChannelIndex": channel_index,
+        "ChannelType": channel_type,
         "ChannelName": channel_name,
     }
 
@@ -174,7 +184,10 @@ def set_channel_name(
 
 
 def get_channel_storage_enabled(
-    con_handle: ConnectionHandler, slot_id: str, channel_index: int
+    con_handle: ConnectionHandler,
+    slot_id: str,
+    channel_index: int,
+    channel_type: str | int,
 ) -> tuple[str, str | None]:
     """Determine if storage is enabled or disabled for a channel.
 
@@ -187,6 +200,7 @@ def get_channel_storage_enabled(
         channels for (e.g. 'A' for the first slot).
         channel_index: The zero-based index of the channel to determine
         the type for.
+        channel_type: The specific channel type.
 
     Returns:
        Tuple with status and storage enabled status for the channel.
@@ -198,6 +212,7 @@ def get_channel_storage_enabled(
     channel_enabled_dict = {
         "SlotId": slot_id,
         "ChannelIndex": channel_index,
+        "ChannelType": channel_type,
     }
 
     response_json = con_handle.send_request_wait_response(
@@ -219,6 +234,7 @@ def set_channel_storage_enabled(
     con_handle: ConnectionHandler,
     slot_id: str,
     channel_index: int,
+    channel_type: str | int,
     enabled: str | int,
 ) -> str:
     """Enable or disable storage for a channel.
@@ -235,6 +251,7 @@ def set_channel_storage_enabled(
         channels for (e.g. 'A' for the first slot).
         channel_index: The zero-based index of the channel to determine
         the type for.
+        channel_type: The specific channel type.
         enabled: The desired storage enabled status for the channel
 
     Returns:
@@ -256,6 +273,7 @@ def set_channel_storage_enabled(
     channel_enabled_dict = {
         "SlotId": slot_id,
         "ChannelIndex": channel_index,
+        "ChannelType": channel_type,
         "ChannelStorageEnable": enabled,
     }
 
@@ -270,6 +288,7 @@ def cmd_zeroing(
     con_handle: ConnectionHandler,
     slot_id: str,
     channel_index: int,
+    channel_type: str | int,
     ezeroing: str | int,
 ) -> str:
     """Perform zeroing in a channel.
@@ -285,6 +304,7 @@ def cmd_zeroing(
         channels for (e.g. 'A' for the first slot).
         channel_index: The zero-based index of the channel to determine
         the type for.
+        channel_type: The specific channel type.
         ezeroing: Zero / Unzero the specific channel.
 
     Returns:
@@ -306,6 +326,7 @@ def cmd_zeroing(
     ezeroing_dict = {
         "SlotId": slot_id,
         "ChannelIndex": channel_index,
+        "ChannelType": channel_type,
         "ZeroingMode": ezeroing,
     }
 
@@ -1783,3 +1804,155 @@ def set_timer_counter_range(
     )
 
     return to_string(response_json[RETURN_KEY], GHSReturnValue)
+
+
+def get_available_span_list(
+    con_handle: ConnectionHandler,
+    slot_id: str,
+    channel_index: int,
+) -> tuple[str, int | None, float | None]:
+    """Get the list of available spans from channel capabilities.
+
+     The system needs to be in preview or in acquisition before calling this function
+
+     Read - This method can be called by multiple connected clients at
+     same time.
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+
+    Returns:
+       Tuple with request status, number of selections and respective values.
+    """
+
+    if not slot_id or not channel_index:
+        return "NullPtrArgument", None
+
+    channel_name_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "GetAvailableSpanList", channel_name_dict
+    )
+    
+    if (
+        not any(
+            key in response_json
+            for key in [
+                "NumberOfSelections",
+                "Values",
+            ]
+        )
+    ) or (response_json[RETURN_KEY] != GHSReturnValue["OK"]):
+        return (
+        to_string(response_json[RETURN_KEY], GHSReturnValue),
+        None,
+        None,
+    )
+
+    return (
+        to_string(response_json[RETURN_KEY], GHSReturnValue),
+        response_json["NumberOfSelections"],
+        response_json["Values"],
+    )
+
+
+def get_physical_channel_name(
+    con_handle: ConnectionHandler,
+    slot_id: str,
+    channel_index: int,
+    channel_type: str | int,
+) -> tuple[str, str | None]:
+    """Determine the name of a channel.
+
+     The channel name is UTF-8 encoded.
+
+     Read - This method can be called by multiple connected clients at
+     same time.
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+        channel_type: The specific channel type.
+
+    Returns:
+       Tuple with status and name of the physical channel.
+    """
+
+    if not slot_id or not channel_index or not channel_type:
+        return "NullPtrArgument", None
+
+    channel_name_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+        "ChannelType": channel_type,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "GetChannelPhysicalName", channel_name_dict
+    )
+
+    if ("ChannelPhysicalName" not in response_json) or (
+        response_json[RETURN_KEY] != GHSReturnValue["OK"]
+    ):
+        return to_string(response_json[RETURN_KEY], GHSReturnValue), None
+
+    return (
+        to_string(response_json[RETURN_KEY], GHSReturnValue),
+        response_json["ChannelPhysicalName"],
+    )
+
+
+def get_range_level_status(
+    con_handle: ConnectionHandler,
+    slot_id: str,
+    channel_index: int,
+) -> tuple[str, str | None]:
+    """Get the range level status on a channel.
+
+     The system needs to be in preview or in acquisition before calling this function.
+
+     Read - This method can be called by multiple connected clients at
+     same time.
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+
+    Returns:
+       Tuple with status and status of the channel range level.
+    """
+
+    if not slot_id or not channel_index:
+        return "NullPtrArgument", None
+
+    channel_name_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "GetRangeLevelStatus", channel_name_dict
+    )
+
+    if ("RangeLevelStatus" not in response_json) or (
+        response_json[RETURN_KEY] != GHSReturnValue["OK"]
+    ):
+        return to_string(response_json[RETURN_KEY], GHSReturnValue), None
+
+    return (
+        to_string(response_json[RETURN_KEY], GHSReturnValue),
+        response_json["RangeLevelStatus"],
+    )
