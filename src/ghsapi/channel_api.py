@@ -38,6 +38,7 @@ from .ghsapi_states import (
     GHSSignalCoupling,
     GHSTimerCounterMode,
     GHSTriggerMode,
+    GHSChannelType,
     from_string,
     to_string,
 )
@@ -88,7 +89,10 @@ def get_channel_type(
 
 
 def get_channel_name(
-    con_handle: ConnectionHandler, slot_id: str, channel_index: int
+    con_handle: ConnectionHandler,
+    slot_id: str,
+    channel_index: int,
+    channel_type: str | int,
 ) -> tuple[str, str | None]:
     """Determine the name of a channel.
 
@@ -101,19 +105,27 @@ def get_channel_name(
         con_handle: A unique identifier per mainframe connection.
         slot_id: The slot containing the recorder to get number of
         channels for (e.g. 'A' for the first slot).
-        channel_index: The zero-based index of the channel to determine
-        the type for.
+        channel_index: The one-based index of the specified channel type to determine
+        the name for.
+        channel_type: The specific channel type.
 
     Returns:
        Tuple with status and name of the channel.
     """
 
-    if not slot_id or not channel_index:
+    if not slot_id or not channel_index or not channel_type:
         return "NullPtrArgument", None
+
+    if isinstance(channel_type, str) and channel_type in GHSChannelType:
+        channel_type = from_string(channel_type, GHSChannelType)
+
+    elif isinstance(channel_type, int) and channel_type in GHSChannelType.values():
+        pass
 
     channel_name_dict = {
         "SlotId": slot_id,
         "ChannelIndex": channel_index,
+        "ChannelType": channel_type
     }
 
     response_json = con_handle.send_request_wait_response(
@@ -135,6 +147,7 @@ def set_channel_name(
     con_handle: ConnectionHandler,
     slot_id: str,
     channel_index: int,
+    channel_type: str | int,
     channel_name: str,
 ) -> str:
     """Set the name of a channel.
@@ -149,20 +162,28 @@ def set_channel_name(
         con_handle: A unique identifier per mainframe connection.
         slot_id: The slot containing the recorder to get number of
         channels for (e.g. 'A' for the first slot).
-        channel_index: The zero-based index of the channel to determine
-        the type for.
+        channel_index: The one-based index of the specified channel type to set
+        the name for.
+        channel_type: The specific channel type.
         channel_name: The desired channel name.
 
     Returns:
        String value representing request status.
     """
 
-    if not slot_id or not channel_index or not channel_name:
+    if not slot_id or not channel_index or not channel_type or not channel_name:
         return "NullPtrArgument"
+
+    if isinstance(channel_type, str) and channel_type in GHSChannelType:
+        channel_type = from_string(channel_type, GHSChannelType)
+
+    elif isinstance(channel_type, int) and channel_type in GHSChannelType.values():
+        pass
 
     channel_name_dict = {
         "SlotId": slot_id,
         "ChannelIndex": channel_index,
+        "ChannelType": channel_type,
         "ChannelName": channel_name,
     }
 
@@ -174,7 +195,10 @@ def set_channel_name(
 
 
 def get_channel_storage_enabled(
-    con_handle: ConnectionHandler, slot_id: str, channel_index: int
+    con_handle: ConnectionHandler,
+    slot_id: str,
+    channel_index: int,
+    channel_type: str | int,
 ) -> tuple[str, str | None]:
     """Determine if storage is enabled or disabled for a channel.
 
@@ -185,19 +209,27 @@ def get_channel_storage_enabled(
         con_handle: A unique identifier per mainframe connection.
         slot_id: The slot containing the recorder to get number of
         channels for (e.g. 'A' for the first slot).
-        channel_index: The zero-based index of the channel to determine
-        the type for.
+        channel_index: The one-based index of the specified channel type to determine 
+        the storage status for.
+        channel_type: The specific channel type.
 
     Returns:
        Tuple with status and storage enabled status for the channel.
     """
 
-    if not slot_id or not channel_index:
+    if not slot_id or not channel_index or not channel_type:
         return "NullPtrArgument", None
+
+    if isinstance(channel_type, str) and channel_type in GHSChannelType:
+        channel_type = from_string(channel_type, GHSChannelType)
+
+    elif isinstance(channel_type, int) and channel_type in GHSChannelType.values():
+        pass
 
     channel_enabled_dict = {
         "SlotId": slot_id,
         "ChannelIndex": channel_index,
+        "ChannelType": channel_type,
     }
 
     response_json = con_handle.send_request_wait_response(
@@ -219,6 +251,7 @@ def set_channel_storage_enabled(
     con_handle: ConnectionHandler,
     slot_id: str,
     channel_index: int,
+    channel_type: str | int,
     enabled: str | int,
 ) -> str:
     """Enable or disable storage for a channel.
@@ -233,16 +266,23 @@ def set_channel_storage_enabled(
         con_handle: A unique identifier per mainframe connection.
         slot_id: The slot containing the recorder to get number of
         channels for (e.g. 'A' for the first slot).
-        channel_index: The zero-based index of the channel to determine
-        the type for.
+        channel_index: The one-based index of the specified channel type to set
+        the storage status for.
+        channel_type: The specific channel type.
         enabled: The desired storage enabled status for the channel
 
     Returns:
        String value representing request status.
     """
 
-    if not slot_id or not channel_index or not enabled:
+    if not slot_id or not channel_index or not channel_type or not enabled:
         return "NullPtrArgument"
+
+    if isinstance(channel_type, str) and channel_type in GHSChannelType:
+        channel_type = from_string(channel_type, GHSChannelType)
+
+    elif isinstance(channel_type, int) and channel_type in GHSChannelType.values():
+        pass
 
     if isinstance(enabled, str) and enabled in GHSEnableDisable:
         enabled = from_string(enabled, GHSEnableDisable)
@@ -256,6 +296,7 @@ def set_channel_storage_enabled(
     channel_enabled_dict = {
         "SlotId": slot_id,
         "ChannelIndex": channel_index,
+        "ChannelType": channel_type,
         "ChannelStorageEnable": enabled,
     }
 
@@ -270,6 +311,7 @@ def cmd_zeroing(
     con_handle: ConnectionHandler,
     slot_id: str,
     channel_index: int,
+    channel_type: str | int,
     ezeroing: str | int,
 ) -> str:
     """Perform zeroing in a channel.
@@ -283,16 +325,23 @@ def cmd_zeroing(
         con_handle: A unique identifier per mainframe connection.
         slot_id: The slot containing the recorder to get number of
         channels for (e.g. 'A' for the first slot).
-        channel_index: The zero-based index of the channel to determine
-        the type for.
+        channel_index: The one-based index of the specified channel type to perform
+        the zeroing for.
+        channel_type: The specific channel type.
         ezeroing: Zero / Unzero the specific channel.
 
     Returns:
        String value representing request status.
     """
 
-    if not slot_id or not channel_index or not ezeroing:
+    if not slot_id or not channel_index or not channel_type or not ezeroing:
         return "NullPtrArgument"
+
+    if isinstance(channel_type, str) and channel_type in GHSChannelType:
+        channel_type = from_string(channel_type, GHSChannelType)
+
+    elif isinstance(channel_type, int) and channel_type in GHSChannelType.values():
+        pass
 
     if isinstance(ezeroing, str) and ezeroing in GHSEnableDisable:
         ezeroing = from_string(ezeroing, GHSEnableDisable)
@@ -306,6 +355,7 @@ def cmd_zeroing(
     ezeroing_dict = {
         "SlotId": slot_id,
         "ChannelIndex": channel_index,
+        "ChannelType": channel_type,
         "ZeroingMode": ezeroing,
     }
 
