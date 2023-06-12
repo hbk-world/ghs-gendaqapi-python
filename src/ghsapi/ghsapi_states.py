@@ -227,6 +227,16 @@ GHSTimerCounterMode = {
     "AngleBiDirectionalWithRefPos": 14,
 }
 
+GHSTimerCounterDeBouncerFilterTime = {
+    "GHSTimerCounterDeBouncerFilterTime_01us": 0,
+    "GHSTimerCounterDeBouncerFilterTime_02us": 1,
+    "GHSTimerCounterDeBouncerFilterTime_05us": 2,
+    "GHSTimerCounterDeBouncerFilterTime_1us": 3,
+    "GHSTimerCounterDeBouncerFilterTime_2us": 4,
+    "GHSTimerCounterDeBouncerFilterTime_5us": 5,
+    "GHSTimerCounterDeBouncerFilterTime_10us": 6,
+}
+
 GHSEnableDisable = {
     "Disable": 0,
     "Enable": 1,

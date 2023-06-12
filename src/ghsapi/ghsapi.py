@@ -35,6 +35,7 @@ Package Contents:
 from . import acquisition_api as _acquisition
 from . import channel_api as _channel
 from . import connection_api as _connection
+from . import formulas_api as _formulas
 from . import mainframe_api as _mainframe
 from . import manage_mainframe_settings as _manage_mainframe_settings
 from . import manage_recordings_api as _manage_recordings
@@ -869,6 +870,91 @@ class GHS:
         return _channel.cmd_zeroing(
             self._con_handle, slot_id, channel_index, channel_type, ezeroing
         )
+        
+    def ghs_get_available_span_list(
+        self,
+        slot_id: str,
+        channel_index: int,
+    ) -> tuple[str, int | None, tuple[float] | None]:
+        """Get the list of available spans from channel capabilities.
+
+        *The system needs to be in preview or in acquisition before calling this function.*
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            * GHSReturnValue - API return values
+            * NumberOfSelections - The number of available span selections.
+            * Values - An array containing the available selection values.
+        """
+
+        return _channel.get_available_span_list(
+            self._con_handle,
+            slot_id,
+            channel_index,
+        )
+
+    def ghs_get_channel_physical_name(
+        self,
+        slot_id: str,
+        channel_index: int,
+        channel_type: str | int,
+    ) -> tuple[str, str | None]:
+        """Determine the name of a channel.
+
+        *The channelName parameter is UTF-8 encoded.*
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+            channel_type: The specific channel type
+
+        Returns:
+            * GHSReturnValue - API return values
+            * ChannelPhysicalName - The physical name of the channel.
+        """
+
+        return _channel.get_channel_physical_name(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            channel_type,
+        )
+
+    def ghs_get_range_level_status(
+        self,
+        slot_id: str,
+        channel_index: int,
+    ) -> tuple[str, int | None]:
+        """Get the range level status on a channel.
+
+        *The system needs to be in preview or in acquisition before calling this function.*
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            channel_index: The zero-based index of the channel
+
+        Returns:
+            * GHSReturnValue - API return values
+            * RangeLevelStatus - The status of the channel range level (OK, overrange or underrange).
+        """
+
+        return _channel.get_range_level_status(
+            self._con_handle,
+            slot_id,
+            channel_index,
+        )
 
     ## Analog Module
 
@@ -1588,8 +1674,8 @@ class GHS:
 
         Returns:
             * GHSReturnValue - API return values
-            * lower_value - The lower range value.
-            * upper_value - The upper range value.
+            * LowerValue - The lower range value.
+            * UpperValue - The upper range value.
         """
 
         return _channel.get_timer_counter_range(
@@ -1631,4 +1717,295 @@ class GHS:
             channel_index,
             lower_value,
             upper_value,
+        )
+
+    def ghs_get_timer_counter_technical_units(
+        self,
+        slot_id: str,
+        channel_index: int
+    ) -> tuple[str, float | None, float | None]:
+        """Determine the technical units, unit multiplier and unit offset for a timer counter channel.
+    
+        The units parameter is UTF-8 encoded.
+        The memory allocated for the returned string must be freed after use using @ref GHSFree().
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            con_handle: A unique identifier per mainframe connection.
+            slot_id: The slot containing the recorder to get number of
+            channels for (e.g. 'A' for the first slot).
+            channel_index: The zero-based index of the channel to determine
+            the type for.
+
+        Returns:
+            * GHSReturnValue - API return values
+            * UnitType: The desired technical units (e.g. 'V' for Volt or 'Hz' for Hertz).
+            * Multiplier: The desired technical units multiplier value.
+            * Offset: The desired technical units offset value.
+        """
+
+        return _channel.get_timer_counter_technical_units(
+            self._con_handle,
+            slot_id,
+            channel_index
+        )
+
+    def ghs_set_timer_counter_technical_units(
+        self,
+        slot_id: str,
+        channel_index: int,
+        unit_type: float,
+        multiplier: float,
+        offset: str,
+    ) -> str:
+        """Set the technical units, unit multiplier and unit offset for a timer counter channel.
+    
+        The units parameter is UTF-8 encoded.
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            con_handle: A unique identifier per mainframe connection.
+            slot_id: The slot containing the recorder to get number of
+            channels for (e.g. 'A' for the first slot).
+            channel_index: The zero-based index of the channel to determine
+            the type for.
+            unit_type: The desired technical units (e.g. 'V' for Volt or 'Hz' for Hertz).
+            multiplier: The desired technical units multiplier value.
+            offset: The desired technical units offset value.
+
+        Returns:
+            * GHSReturnValue - API return values
+        """
+
+        return _channel.set_timer_counter_technical_units(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            unit_type,
+            multiplier,
+            offset,
+        )
+
+    def ghs_get_timer_counter_min_pulse_width(
+        self,
+        slot_id: str,
+        channel_index: int,
+    ) -> tuple[str, str | None]:
+        """Determine the minimum pulse width of a timer/counter channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            con_handle: A unique identifier per mainframe connection.
+            slot_id: The slot containing the recorder to get number of
+            channels for (e.g. 'A' for the first slot).
+            channel_index: The zero-based index of the channel to determine
+            the type for.
+
+        Returns:
+            * GHSReturnValue - API return values
+            * MinimumPulseWidth: The minimum pulse width @ref GHSTimerCounterDeBouncerFilterTime.
+        """
+
+        return _channel.get_timer_counter_min_pulse_width(
+            self._con_handle,
+            slot_id,
+            channel_index
+        )
+
+    def ghs_set_timer_counter_min_pulse_width(
+        self,
+        slot_id: str,
+        channel_index: int,
+        min_pulse_width: str | int,
+    ) -> str:
+        """Set the minimum pulse width for a timer/counter channel.
+    
+        The system needs to be idle before calling this function.
+        If the specified timer/counter mode is not supported by the recorder,
+        the timer/counter mode remains unchanged.
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            con_handle: A unique identifier per mainframe connection.
+            slot_id: The slot containing the recorder to get number of
+            channels for (e.g. 'A' for the first slot).
+            channel_index: The zero-based index of the channel to determine
+            the type for.
+            min_pulse_width: The minimum pulse width @ref GHSTimerCounterDeBouncerFilterTime.
+            Default is GHSTimerCounterDeBouncerFilterTime_01.
+
+        Returns:
+            * GHSReturnValue - API return values
+        """
+
+        return _channel.set_timer_counter_min_pulse_width(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            min_pulse_width,
+        )
+
+    def ghs_get_timer_counter_pulses_per_rotation(
+        self,
+        slot_id: str,
+        channel_index: int,
+    ) -> tuple[str, float | None]:
+        """Determine the gate time for a timer/counter channel.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            con_handle: A unique identifier per mainframe connection.
+            slot_id: The slot containing the recorder to get number of
+            channels for (e.g. 'A' for the first slot).
+            channel_index: The zero-based index of the channel to determine
+            the type for.
+
+        Returns:
+            * GHSReturnValue - API return values
+            * PulsesPerRotation: The pulses per rotation.
+        """
+
+        return _channel.get_timer_counter_pulses_per_rotation(
+            self._con_handle,
+            slot_id,
+            channel_index
+        )
+
+    def ghs_set_timer_counter_pulses_per_rotation(
+        self,
+        slot_id: str,
+        channel_index: int,
+        pulses_per_rot: str | int,
+    ) -> str:
+        """Set the pulses per rotation for a timer/counter channel.
+    
+        The system needs to be idle before calling this function.
+        If the specified timer/counter mode is not supported by the recorder,
+        the timer/counter mode remains unchanged.
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            con_handle: A unique identifier per mainframe connection.
+            slot_id: The slot containing the recorder to get number of
+            channels for (e.g. 'A' for the first slot).
+            channel_index: The zero-based index of the channel to determine
+            the type for.
+            pulses_per_rot: The desired pulses per rotation.
+
+        Returns:
+            * GHSReturnValue - API return values
+        """
+
+        return _channel.set_timer_counter_pulses_per_rotation(
+            self._con_handle,
+            slot_id,
+            channel_index,
+            pulses_per_rot,
+        )
+
+    ## Formulas APIs
+
+    def ghs_get_number_of_scalars(
+        self,
+    ) -> tuple[str, int | None]:
+        """Get number of scalar formulas in the Mainframe.
+
+        *The formulaName is UTF-8 encoded.*
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Returns:
+            * GHSReturnValue - API return values
+            * NumberOfScalars - The number of scalars.
+        """
+
+        return _formulas.get_number_of_scalars(
+            self._con_handle,
+        )
+
+    def ghs_get_scalar_info(
+        self,
+        scalar_index: int,
+    ) -> tuple[str, str | None, float | None, str | None]:
+        """Get scalar information for a certain scalar index.
+
+        *The formulaName is UTF-8 encoded.*
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            scalar_index: The index from the scalar collection to identify target scalar to get info from.
+
+        Returns:
+            * GHSReturnValue - API return values
+            * Name - The number of scalars.
+            * Value - The number of scalars.
+            * Unit - The number of scalars.
+        """
+
+        return _formulas.get_scalar_info(
+            self._con_handle,
+            scalar_index,
+        )
+
+    def ghs_get_scalar_value(
+        self,
+        formula_name: str,
+    ) -> tuple[str, float | None]:
+        """Determine scalar value from a formula name.
+
+        *The formulaName is UTF-8 encoded.*
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Returns:
+            * GHSReturnValue - API return values
+            * ScalarValue - The scalar value to be set (in double format).
+        """
+
+        return _formulas.get_scalar_value(
+            self._con_handle,
+            formula_name,
+        )
+
+    def ghs_set_scalar_value(
+        self,
+        formula_name: str,
+        scalar_value: float,
+    ) -> str:
+        """Set a scalar value by formula name.
+
+        *The formulaName is UTF-8 encoded.*
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Returns:
+            * GHSReturnValue - API return values
+            * FormulaName - The formula name of the scalar to get the value from.
+            * Value - The scalar value to be set (in double format).
+        """
+
+        return _formulas.set_scalar_value(
+            self._con_handle,
+            formula_name,
+            scalar_value,
         )

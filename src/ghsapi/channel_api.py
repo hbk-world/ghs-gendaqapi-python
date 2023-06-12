@@ -37,6 +37,7 @@ from .ghsapi_states import (
     GHSReturnValue,
     GHSSignalCoupling,
     GHSTimerCounterMode,
+    GHSTimerCounterDeBouncerFilterTime,
     GHSTriggerMode,
     GHSChannelType,
     from_string,
@@ -364,6 +365,162 @@ def cmd_zeroing(
     )
 
     return to_string(response_json[RETURN_KEY], GHSReturnValue)
+
+
+def get_available_span_list(
+    con_handle: ConnectionHandler, slot_id: str, channel_index: int
+) -> tuple[str, int | None, tuple[float] | None]:
+    """Get the list of available spans from channel capabilities.
+    
+    The system needs to be in preview or in acquisition before calling this function.
+
+    Read - This method can be called by multiple connected clients at
+    same time.
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+
+    Returns:
+       Tuple with status, the number of selections and their respective values.
+    """
+
+    if not slot_id or not channel_index:
+        return "NullPtrArgument", None, None
+
+    range_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "GetAvailableSpanList", range_dict
+    )
+
+    if (
+        not any(
+            key in response_json
+            for key in [
+                "NumberOfSelections",
+                "Values",
+            ]
+        )
+    ) or (response_json[RETURN_KEY] != GHSReturnValue["OK"]):
+        return (
+            to_string(response_json[RETURN_KEY], GHSReturnValue),
+            None,
+            None,
+        )
+
+    return (
+        to_string(response_json[RETURN_KEY], GHSReturnValue),
+        response_json["NumberOfSelections"],
+        response_json["Values"],
+    )
+
+
+def get_channel_physical_name(
+    con_handle: ConnectionHandler,
+    slot_id: str,
+    channel_index: int,
+    channel_type: str | int,
+) -> tuple[str, str | None]:
+    """Determine the name of a channel.
+
+     The channel name is UTF-8 encoded.
+
+     Read - This method can be called by multiple connected clients at
+     same time.
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The one-based index of the specified channel type to determine
+        the name for.
+        channel_type: The specific channel type.
+
+    Returns:
+       Tuple with status and name of the channel.
+    """
+
+    if not slot_id or not channel_index or not channel_type:
+        return "NullPtrArgument", None
+
+    if isinstance(channel_type, str) and channel_type in GHSChannelType:
+        channel_type = from_string(channel_type, GHSChannelType)
+
+    elif isinstance(channel_type, int) and channel_type in GHSChannelType.values():
+        pass
+
+    channel_name_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+        "ChannelType": channel_type
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "GetChannelPhysicalName", channel_name_dict
+    )
+
+    if ("ChannelPhysicalName" not in response_json) or (
+        response_json[RETURN_KEY] != GHSReturnValue["OK"]
+    ):
+        return to_string(response_json[RETURN_KEY], GHSReturnValue), None
+
+    return (
+        to_string(response_json[RETURN_KEY], GHSReturnValue),
+        response_json["ChannelPhysicalName"],
+    )
+
+
+def get_range_level_status(
+    con_handle: ConnectionHandler,
+    slot_id: str,
+    channel_index: int,
+) -> tuple[str, int | None]:
+    """Get the range level status on a channel.
+
+     The system needs to be in preview or in acquisition before calling this function.
+
+     Read - This method can be called by multiple connected clients at
+     same time.
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The one-based index of the specified channel type to determine
+        the name for.
+
+    Returns:
+       Tuple with result and the status of the channel range level.
+    """
+
+    if not slot_id or not channel_index:
+        return "NullPtrArgument", None
+
+    channel_name_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "GetRangeLevelStatus", channel_name_dict
+    )
+
+    if ("RangeLevelStatus" not in response_json) or (
+        response_json[RETURN_KEY] != GHSReturnValue["OK"]
+    ):
+        return to_string(response_json[RETURN_KEY], GHSReturnValue), None
+
+    return (
+        to_string(response_json[RETURN_KEY], GHSReturnValue),
+        response_json["RangeLevelStatus"],
+    )
 
 
 ## Modules
@@ -1833,3 +1990,314 @@ def set_timer_counter_range(
     )
 
     return to_string(response_json[RETURN_KEY], GHSReturnValue)
+
+
+def get_timer_counter_technical_units(
+    con_handle: ConnectionHandler,
+    slot_id: str,
+    channel_index: int
+) -> tuple[str, float | None, float | None, str | None]:
+    """Determine the technical units, unit multiplier and unit offset for a timer counter channel.
+    
+    The units parameter is UTF-8 encoded.
+    The memory allocated for the returned string must be freed after use using @ref GHSFree().
+
+    Read - This method can be called by multiple connected clients at
+    same time.
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+
+    Returns:
+       Tuple with status and technical unit, multiplier & offset.
+    """
+
+    if not slot_id or not channel_index:
+        return "NullPtrArgument", None, None
+
+    range_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "GetTimerCounterTechnicalUnits", range_dict
+    )
+
+    if (
+        not any(
+            key in response_json
+            for key in [
+                "Multiplier",
+                "Offset",
+                "UnitType",
+            ]
+        )
+    ) or (response_json[RETURN_KEY] != GHSReturnValue["OK"]):
+        return (
+            to_string(response_json[RETURN_KEY], GHSReturnValue),
+            None,
+            None,
+            None,
+        )
+
+    return (
+        to_string(response_json[RETURN_KEY], GHSReturnValue),
+        response_json["Multiplier"],
+        response_json["Offset"],
+        response_json["UnitType"],
+    )
+
+
+def set_timer_counter_technical_units(
+    con_handle: ConnectionHandler,
+    slot_id: str,
+    channel_index: int,
+    unit_type: float,
+    multiplier: float,
+    offset: str,
+) -> str:
+    """Set the technical units, unit multiplier and unit offset for a timer counter channel.
+
+     The units parameter must be UTF-8 encoded.
+
+     ReadWrite - This method will only process requests from the
+     connected client with the most privileges order (Privileges order:
+     1- Perception, 2- GenDaq, 3- Other)
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+        unit_type: The desired technical units (e.g. 'V' for Volt or 'Hz' for Hertz).
+        multiplier: The desired technical units multiplier value.
+        offset: The desired technical units offset value.
+
+    Returns:
+       String value representing request status.
+    """
+
+    if not slot_id or not channel_index or not unit_type or not multiplier or not offset:
+        return "NullPtrArgument"
+
+    if not isinstance(unit_type, float) or not isinstance(
+        multiplier, float
+    ):
+        return "InvalidDataType"
+
+    range_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+        "UnitType": unit_type,
+        "Multiplier": multiplier,
+        "Offset": offset,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "SetTimerCounterTechnicalUnits", range_dict
+    )
+
+    return to_string(response_json[RETURN_KEY], GHSReturnValue)
+
+
+def get_timer_counter_min_pulse_width(
+    con_handle: ConnectionHandler,
+    slot_id: str,
+    channel_index: int
+) -> tuple[str, str | None]:
+    """Determine the minimum pulse width of a timer/counter channel.
+
+    Read - This method can be called by multiple connected clients at
+    same time.
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+
+    Returns:
+       Tuple with status and the minimum pulse width.
+    """
+
+    if not slot_id or not channel_index:
+        return "NullPtrArgument", None, None
+
+    range_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "GetTimerCounterMinimumPulseWidth", range_dict
+    )
+
+    if ("MinimumPulseWidth" not in response_json) or (
+        response_json[RETURN_KEY] != GHSReturnValue["OK"]
+    ):
+        return (
+            to_string(response_json[RETURN_KEY], GHSReturnValue),
+            None,
+        )
+
+    return (
+        to_string(response_json[RETURN_KEY], GHSReturnValue),
+        to_string(response_json["MinimumPulseWidth"], GHSTimerCounterDeBouncerFilterTime),
+    )
+
+
+def set_timer_counter_min_pulse_width(
+    con_handle: ConnectionHandler,
+    slot_id: str,
+    channel_index: int,
+    min_pulse_width: str | int,
+) -> str:
+    """Set the minimum pulse width for a timer/counter channel.
+
+     The system needs to be idle before calling this function.
+     If the specified timer/counter mode is not supported by the recorder,
+     the timer/counter mode remains unchanged.
+
+     ReadWrite - This method will only process requests from the
+     connected client with the most privileges order (Privileges order:
+     1- Perception, 2- GenDaq, 3- Other)
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+        min_pulse_width: The minimum pulse width @ref GHSTimerCounterDeBouncerFilterTime.
+        Default is GHSTimerCounterDeBouncerFilterTime_01.
+
+    Returns:
+       String value representing request status.
+    """
+
+    if not slot_id or not channel_index or not min_pulse_width:
+        return "NullPtrArgument"
+
+    if isinstance(mode, str) and mode in GHSTimerCounterDeBouncerFilterTime:
+        mode = from_string(mode, GHSTimerCounterDeBouncerFilterTime)
+
+    elif isinstance(mode, int) and mode in GHSTimerCounterDeBouncerFilterTime.values():
+        pass
+
+    else:
+        return "InvalidDataType"
+
+    range_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+        "MinimumPulseWidth": min_pulse_width,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "SetTimerCounterMinimumPulseWidth", range_dict
+    )
+
+    return to_string(response_json[RETURN_KEY], GHSReturnValue)
+
+
+def get_timer_counter_pulses_per_rotation(
+    con_handle: ConnectionHandler,
+    slot_id: str,
+    channel_index: int
+) -> tuple[str, float | None]:
+    """Determine the pulses per rotation for a timer/counter channel.
+
+    Read - This method can be called by multiple connected clients at
+    same time.
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+
+    Returns:
+       Tuple with status and the pulses per rotation.
+    """
+
+    if not slot_id or not channel_index:
+        return "NullPtrArgument", None, None
+
+    range_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "GetTimerCounterPulsesPerRotation", range_dict
+    )
+
+    if ("PulsesPerRotation" not in response_json) or (
+        response_json[RETURN_KEY] != GHSReturnValue["OK"]
+    ):
+        return (
+            to_string(response_json[RETURN_KEY], GHSReturnValue),
+            None,
+        )
+
+    return (
+        to_string(response_json[RETURN_KEY], GHSReturnValue),
+        response_json["PulsesPerRotation"],
+    )
+
+
+def set_timer_counter_pulses_per_rotation(
+    con_handle: ConnectionHandler,
+    slot_id: str,
+    channel_index: int,
+    pulses_per_rot: float,
+) -> str:
+    """Set the pulses per rotation for a timer/counter channel.
+
+     The system needs to be idle before calling this function.
+     If the specified timer/counter mode is not supported by the recorder,
+     the timer/counter mode remains unchanged.
+
+     ReadWrite - This method will only process requests from the
+     connected client with the most privileges order (Privileges order:
+     1- Perception, 2- GenDaq, 3- Other)
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+        channel_index: The zero-based index of the channel to determine
+        the type for.
+        pulses_per_rot: The desired pulses per rotation.
+
+    Returns:
+       String value representing request status.
+    """
+
+    if not slot_id or not channel_index or not pulses_per_rot:
+        return "NullPtrArgument"
+
+    if not isinstance(pulses_per_rot, float
+    ):
+        return "InvalidDataType"
+
+    range_dict = {
+        "SlotId": slot_id,
+        "ChannelIndex": channel_index,
+        "PulsesPerRotation": pulses_per_rot,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "SetTimerCounterPulsesPerRotation", range_dict
+    )
+
+    return to_string(response_json[RETURN_KEY], GHSReturnValue)
+
