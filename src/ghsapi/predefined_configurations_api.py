@@ -64,10 +64,6 @@ def apply_configuration(
         "ApplyConfiguration", dict
     )
 
-    if (response_json[RETURN_KEY] != GHSReturnValue["OK"]
-    ):
-        return to_string(response_json[RETURN_KEY], GHSReturnValue), None
-
     return to_string(response_json[RETURN_KEY], GHSReturnValue)
 
 
@@ -212,7 +208,7 @@ def get_number_of_configurations(
         "GetNumberOfConfigurations", dict
     )
 
-    if ("Section" not in response_json) or (
+    if ("TotalConfigurations" not in response_json) or (
         response_json[RETURN_KEY] != GHSReturnValue["OK"]
     ):
         return to_string(response_json[RETURN_KEY], GHSReturnValue), None
@@ -257,7 +253,7 @@ def get_persisted_configuration_id(
 def set_persisted_configuration(
     con_handle: ConnectionHandler,
     config_id: int
-) -> tuple[str, int | None]:
+) -> str:
     """Sets the persisted configuration.
      * This is the configuration loaded when the mainframe starts.
 

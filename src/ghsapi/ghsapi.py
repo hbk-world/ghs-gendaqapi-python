@@ -182,7 +182,7 @@ class GHS:
             * GHSReturnValue - Start recording status.
         """
 
-        return _acquisition.start_recording(
+        return _acquisition.start_recording_in_pause(
             self._con_handle,
             ignore_sync
         )
@@ -250,7 +250,7 @@ class GHS:
             * TriggerCount - Trigger Count.
         """
 
-        return _acquisition.get_acquisition_state(self._con_handle)
+        return _acquisition.get_extended_acquisition_state(self._con_handle)
 
     def ghs_get_acquisition_start_time(
         self,
@@ -623,7 +623,7 @@ class GHS:
             config_id
         )
 
-    def get_current_configuration_id(
+    def ghs_get_current_configuration_id(
         self
     ) -> tuple[str, int | None]:
         """Returns the identification number of the currently loaded configuration.
@@ -680,7 +680,7 @@ class GHS:
     def ghs_set_persisted_configuration(
         self,
         config_id: int
-    ) -> tuple[str, int | None]:
+    ) -> str:
         """Sets the persisted configuration.
         * This is the configuration loaded when the mainframe starts.
 
@@ -747,8 +747,7 @@ class GHS:
 
     def ghs_get_number_analog_channels(
         self,
-        slot_id: str,
-        digital_output: str | int
+        slot_id: str
     ) -> tuple[str, str | None]:
         """Get number of analog channels in a recorder.
 
@@ -757,7 +756,6 @@ class GHS:
 
         Args:
             slot_id: The slot containing the recorder
-            digital_output: The output number desired.
 
         Returns:
             * GHSReturnValue - API return status
@@ -766,14 +764,12 @@ class GHS:
 
         return _recorder.get_number_analog_channels(
             self._con_handle,
-            slot_id,
-            digital_output
+            slot_id
         )
 
     def ghs_get_number_timer_counter_channels(
         self,
-        slot_id: str,
-        digital_output: str | int
+        slot_id: str
     ) -> tuple[str, str | None]:
         """Get number of timer counter channels in a recorder.
 
@@ -782,7 +778,6 @@ class GHS:
 
         Args:
             slot_id: The slot containing the recorder
-            digital_output: The output number desired.
 
         Returns:
             * GHSReturnValue - API return status
@@ -791,8 +786,7 @@ class GHS:
 
         return _recorder.get_number_timer_counter_channels(
             self._con_handle,
-            slot_id,
-            digital_output
+            slot_id
         )
 
     def ghs_get_recorder_enabled(
@@ -854,8 +848,7 @@ class GHS:
 
         Returns:
             * GHSReturnValue - API return status
-            * RecorderSalesType - The sales type of the recorder
-            (type string in 'GNXXXB' format, e.g. GN310B).
+            * RecorderSalesType - The sales type of the recorder (type string in 'GNXXXB' format, e.g. GN310B).
         """
 
         return _recorder.get_recorder_sales_type(
@@ -1889,7 +1882,7 @@ class GHS:
 
     def ghs_get_number_of_sweeps(
         self,
-        slot_id: int
+        slot_id: str
     ) -> tuple[str, int | None]:
         """Determine the number of sweeps for a recorder.
 
@@ -1911,7 +1904,7 @@ class GHS:
 
     def ghs_get_sweep_length(
         self,
-        slot_id: int
+        slot_id: str
     ) -> tuple[str, int | None]:
         """Determine the sweep length in samples for a recorder.
 
@@ -1933,7 +1926,7 @@ class GHS:
 
     def ghs_get_sweep_recording_mode(
         self,
-        slot_id: int
+        slot_id: str
     ) -> tuple[str, str | None]:
         """Determine the number of sweeps for a recorder.
 
@@ -1955,7 +1948,7 @@ class GHS:
 
     def ghs_get_sweep_trigger_mode(
         self,
-        slot_id: int
+        slot_id: str
     ) -> tuple[str, str | None]:
         """Gets the sweep trigger mode for a recorder.
 
@@ -2201,7 +2194,7 @@ class GHS:
 
     def ghs_set_timeout_trigger_time(
         self,
-        time: int
+        time: float
     ) -> str:
         """Sets the timeout trigger time.
 
@@ -2250,7 +2243,7 @@ class GHS:
 
     def ghs_set_trigger_position(
         self,
-        slot_id: int,
+        slot_id: str,
         trigger_position: float
     ) -> str:
         """Sets the trigger position percentage for a recorder.
@@ -2279,7 +2272,7 @@ class GHS:
 
     def ghs_get_continuous_lead_out_time(
         self,
-        slot_id: int
+        slot_id: str
     ) -> tuple[str, float | None]:
         """Determine the continuous recording lead out time for a recorder.
 
@@ -2301,7 +2294,7 @@ class GHS:
 
     def ghs_get_continuous_recording_mode(
         self,
-        slot_id: int
+        slot_id: str
     ) -> tuple[str, str | None]:
         """Determine the continuous recording mode for a recorder.
 
@@ -2321,9 +2314,9 @@ class GHS:
             slot_id
         )
 
-    def ghs_get_continuous_lead_out_time(
+    def ghs_get_continuous_time_span(
         self,
-        slot_id: int
+        slot_id: str
     ) -> tuple[str, str | None]:
         """Determine the continuous recording time span for a recorder.
 
@@ -2345,7 +2338,7 @@ class GHS:
 
     def ghs_set_continuous_lead_out_time(
         self,
-        slot_id: int,
+        slot_id: str,
         lead_out_time: float
     ) -> str:
         """Sets the continuous recording lead out time for a recorder.
@@ -2370,7 +2363,7 @@ class GHS:
 
     def ghs_set_continuous_recording_mode(
         self,
-        slot_id: int,
+        slot_id: str,
         continuous_mode: str | int
     ) -> str:
         """Set the continuous recording mode for a recorder.
@@ -2397,7 +2390,7 @@ class GHS:
 
     def ghs_set_continuous_time_span(
         self,
-        slot_id: int,
+        slot_id: str,
         time_span: str | int
     ) -> str:
         """Set the continuous recording mode for a recorder.
@@ -2466,7 +2459,7 @@ class GHS:
             * GHSReturnValue - API return values
         """
 
-        return _continuous.set_can_acq_control(
+        return _can_fieldbus.set_can_acq_control(
             self._con_handle,
             enabled,
             bus_id,

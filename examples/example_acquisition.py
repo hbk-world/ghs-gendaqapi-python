@@ -56,6 +56,12 @@ def main():
         sys.exit()
     print(f"GHSConnect - Return Status: {return_var}")
 
+    # Stop recording
+    return_var = gen.ghs_stop_recording()
+    if return_var != "OK":
+        print(f"Failed on GHSStopRecording. Return Status: {return_var}")
+    print(f"GHSStopRecording - Return Status: {return_var}")
+
     # Start preview mode (this enables EtherCAT output).
     return_var = gen.ghs_start_preview()
     if return_var != "OK":
@@ -78,6 +84,13 @@ def main():
         print(f"Failed on GHSStopPreview. Return Status: {return_var}")
         sys.exit()
     print(f"GHSStopPreview - Return Status: {return_var}")
+
+    # Set the storage location
+    return_var = gen.ghs_set_storage_location("Local1")
+    if return_var != "OK":
+        print(f"Failed on GHSSetStorageLocation. Return Status: {return_var}")
+        sys.exit()
+    print(f"GHSSetStorageLocation - Return Status: {return_var}")
 
     # Start recording.
     # Note: the mainframe should be configured to store recordings
@@ -122,6 +135,34 @@ def main():
         print(f"Failed on GHSTrigger. Return Status: {return_var}")
         sys.exit()
     print(f"GHSTrigger - Return Status: {return_var}")
+
+    # Stop recording
+    return_var = gen.ghs_stop_recording()
+    if return_var != "OK":
+        print(f"Failed on GHSStopRecording. Return Status: {return_var}")
+        sys.exit()
+    print(f"GHSStopRecording - Return Status: {return_var}")
+
+    # Start recording.
+    # Note: the mainframe should be configured to store recordings
+    # on its local disk.
+    # Execution of this command can be influenced by Perception setting "Suspend storage at start of recording"
+    return_var = gen.ghs_start_recording_in_pause(1)
+    if return_var != "OK":
+        print(f"Failed on GHSStartRecordingInPause. Return Status: {return_var}")
+        sys.exit()
+    print(f"GHSStartRecordingInPause - Return Status: {return_var}")
+
+    # Returns the extended Acquisition State of the Mainframe.
+    # This includes sweep state and trigger count.
+    return_var, state, count = gen.ghs_get_extended_acquisition_state()
+    if return_var != "OK":
+        print(f"Failed on GHSGetExtendedAcquisitionState. Return Status: {return_var}")
+        sys.exit()
+    print(f"GHSGetExtendedAcquisitionState - Return Status: {return_var}\
+        GHSAcquisitionState: {state}\
+        TriggerCount: {count}"
+    )
 
     # Stop recording
     return_var = gen.ghs_stop_recording()

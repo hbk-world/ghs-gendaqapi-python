@@ -13,3 +13,7 @@ All available API functions:
    managemainframe
    recorder
    channel
+   can_fieldbus
+   continuous
+   predefined_configurations
+   sweep

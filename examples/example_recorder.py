@@ -133,6 +133,36 @@ def main():
         Recorder enabled: {enabled}"
     )
 
+    # Get number of analog channels in a recorder
+    return_var, number_channels = gen.ghs_get_number_analog_channels("A")
+    if return_var != "OK":
+        print(f"Failed on GHSGetNumberOfAnalogChannels. Return Status: {return_var}")
+        sys.exit()
+    print(
+        f"GHSGetNumberOfAnalogChannels - Return Status: {return_var}\
+        NumberOfAnalogChannels: {number_channels}"
+    )
+
+    # Get number of timer counter channels in a recorder
+    return_var, number_channels = gen.ghs_get_number_timer_counter_channels("A")
+    if return_var != "OK":
+        print(f"Failed on GHSGetNumberOfTimerCounterChannels. Return Status: {return_var}")
+        sys.exit()
+    print(
+        f"GHSGetNumberOfTimerCounterChannels - Return Status: {return_var}\
+        NumberOfTimerCounterChannels: {number_channels}"
+    )
+
+    # Get number of timer counter channels in a recorder
+    return_var, sales_type = gen.ghs_get_recorder_sales_type("A")
+    if return_var != "OK":
+        print(f"Failed on GHSGetRecorderSalesType. Return Status: {return_var}")
+        sys.exit()
+    print(
+        f"GHSGetRecorderSalesType - Return Status: {return_var}\
+        RecorderSalesType: {sales_type}"
+    )
+
     return_var = gen.ghs_disconnect()
     if return_var != "OK":
         print(f"Failed on GHSDisconnect. Return Status: {return_var}")

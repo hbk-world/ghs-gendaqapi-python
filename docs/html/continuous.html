@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Continuous &mdash; GEN DAQ API - Python Driver 1.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Predefined Configurations" href="predefined_configurations.html" />
+    <link rel="prev" title="CAN fieldbus" href="can_fieldbus.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            GEN DAQ API - Python Driver
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="ghspyapi.html">API Functions</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="connections.html">Connections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="acquisition.html">Acquisition control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mainframe.html">Mainframe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="managerecording.html">Manage recordings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="managemainframe.html">Manage mainframe settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="recorder.html">Recorder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="channel.html">Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="can_fieldbus.html">CAN fieldbus</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Continuous</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_get_continuous_lead_out_time"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_continuous_lead_out_time()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_get_continuous_recording_mode"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_continuous_recording_mode()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_get_continuous_time_span"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_continuous_time_span()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_set_continuous_lead_out_time"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_set_continuous_lead_out_time()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_set_continuous_recording_mode"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_set_continuous_recording_mode()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_set_continuous_time_span"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_set_continuous_time_span()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="predefined_configurations.html">Predefined Configurations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sweep.html">Sweep</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remarks.html">Remarks</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">GEN DAQ API - Python Driver</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="ghspyapi.html">API Functions</a></li>
+      <li class="breadcrumb-item active">Continuous</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/continuous.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="continuous">
+<h1>Continuous<a class="headerlink" href="#continuous" title="Permalink to this heading"></a></h1>
+<p>Continuous related API functions.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_get_continuous_lead_out_time">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_get_continuous_lead_out_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_get_continuous_lead_out_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_get_continuous_lead_out_time" title="Permalink to this definition"></a></dt>
+<dd><p>Determine the continuous recording lead out time for a recorder.</p>
+<p><em>Read - This method can be called by multiple connected clients at same
+time.</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>slot_id</strong> – The slot containing the recorder</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>GHSReturnValue - API return values</p></li>
+<li><p>ContinuousLeadOutTime - The continuous recording mode lead out time (post trigger time) in seconds.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_get_continuous_recording_mode">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_get_continuous_recording_mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_get_continuous_recording_mode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_get_continuous_recording_mode" title="Permalink to this definition"></a></dt>
+<dd><p>Determine the continuous recording mode for a recorder.</p>
+<p><em>Read - This method can be called by multiple connected clients at same
+time.</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>slot_id</strong> – The slot containing the recorder</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>GHSReturnValue - API return values</p></li>
+<li><p>ContinuousRecordingMode - The continuous recording mode &#64;ref GHSContinuousRecordingMode.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_get_continuous_time_span">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_get_continuous_time_span</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_get_continuous_time_span"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_get_continuous_time_span" title="Permalink to this definition"></a></dt>
+<dd><p>Determine the continuous recording time span for a recorder.</p>
+<p><em>Read - This method can be called by multiple connected clients at same
+time.</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>slot_id</strong> – The slot containing the recorder</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>GHSReturnValue - API return values</p></li>
+<li><p>ContinuousTimeSpan - The time span in seconds for circular and specified time continuous recording modes.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_set_continuous_lead_out_time">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_set_continuous_lead_out_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lead_out_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_set_continuous_lead_out_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_set_continuous_lead_out_time" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the continuous recording lead out time for a recorder.</p>
+<p><em>ReadWrite - This method will only process requests from the
+connected client with the most privileges order (Privileges
+order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
+<li><p><strong>lead_out_time</strong> – The desired continuous recording mode lead out time (post trigger time) in seconds.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>GHSReturnValue - API return values</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_set_continuous_recording_mode">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_set_continuous_recording_mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">continuous_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_set_continuous_recording_mode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_set_continuous_recording_mode" title="Permalink to this definition"></a></dt>
+<dd><p>Set the continuous recording mode for a recorder.</p>
+<ul class="simple">
+<li><p>The system needs to be idle before calling this function.</p></li>
+</ul>
+<p><em>ReadWrite - This method will only process requests from the
+connected client with the most privileges order (Privileges
+order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
+<li><p><strong>continuous_mode</strong> – The desired continuous recording mode.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>GHSReturnValue - API return values</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_set_continuous_time_span">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_set_continuous_time_span</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_span</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_set_continuous_time_span"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_set_continuous_time_span" title="Permalink to this definition"></a></dt>
+<dd><p>Set the continuous recording mode for a recorder.</p>
+<ul class="simple">
+<li><p>The system needs to be idle before calling this function.</p></li>
+</ul>
+<p><em>ReadWrite - This method will only process requests from the
+connected client with the most privileges order (Privileges
+order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
+<li><p><strong>time_span</strong> – The desired time span in seconds for circular and specified time continuous recording modes.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>GHSReturnValue - API return values</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="can_fieldbus.html" class="btn btn-neutral float-left" title="CAN fieldbus" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="predefined_configurations.html" class="btn btn-neutral float-right" title="Predefined Configurations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Hottinger Bruel and Kjaer Benelux B.V..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

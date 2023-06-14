@@ -114,7 +114,7 @@ def get_continuous_recording_mode(
     )
 
 
-def get_continuous_lead_out_time(
+def get_continuous_time_span(
     con_handle: ConnectionHandler,
     slot_id: int,
 ) -> tuple[str, float | None]:

@@ -63,7 +63,7 @@ def cmd_trigger_arm(
 
 def get_number_of_sweeps(
     con_handle: ConnectionHandler,
-    slot_id: int,
+    slot_id: str,
 ) -> tuple[str, int | None]:
     """Determine the number of sweeps for a recorder.
 
@@ -385,7 +385,7 @@ def get_trigger_position(
 
 def set_number_of_sweeps(
     con_handle: ConnectionHandler,
-    slot_id: int,
+    slot_id: str,
     number_of_sweeps: int
 ) -> str:
     """Sets the number of sweeps for a recorder.
@@ -423,7 +423,7 @@ def set_number_of_sweeps(
 
 def set_sweep_length(
     con_handle: ConnectionHandler,
-    slot_id: int,
+    slot_id: str,
     number_of_samples: int
 ) -> str:
     """Sets the sweep length in samples for a recorder.
@@ -461,7 +461,7 @@ def set_sweep_length(
 
 def set_sweep_recording_mode(
     con_handle: ConnectionHandler,
-    slot_id: int,
+    slot_id: str,
     recording_mode: str | int
 ) -> str:
     """Sets the sweep recording mode for a recorder.
@@ -508,7 +508,7 @@ def set_sweep_recording_mode(
 
 def set_sweep_trigger_mode(
     con_handle: ConnectionHandler,
-    slot_id: int,
+    slot_id: str,
     trigger_mode: str | int
 ) -> str:
     """Sets the sweep trigger mode for a recorder.
@@ -602,7 +602,7 @@ def set_timeout_trigger_enabled(
 
 def set_timeout_trigger_time(
     con_handle: ConnectionHandler,
-    time: int
+    time: float
 ) -> str:
     """Sets the timeout trigger time.
     
@@ -680,7 +680,7 @@ def set_trigger_arm_enabled(
 
 def set_trigger_position(
     con_handle: ConnectionHandler,
-    slot_id: int,
+    slot_id: str,
     trigger_position: float
 ) -> str:
     """Sets the trigger position percentage for a recorder.

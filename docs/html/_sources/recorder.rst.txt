@@ -12,6 +12,9 @@ Recorder related API functions.
 .. automethod:: ghsapi.ghsapi.GHS.ghs_set_sample_rate
 .. automethod:: ghsapi.ghsapi.GHS.ghs_get_digital_output
 .. automethod:: ghsapi.ghsapi.GHS.ghs_set_digital_output
+.. automethod:: ghsapi.ghsapi.GHS.ghs_get_number_analog_channels
+.. automethod:: ghsapi.ghsapi.GHS.ghs_get_number_timer_counter_channels
+.. automethod:: ghsapi.ghsapi.GHS.ghs_get_recorder_sales_type
 
 **Accepted values:**
 
