@@ -1887,7 +1887,7 @@ class GHS:
         self,
         slot_id: str,
         channel_index: int,
-        pulses_per_rot: str | int,
+        pulses_per_rot: float,
     ) -> str:
         """Set the pulses per rotation for a timer/counter channel.
     

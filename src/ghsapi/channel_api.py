@@ -391,13 +391,13 @@ def get_available_span_list(
     if not slot_id or not channel_index:
         return "NullPtrArgument", None, None
 
-    range_dict = {
+    dict = {
         "SlotId": slot_id,
         "ChannelIndex": channel_index,
     }
 
     response_json = con_handle.send_request_wait_response(
-        "GetAvailableSpanList", range_dict
+        "GetAvailableSpanList", dict
     )
 
     if (
@@ -503,13 +503,13 @@ def get_range_level_status(
     if not slot_id or not channel_index:
         return "NullPtrArgument", None
 
-    channel_name_dict = {
+    dict = {
         "SlotId": slot_id,
         "ChannelIndex": channel_index,
     }
 
     response_json = con_handle.send_request_wait_response(
-        "GetRangeLevelStatus", channel_name_dict
+        "GetRangeLevelStatus", dict
     )
 
     if ("RangeLevelStatus" not in response_json) or (
@@ -2019,13 +2019,13 @@ def get_timer_counter_technical_units(
     if not slot_id or not channel_index:
         return "NullPtrArgument", None, None
 
-    range_dict = {
+    dict = {
         "SlotId": slot_id,
         "ChannelIndex": channel_index,
     }
 
     response_json = con_handle.send_request_wait_response(
-        "GetTimerCounterTechnicalUnits", range_dict
+        "GetTimerCounterTechnicalUnits", dict
     )
 
     if (
@@ -2057,9 +2057,9 @@ def set_timer_counter_technical_units(
     con_handle: ConnectionHandler,
     slot_id: str,
     channel_index: int,
-    unit_type: float,
+    unit_type: str,
     multiplier: float,
-    offset: str,
+    offset: float,
 ) -> str:
     """Set the technical units, unit multiplier and unit offset for a timer counter channel.
 
@@ -2086,12 +2086,12 @@ def set_timer_counter_technical_units(
     if not slot_id or not channel_index or not unit_type or not multiplier or not offset:
         return "NullPtrArgument"
 
-    if not isinstance(unit_type, float) or not isinstance(
-        multiplier, float
+    if not isinstance(multiplier, float) or not isinstance(
+        offset, float
     ):
         return "InvalidDataType"
 
-    range_dict = {
+    dict = {
         "SlotId": slot_id,
         "ChannelIndex": channel_index,
         "UnitType": unit_type,
@@ -2100,7 +2100,7 @@ def set_timer_counter_technical_units(
     }
 
     response_json = con_handle.send_request_wait_response(
-        "SetTimerCounterTechnicalUnits", range_dict
+        "SetTimerCounterTechnicalUnits", dict
     )
 
     return to_string(response_json[RETURN_KEY], GHSReturnValue)
@@ -2130,13 +2130,13 @@ def get_timer_counter_min_pulse_width(
     if not slot_id or not channel_index:
         return "NullPtrArgument", None, None
 
-    range_dict = {
+    dict = {
         "SlotId": slot_id,
         "ChannelIndex": channel_index,
     }
 
     response_json = con_handle.send_request_wait_response(
-        "GetTimerCounterMinimumPulseWidth", range_dict
+        "GetTimerCounterMinimumPulseWidth", dict
     )
 
     if ("MinimumPulseWidth" not in response_json) or (
@@ -2185,23 +2185,23 @@ def set_timer_counter_min_pulse_width(
     if not slot_id or not channel_index or not min_pulse_width:
         return "NullPtrArgument"
 
-    if isinstance(mode, str) and mode in GHSTimerCounterDeBouncerFilterTime:
-        mode = from_string(mode, GHSTimerCounterDeBouncerFilterTime)
+    if isinstance(min_pulse_width, str) and min_pulse_width in GHSTimerCounterDeBouncerFilterTime:
+        min_pulse_width = from_string(min_pulse_width, GHSTimerCounterDeBouncerFilterTime)
 
-    elif isinstance(mode, int) and mode in GHSTimerCounterDeBouncerFilterTime.values():
+    elif isinstance(min_pulse_width, int) and min_pulse_width in GHSTimerCounterDeBouncerFilterTime.values():
         pass
 
     else:
         return "InvalidDataType"
 
-    range_dict = {
+    dict = {
         "SlotId": slot_id,
         "ChannelIndex": channel_index,
         "MinimumPulseWidth": min_pulse_width,
     }
 
     response_json = con_handle.send_request_wait_response(
-        "SetTimerCounterMinimumPulseWidth", range_dict
+        "SetTimerCounterMinimumPulseWidth", dict
     )
 
     return to_string(response_json[RETURN_KEY], GHSReturnValue)
@@ -2231,13 +2231,13 @@ def get_timer_counter_pulses_per_rotation(
     if not slot_id or not channel_index:
         return "NullPtrArgument", None, None
 
-    range_dict = {
+    dict = {
         "SlotId": slot_id,
         "ChannelIndex": channel_index,
     }
 
     response_json = con_handle.send_request_wait_response(
-        "GetTimerCounterPulsesPerRotation", range_dict
+        "GetTimerCounterPulsesPerRotation", dict
     )
 
     if ("PulsesPerRotation" not in response_json) or (
@@ -2289,14 +2289,14 @@ def set_timer_counter_pulses_per_rotation(
     ):
         return "InvalidDataType"
 
-    range_dict = {
+    dict = {
         "SlotId": slot_id,
         "ChannelIndex": channel_index,
         "PulsesPerRotation": pulses_per_rot,
     }
 
     response_json = con_handle.send_request_wait_response(
-        "SetTimerCounterPulsesPerRotation", range_dict
+        "SetTimerCounterPulsesPerRotation", dict
     )
 
     return to_string(response_json[RETURN_KEY], GHSReturnValue)

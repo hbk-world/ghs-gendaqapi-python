@@ -54,7 +54,7 @@ def get_number_of_scalars(
     """
     
     response_json = con_handle.send_request_wait_response(
-        "GetNumberOfScalars"
+        "GetNumberOfScalars", None
     )
 
     if ("NumberOfScalars" not in response_json) or (

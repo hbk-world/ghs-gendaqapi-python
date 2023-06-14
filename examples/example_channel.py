@@ -326,6 +326,41 @@ def main():
         Power Verification Lab: {power_verification_lab}"
     )
 
+    # Get the list of available spans from channel capabilities
+    (
+        return_var,
+        number_selections,
+        values,
+    ) = gen.ghs_get_available_span_list("A", 1)
+    if return_var != "OK":
+        print(f"Failed on GHSGetAvailableSpanList. Return Status: {return_var}")
+        sys.exit()
+    print(
+        f"GHSGetAvailableSpanList - Return Status: {return_var}\
+        Number Of Selections: {number_selections}\
+        Values: {values}"
+    )
+
+    # Get channel physical name
+    return_var, physical_name = gen.ghs_get_channel_physical_name("A", 1, "Analog")
+    if return_var != "OK":
+        print(f"Failed on GHSGetChannelPhysicalName. Return Status: {return_var}")
+        sys.exit()
+    print(
+        f"GHSGetChannelPhysicalName - Return Status: {return_var}\
+        Channel name: {physical_name}"
+    )
+
+    # Get range level status
+    return_var, range_level = gen.ghs_get_range_level_status("A", 1)
+    if return_var != "OK":
+        print(f"Failed on GHSGetRangeLevelStatus. Return Status: {return_var}")
+        sys.exit()
+    print(
+        f"GHSGetRangeLevelStatus - Return Status: {return_var}\
+        Channel name: {range_level}"
+    )
+
     ## NOTE: Enter valid timer/counter channel slot ID and index
     # Set the gate time for a timer/counter channel.
     return_var = gen.ghs_set_timer_counter_gate_time("A", 1, 23.0)
@@ -386,6 +421,64 @@ def main():
         Lower value: {lower}\
         Upper value: {upper}"
     )
+
+    # Determine the technical units, unit multiplier and unit offset for a timer counter channel
+    (
+        return_var,
+        multiplier,
+        offset,
+        unit_type,
+    ) = gen.ghs_get_timer_counter_technical_units("A", 1)
+    if return_var != "OK":
+        print(f"Failed on GHSGetTimerCounterTechnicalUnits. Return Status: {return_var}")
+        sys.exit()
+    print(
+        f"GHSGetTimerCounterTechnicalUnits - Return Status: {return_var}\
+        Multiplier: {multiplier}\
+        Offset: {offset}\
+        UnitType: {unit_type}"
+    )
+
+    # Set the technical units, unit multiplier and unit offset for a timer counter channel
+    return_var = gen.ghs_set_timer_counter_technical_units("A", 1, "V", 10.0, 20.0)
+    if return_var != "OK":
+        print(f"Failed on GHSSetTimerCounterTechnicalUnits. Return Status: {return_var}")
+        sys.exit()
+    print(f"GHSSetTimerCounterTechnicalUnits - Return Status: {return_var}")
+
+    # Determine the minimum pulse width of a timer/counter channel.
+    return_var, min_pulse_width = gen.ghs_get_timer_counter_min_pulse_width("A", 1)
+    if return_var != "OK":
+        print(f"Failed on GHSGetTimerCounterMinimumPulseWidth. Return Status: {return_var}")
+        sys.exit()
+    print(
+        f"GHSGetTimerCounterMinimumPulseWidth - Return Status: {return_var}\
+        TimerCounterDeBouncerFilterTime: {min_pulse_width}"
+    )
+
+    # Set the minimum pulse width for a timer/counter channel.
+    return_var = gen.ghs_set_timer_counter_min_pulse_width("A", 1, "1us")
+    if return_var != "OK":
+        print(f"Failed on GHSSetTimerCounterMinimumPulseWidth. Return Status: {return_var}")
+        sys.exit()
+    print(f"GHSSetTimerCounterMinimumPulseWidth - Return Status: {return_var}")
+
+    # Determine the pulses per rotation for a timer/counter channel
+    return_var, pulses_per_rot = gen.ghs_get_timer_counter_pulses_per_rotation("A", 1)
+    if return_var != "OK":
+        print(f"Failed on GHSGetTimerCounterPulsesPerRotation. Return Status: {return_var}")
+        sys.exit()
+    print(
+        f"GHSGetTimerCounterPulsesPerRotation - Return Status: {return_var}\
+        Pulses per Rotation: {pulses_per_rot}"
+    )
+
+    # Set the pulses per rotation for a timer/counter channel
+    return_var = gen.ghs_set_timer_counter_pulses_per_rotation("A", 1, 10.0)
+    if return_var != "OK":
+        print(f"Failed on GHSSetTimerCounterPulsesPerRotation. Return Status: {return_var}")
+        sys.exit()
+    print(f"GHSSetTimerCounterPulsesPerRotation - Return Status: {return_var}")
 
     # Disconnect
     return_var = gen.ghs_disconnect()
