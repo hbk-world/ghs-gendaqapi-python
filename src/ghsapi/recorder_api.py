@@ -127,6 +127,86 @@ def get_digital_output(
     )
 
 
+def get_number_analog_channels(
+    con_handle: ConnectionHandler,
+    slot_id: str,
+) -> tuple[str, int | None]:
+    """Get number of analog channels in a recorder.
+
+    Read - This method can be called by multiple connected clients at
+    same time.
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+
+    Returns:
+       Tuple with status and the number of analog channels in the recorder
+    """
+
+    if not slot_id:
+        return "NullPtrArgument", None
+
+    analog_channels_dict = {
+        "SlotId": slot_id,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "GetNumberOfAnalogChannels", analog_channels_dict
+    )
+
+    if ("NumberOfAnalogChannels" not in response_json) or (
+        response_json[RETURN_KEY] != GHSReturnValue["OK"]
+    ):
+        return to_string(response_json[RETURN_KEY], GHSReturnValue), None
+
+    return (
+        to_string(response_json[RETURN_KEY], GHSReturnValue),
+        response_json["NumberOfAnalogChannels"],
+    )
+
+
+def get_number_timer_counter_channels(
+    con_handle: ConnectionHandler,
+    slot_id: str,
+) -> tuple[str, int | None]:
+    """Get number of timer counter channels in a recorder.
+
+    Read - This method can be called by multiple connected clients at
+    same time.
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+
+    Returns:
+       Tuple with status and the number of timer counter channels in the recorder
+    """
+
+    if not slot_id:
+        return "NullPtrArgument", None
+
+    timer_counter_channels_dict = {
+        "SlotId": slot_id,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "GetNumberOfTimerCounterChannels", timer_counter_channels_dict
+    )
+
+    if ("NumberOfTimerCounterChannels" not in response_json) or (
+        response_json[RETURN_KEY] != GHSReturnValue["OK"]
+    ):
+        return to_string(response_json[RETURN_KEY], GHSReturnValue), None
+
+    return (
+        to_string(response_json[RETURN_KEY], GHSReturnValue),
+        response_json["NumberOfTimerCounterChannels"],
+    )
+
+
 def get_recorder_enabled(
     con_handle: ConnectionHandler, slot_id: str
 ) -> tuple[str, str | None]:
@@ -223,6 +303,46 @@ def get_recorder_info(
         response_json["RecorderName"],
         response_json["SerialNumber"],
         response_json["FirmwareVersion"],
+    )
+
+
+def get_recorder_sales_type(
+    con_handle: ConnectionHandler,
+    slot_id: str
+) -> tuple[str, str | None]:
+    """Determine sales type for a recorder.
+
+    This method can be called by multiple connected clients at same
+    time.
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        slot_id: The slot containing the recorder to get number of
+        channels for (e.g. 'A' for the first slot).
+
+    Returns:
+       Tuple with status and the sales type of the recorder.
+    """
+
+    if not slot_id:
+        return "NullPtrArgument", None
+
+    recorder_sales_type_dict = {
+        "SlotId": slot_id,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "GetRecorderSalesType", recorder_sales_type_dict
+    )
+
+    if ("RecorderSalesType" not in response_json) or (
+        response_json[RETURN_KEY] != GHSReturnValue["OK"]
+    ):
+        return to_string(response_json[RETURN_KEY], GHSReturnValue), None
+
+    return (
+        to_string(response_json[RETURN_KEY], GHSReturnValue),
+        response_json["RecorderSalesType"]
     )
 
 

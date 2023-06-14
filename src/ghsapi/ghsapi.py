@@ -39,6 +39,10 @@ from . import mainframe_api as _mainframe
 from . import manage_mainframe_settings as _manage_mainframe_settings
 from . import manage_recordings_api as _manage_recordings
 from . import recorder_api as _recorder
+from . import predefined_configurations_api as _predefined_config
+from . import sweep_api as _sweep
+from . import continuous_api as _continuous
+from . import can_fieldbus_api as _can_fieldbus
 from .connection import ConnectionHandler
 from .ghsapi_states import (
     RETURN_KEY,
@@ -161,6 +165,28 @@ class GHS:
 
         return _acquisition.start_recording(self._con_handle)
 
+    def ghs_start_recording_in_pause(
+        self,
+        ignore_sync
+    ) -> str:
+        """Starts a recording on local storage in Pause mode.
+
+        *The system needs to be idle before calling this function. Note
+        that the connected mainframe will generate a recording name.
+        This command can be executed only successfully when the local
+        storage is set.*
+        Execution of this command can be influenced by Perception setting
+        "Suspend storage at start of recording"
+
+        Returns:
+            * GHSReturnValue - Start recording status.
+        """
+
+        return _acquisition.start_recording(
+            self._con_handle,
+            ignore_sync
+        )
+
     def ghs_pause_recording(self) -> str:
         """Pauses a started recording.
 
@@ -211,6 +237,17 @@ class GHS:
         Returns:
             * GHSReturnValue - API return status
             * GHSAcquisitionState - acquisition state of the mainframe.
+        """
+
+        return _acquisition.get_acquisition_state(self._con_handle)
+
+    def ghs_get_extended_acquisition_state(self) -> tuple[str, str | None, int | None]:
+        """Returns the Acquisition State of the Mainframe.
+
+        Returns:
+            * GHSReturnValue - API return status
+            * GHSExtendedAcquisitionState - The acquisition state @ref GHSExtendedAcquisitionState.
+            * TriggerCount - Trigger Count.
         """
 
         return _acquisition.get_acquisition_state(self._con_handle)
@@ -531,9 +568,144 @@ class GHS:
             self._con_handle, blob, blob_size
         )
 
+    # Predefined Configurations APIs
+
+    def ghs_apply_configuration(
+        self,
+        config_id: int
+    ) -> str:
+        """Applies one of the predefined configurations as actual configuration of the mainframe.
+
+        *This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            config_id: The configuration identification number.
+
+        Returns:
+            * GHSReturnValue - API return status
+        """
+
+        return _predefined_config.apply_configuration(
+            self._con_handle,
+            config_id
+        )
+
+    def ghs_get_configuration_info(
+        self,
+        config_type: str | int,
+        config_id: int
+    ) -> tuple[
+        str, str | None, str | None, str | None, str | None, str | None, str | None
+    ]:
+        """Returns information of a specified configuration.
+
+        *This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            config_type: The configuration type @ref GHSConfigurationType.
+            config_id: The configuration identification number.
+
+        Returns:
+            * GHSReturnValue - API return status
+            * MainframeType - The type of the mainframe.
+            * Boards - The acquisition boards.
+            * Description - The configuration description.
+            * HWCompatibility - The HW compatibility with the given configurations @ref GHSHWCompatibility.
+            * WiringPath - The wiring path of the given configuration.
+            * SchematicPath - The schematic path of the given configuration.
+        """
+
+        return _predefined_config.get_configuration_info(
+            self._con_handle,
+            config_type,
+            config_id
+        )
+
+    def get_current_configuration_id(
+        self
+    ) -> tuple[str, int | None]:
+        """Returns the identification number of the currently loaded configuration.
+
+        *This method will only process requests from the connected client
+        with the most privileges order (Privileges order: 1- Perception,
+        2- GenDaq, 3- Other)*
+
+        Returns:
+            * GHSReturnValue - API return status
+            * ConfigurationId - The configuration identification number.
+        """
+
+        return _predefined_config.get_current_configuration_id(self._con_handle)
+
+    def ghs_get_number_of_configurations(
+        self,
+        config_type: str | int
+    ) -> tuple[str, int | None]:
+        """Returns the total number of predefined configurations present on the mainframe.
+
+        *This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            config_type: The configuration type @ref GHSConfigurationType.
+
+        Returns:
+            * GHSReturnValue - API return status
+            * TotalConfigurations - The total number of configurations.
+        """
+
+        return _predefined_config.get_number_of_configurations(
+            self._con_handle,
+            config_type
+        )
+
+    def ghs_get_persisted_configuration_id(
+        self
+    ) -> tuple[str, int | None]:
+        """Returns the identification number of the currently persisted configuration.
+        * This is the configuration loaded when the mainframe starts.
+
+        *This method can be called by multiple connected clients at same
+        time.*
+
+        Returns:
+            * GHSReturnValue - API return status
+            * ConfigurationId - The configuration identification number.
+        """
+
+        return _predefined_config.get_persisted_configuration_id(self._con_handle)
+
+    def ghs_set_persisted_configuration(
+        self,
+        config_id: int
+    ) -> tuple[str, int | None]:
+        """Sets the persisted configuration.
+        * This is the configuration loaded when the mainframe starts.
+
+        *This method will only process requests from the connected client
+        with the most privileges order (Privileges order: 1- Perception,
+        2- GenDaq, 3- Other)*
+
+        Args:
+            config_id: The configuration identification number.
+
+        Returns:
+            * GHSReturnValue - API return status
+        """
+
+        return _predefined_config.set_persisted_configuration(
+            self._con_handle,
+            config_id
+        )
+
     # Recorder APIs
 
-    def ghs_get_channel_count(self, slot_id: str) -> tuple[str, int | None]:
+    def ghs_get_channel_count(
+        self,
+        slot_id: str
+    ) -> tuple[str, int | None]:
         """Retrieve the number of channels for a recorder.
 
         *This method can be called by multiple connected clients at same
@@ -550,7 +722,9 @@ class GHS:
         return _recorder.get_channel_count(self._con_handle, slot_id)
 
     def ghs_get_digital_output(
-        self, slot_id: str, digital_output: str | int
+        self,
+        slot_id: str,
+        digital_output: str | int
     ) -> tuple[str, str | None]:
         """Retrieve the Digital Output Mode for a specified Output ID in a
         recorder.
@@ -571,7 +745,60 @@ class GHS:
             self._con_handle, slot_id, digital_output
         )
 
-    def ghs_get_recorder_enabled(self, slot_id: str) -> tuple[str, str | None]:
+    def ghs_get_number_analog_channels(
+        self,
+        slot_id: str,
+        digital_output: str | int
+    ) -> tuple[str, str | None]:
+        """Get number of analog channels in a recorder.
+
+        *This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            digital_output: The output number desired.
+
+        Returns:
+            * GHSReturnValue - API return status
+            * NumberOfAnalogChannels - The digital output mode for that output
+        """
+
+        return _recorder.get_number_analog_channels(
+            self._con_handle,
+            slot_id,
+            digital_output
+        )
+
+    def ghs_get_number_timer_counter_channels(
+        self,
+        slot_id: str,
+        digital_output: str | int
+    ) -> tuple[str, str | None]:
+        """Get number of timer counter channels in a recorder.
+
+        *This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+            digital_output: The output number desired.
+
+        Returns:
+            * GHSReturnValue - API return status
+            * NumberOfTimerCounterChannels - The number of timer counter channels in the recorder.
+        """
+
+        return _recorder.get_number_timer_counter_channels(
+            self._con_handle,
+            slot_id,
+            digital_output
+        )
+
+    def ghs_get_recorder_enabled(
+        self,
+        slot_id: str
+    ) -> tuple[str, str | None]:
         """Determine if recorder is enabled or disabled.
 
         *This method can be called by multiple connected clients at same
@@ -588,7 +815,8 @@ class GHS:
         return _recorder.get_recorder_enabled(self._con_handle, slot_id)
 
     def ghs_get_recorder_info(
-        self, slot_id: str
+        self,
+        slot_id: str
     ) -> tuple[str, str | None, str | None, str | None, str | None]:
         """Determine type, name, serial number and firmware version
         information for a recorder.
@@ -612,7 +840,33 @@ class GHS:
 
         return _recorder.get_recorder_info(self._con_handle, slot_id)
 
-    def ghs_get_sample_rate(self, slot_id: str) -> tuple[str, float | None]:
+    def ghs_get_recorder_sales_type(
+        self,
+        slot_id: str
+    ) -> tuple[str, str | None]:
+        """Determine sales type for a recorder.
+
+        *This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+
+        Returns:
+            * GHSReturnValue - API return status
+            * RecorderSalesType - The sales type of the recorder
+            (type string in 'GNXXXB' format, e.g. GN310B).
+        """
+
+        return _recorder.get_recorder_sales_type(
+            self._con_handle,
+            slot_id
+        )
+
+    def ghs_get_sample_rate(
+        self,
+        slot_id: str
+    ) -> tuple[str, float | None]:
         """Determine the sample rate for a recorder.
 
         *This method can be called by multiple connected clients at same
@@ -1611,4 +1865,610 @@ class GHS:
             channel_index,
             lower_value,
             upper_value,
+        )
+
+    # Sweep APIs
+
+    def ghs_cmd_trigger_arm(
+        self
+    ) -> str:
+        """Arm the trigger, so that the next trigger will be accepted.
+        * After the next trigger occurred, triggers are disarmed automatically and need to be
+        * armed explicitly again using this function.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Returns:
+            * GHSReturnValue - API return values
+        """
+
+        return _sweep.cmd_trigger_arm(
+            self._con_handle
+        )
+
+    def ghs_get_number_of_sweeps(
+        self,
+        slot_id: int
+    ) -> tuple[str, int | None]:
+        """Determine the number of sweeps for a recorder.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+
+        Returns:
+            * GHSReturnValue - API return values
+            * NumberOfSweeps - The number of sweeps for the recorder.
+        """
+
+        return _sweep.get_number_of_sweeps(
+            self._con_handle,
+            slot_id
+        )
+
+    def ghs_get_sweep_length(
+        self,
+        slot_id: int
+    ) -> tuple[str, int | None]:
+        """Determine the sweep length in samples for a recorder.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+
+        Returns:
+            * GHSReturnValue - API return values
+            * SweepLength - The sweep length in number of samples.
+        """
+
+        return _sweep.get_sweep_length(
+            self._con_handle,
+            slot_id
+        )
+
+    def ghs_get_sweep_recording_mode(
+        self,
+        slot_id: int
+    ) -> tuple[str, str | None]:
+        """Determine the number of sweeps for a recorder.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+
+        Returns:
+            * GHSReturnValue - API return values
+            * SweepMode - The desired sweep recording mode for the recorder.
+        """
+
+        return _sweep.get_sweep_recording_mode(
+            self._con_handle,
+            slot_id
+        )
+
+    def ghs_get_sweep_trigger_mode(
+        self,
+        slot_id: int
+    ) -> tuple[str, str | None]:
+        """Gets the sweep trigger mode for a recorder.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+
+        Returns:
+            * GHSReturnValue - API return values
+            * SweepTriggerMode - The sweep trigger mode.
+        """
+
+        return _sweep.get_sweep_recording_mode(
+            self._con_handle,
+            slot_id
+        )
+
+    def ghs_get_timeout_trigger_enabled(
+        self
+    ) -> tuple[str, str | None]:
+        """Retrieve the timeout trigger enabled status.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Returns:
+            * GHSReturnValue - API return values
+            * Enable - Flag to indicate if feature is on.
+        """
+
+        return _sweep.get_timeout_trigger_enabled(
+            self._con_handle
+        )
+
+    def ghs_get_timeout_trigger_time(
+        self
+    ) -> tuple[str, float | None]:
+        """Retrieve the timeout trigger time.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Returns:
+            * GHSReturnValue - API return values
+            * Time - The timeout trigger time in seconds.
+        """
+
+        return _sweep.get_timeout_trigger_time(
+            self._con_handle
+        )
+
+    def ghs_get_trigger_arm_enabled(
+        self
+    ) -> tuple[str, str | None]:
+        """Retrieve trigger arm enabled status for a recorder.
+        * When enabled, triggers must be armed explicitly before they will be accepted.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Returns:
+            * GHSReturnValue - API return values
+            * Enable - Flag to indicate if feature is on.
+        """
+
+        return _sweep.get_trigger_arm_enabled(
+            self._con_handle
+        )
+
+    def ghs_get_trigger_arm_state(
+        self
+    ) -> tuple[str, str | None]:
+        """Retrieve the current trigger arm state.
+        * This function can be used to synchronize CmdTriggerArm function calls with the user application.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Returns:
+            * GHSReturnValue - API return values
+            * TriggerArmState - The current state of trigger arm (e.g. triggers armed or disarmed).
+        """
+
+        return _sweep.get_trigger_arm_state(
+            self._con_handle
+        )
+
+    def ghs_get_trigger_position(
+        self,
+        slot_id: str
+    ) -> tuple[str, float | None]:
+        """Retrieve the timeout trigger time.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+
+        Returns:
+            * GHSReturnValue - API return values
+            * TriggerPosition - The trigger position in percentage (0% to 100%).
+        """
+
+        return _sweep.get_trigger_position(
+            self._con_handle,
+            slot_id
+        )
+
+    def ghs_set_number_of_sweeps(
+        self,
+        slot_id: str,
+        number_of_sweeps: int
+    ) -> str:
+        """Sets the number of sweeps for a recorder.
+
+        *The system needs to be idle before calling this function.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            number_of_sweeps: The desired number of sweeps for the recorder.
+
+        Returns:
+            * GHSReturnValue - API return values
+        """
+
+        return _sweep.set_number_of_sweeps(
+            self._con_handle,
+            slot_id,
+            number_of_sweeps,
+        )
+
+    def ghs_set_sweep_length(
+        self,
+        slot_id: str,
+        number_of_samples: int
+    ) -> str:
+        """Sets the sweep length in samples for a recorder.
+
+        *The system needs to be idle before calling this function.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            number_of_samples: The desired sweep length in number of samples.
+
+        Returns:
+            * GHSReturnValue - API return values
+        """
+
+        return _sweep.set_sweep_length(
+            self._con_handle,
+            slot_id,
+            number_of_samples,
+        )
+
+    def ghs_set_sweep_recording_mode(
+        self,
+        slot_id: str,
+        recording_mode: str | int
+    ) -> str:
+        """Sets the sweep recording mode for a recorder.
+
+        *The system needs to be idle before calling this function.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            recording_mode: The desired sweep recording mode for the recorder
+
+        Returns:
+            * GHSReturnValue - API return values
+        """
+
+        return _sweep.set_sweep_recording_mode(
+            self._con_handle,
+            slot_id,
+            recording_mode,
+        )
+
+    def ghs_set_sweep_trigger_mode(
+        self,
+        slot_id: str,
+        trigger_mode: str | int
+    ) -> str:
+        """Sets the sweep trigger mode for a recorder.
+
+        *The system needs to be idle before calling this function.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            trigger_mode: The sweep trigger mode to be set.
+
+        Returns:
+            * GHSReturnValue - API return values
+        """
+
+        return _sweep.set_sweep_trigger_mode(
+            self._con_handle,
+            slot_id,
+            trigger_mode,
+        )
+
+    def ghs_set_timeout_trigger_enabled(
+        self,
+        enabled: str | int
+    ) -> str:
+        """Enables or disables timeout triggers.
+
+        *The system needs to be idle before calling this function.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            enabled: Flag to indicate if feature is on.
+
+        Returns:
+            * GHSReturnValue - API return values
+        """
+
+        return _sweep.set_timeout_trigger_enabled(
+            self._con_handle,
+            enabled
+        )
+
+    def ghs_set_timeout_trigger_time(
+        self,
+        time: int
+    ) -> str:
+        """Sets the timeout trigger time.
+
+        *The system needs to be idle before calling this function.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            time: The timeout trigger time in seconds.
+
+        Returns:
+            * GHSReturnValue - API return values
+        """
+
+        return _sweep.set_timeout_trigger_time(
+            self._con_handle,
+            time
+        )
+
+    def ghs_set_trigger_arm_enabled(
+        self,
+        enabled: str | int
+    ) -> str:
+        """Enable or disable trigger arm.
+        * When enabled, triggers must be armed explicitly before they will be accepted.
+
+        *The system needs to be idle before calling this function.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            enabled: Flag to indicate if feature is on.
+
+        Returns:
+            * GHSReturnValue - API return values
+        """
+
+        return _sweep.set_trigger_arm_enabled(
+            self._con_handle,
+            enabled
+        )
+
+    def ghs_set_trigger_position(
+        self,
+        slot_id: int,
+        trigger_position: float
+    ) -> str:
+        """Sets the trigger position percentage for a recorder.
+
+        *The system needs to be idle before calling this function.*
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            trigger_position: The desired trigger position in percentage (0% to 100%).
+
+        Returns:
+            * GHSReturnValue - API return values
+        """
+
+        return _sweep.set_trigger_position(
+            self._con_handle,
+            slot_id,
+            trigger_position
+        )
+
+    # Continuous APIs
+
+    def ghs_get_continuous_lead_out_time(
+        self,
+        slot_id: int
+    ) -> tuple[str, float | None]:
+        """Determine the continuous recording lead out time for a recorder.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+
+        Returns:
+            * GHSReturnValue - API return values
+            * ContinuousLeadOutTime - The continuous recording mode lead out time (post trigger time) in seconds.
+        """
+
+        return _continuous.get_continuous_lead_out_time(
+            self._con_handle,
+            slot_id
+        )
+
+    def ghs_get_continuous_recording_mode(
+        self,
+        slot_id: int
+    ) -> tuple[str, str | None]:
+        """Determine the continuous recording mode for a recorder.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+
+        Returns:
+            * GHSReturnValue - API return values
+            * ContinuousRecordingMode - The continuous recording mode @ref GHSContinuousRecordingMode.
+        """
+
+        return _continuous.get_continuous_recording_mode(
+            self._con_handle,
+            slot_id
+        )
+
+    def ghs_get_continuous_lead_out_time(
+        self,
+        slot_id: int
+    ) -> tuple[str, str | None]:
+        """Determine the continuous recording time span for a recorder.
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Args:
+            slot_id: The slot containing the recorder
+
+        Returns:
+            * GHSReturnValue - API return values
+            * ContinuousTimeSpan - The time span in seconds for circular and specified time continuous recording modes.
+        """
+
+        return _continuous.get_continuous_lead_out_time(
+            self._con_handle,
+            slot_id
+        )
+
+    def ghs_set_continuous_lead_out_time(
+        self,
+        slot_id: int,
+        lead_out_time: float
+    ) -> str:
+        """Sets the continuous recording lead out time for a recorder.
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            lead_out_time: The desired continuous recording mode lead out time (post trigger time) in seconds.
+
+        Returns:
+            * GHSReturnValue - API return values
+        """
+
+        return _continuous.set_continuous_lead_out_time(
+            self._con_handle,
+            slot_id,
+            lead_out_time
+        )
+
+    def ghs_set_continuous_recording_mode(
+        self,
+        slot_id: int,
+        continuous_mode: str | int
+    ) -> str:
+        """Set the continuous recording mode for a recorder.
+    
+        * The system needs to be idle before calling this function.
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            continuous_mode: The desired continuous recording mode.
+
+        Returns:
+            * GHSReturnValue - API return values
+        """
+
+        return _continuous.set_continuous_recording_mode(
+            self._con_handle,
+            slot_id,
+            continuous_mode
+        )
+
+    def ghs_set_continuous_time_span(
+        self,
+        slot_id: int,
+        time_span: str | int
+    ) -> str:
+        """Set the continuous recording mode for a recorder.
+    
+        * The system needs to be idle before calling this function.
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            slot_id: The slot containing the recorder
+            time_span: The desired time span in seconds for circular and specified time continuous recording modes.
+
+        Returns:
+            * GHSReturnValue - API return values
+        """
+
+        return _continuous.set_continuous_time_span(
+            self._con_handle,
+            slot_id,
+            time_span
+        )
+
+    # CAN Fieldbus APIs
+
+    def ghs_get_can_acq_control(
+        self
+    ) -> tuple[str, str | None, int | None, int | None]:
+        """Get the current setup of CAN acquisition control
+
+        *Read - This method can be called by multiple connected clients at same
+        time.*
+
+        Returns:
+            * GHSReturnValue - API return values
+            * Enable - Flag to indicate if feature is on
+            * MsgID - The one-based index that specifies which CAN controller is used
+            * BusID - Message ID of the CAN acquisition control
+        """
+
+        return _can_fieldbus.get_can_acq_control(
+            self._con_handle
+        )
+
+    def ghs_set_can_acq_control(
+        self,
+        enabled: str,
+        bus_id: int,
+        msg_id: int
+    ) -> str:
+        """Set up CAN acquisition control.
+    
+        * The system needs to be idle before calling this function.
+
+        *ReadWrite - This method will only process requests from the
+        connected client with the most privileges order (Privileges
+        order: 1- Perception, 2- GenDaq, 3- Other)*
+
+        Args:
+            enabled: Flag to indicate if feature is on
+            bus_id: The one-based index that specifies which CAN controller to use
+            msg_id: Message ID of the CAN acquisition control
+
+        Returns:
+            * GHSReturnValue - API return values
+        """
+
+        return _continuous.set_can_acq_control(
+            self._con_handle,
+            enabled,
+            bus_id,
+            msg_id
         )

@@ -31,6 +31,7 @@ from .connection import ConnectionHandler
 from .ghsapi_states import (
     RETURN_KEY,
     GHSAcquisitionState,
+    GHSExtendedAcquisitionState,
     GHSReturnValue,
     to_string,
 )
@@ -76,6 +77,42 @@ def start_recording(con_handle: ConnectionHandler) -> str:
 
     response_json = con_handle.send_request_wait_response(
         "StartRecording", None
+    )
+    return to_string(response_json[RETURN_KEY], GHSReturnValue)
+
+
+def start_recording_in_pause(
+    con_handle: ConnectionHandler,
+    ignore_sync: int
+) -> str:
+    """Starts a recording on local storage in Pause mode.
+     *
+     * The system needs to be idle before calling this function.
+     * Note that the connected mainframe will generate a recording name.
+     * This command can be executed only successfully when the local storage is set.
+     * Execution of this command can be influenced by Perception setting "Suspend storage at start of recording"
+
+    This method can be called by multiple connected clients at same
+    time.
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+        ignore_sync: Flag (0/1) to indicate if mainframe synchronization check will be ignored.
+
+    Returns:
+        String value representing request status.
+    """
+
+    if not ignore_sync:
+        return "NullPtrArgument"
+
+    recording_in_pause_dict = {
+        "IgnoreSync": ignore_sync,
+        "StartPaused": 1,
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "StartRecording", recording_in_pause_dict
     )
     return to_string(response_json[RETURN_KEY], GHSReturnValue)
 
@@ -147,6 +184,9 @@ def get_acquisition_state(
 ) -> tuple[str, str | None]:
     """Interface to get acquisition state of mainframe.
 
+    This method can be called by multiple connected clients at same
+    time.
+
     Args:
         con_handle: A unique identifier per mainframe connection.
 
@@ -170,6 +210,9 @@ def get_acquisition_start_time(
     con_handle: ConnectionHandler,
 ) -> tuple[str, int | None, int | None, float | None]:
     """Interface to get absolute time of the start of acquisition.
+
+    This method can be called by multiple connected clients at same
+    time.
 
     Args:
         con_handle: A unique identifier per mainframe connection.
@@ -213,6 +256,9 @@ def get_acquisition_time(
     """Interface to get current acquisition time relative to the start
     of acquistion.
 
+    This method can be called by multiple connected clients at same
+    time.
+
     Args:
         con_handle: A unique identifier per mainframe connection.
 
@@ -232,4 +278,35 @@ def get_acquisition_time(
     return (
         to_string(response_json[RETURN_KEY], GHSReturnValue),
         response_json["AcquisitionTime"],
+    )
+
+
+def get_extended_acquisition_state(
+    con_handle: ConnectionHandler,
+) -> tuple[str, str | None, int | None]:
+    """Returns the extended Acquisition State of the Mainframe.
+    This includes sweep state and trigger count.
+
+    This method can be called by multiple connected clients at same
+    time.
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+
+    Returns:
+        Tuple with status, acquisition state of the mainframe and trigger count.
+    """
+
+    response_json = con_handle.send_request_wait_response(
+        "GetAcquisitionState", None
+    )
+    if ("GHSExtendedAcquisitionState" not in response_json) or (
+        response_json[RETURN_KEY] != GHSReturnValue["OK"]
+    ):
+        return to_string(response_json[RETURN_KEY], GHSReturnValue), None
+    
+    return(
+        to_string(response_json[RETURN_KEY], GHSReturnValue),
+        to_string(response_json["GHSAcquisitionState"], GHSExtendedAcquisitionState),
+        response_json["TriggerCount"]
     )

@@ -87,6 +87,21 @@ GHSAcquisitionState = {
     "Preview": 5,
 }
 
+GHSExtendedAcquisitionState = {
+    "Reserved": 0,
+    "Idle": 1,
+    "Starting": 2,
+    "Preview": 3,
+    "Pause": 4,
+    "Storing": 5,
+    "Reserved1": 6,
+    "Reserved2": 7,
+    "Recording": 8,
+    "WaitingForArm": 9,
+    "WaitingForTrigger": 10,
+    "Triggered": 11,
+}
+
 GHSSyncStatus = {
     "Reserved": 0,
     "NotSynced": 1,
@@ -116,6 +131,12 @@ GHSStorageLocation = {
 }
 
 GHSSweepRecordingMode = {"Reserved": 0, "Normal": 1, "PreTrigger": 2}
+
+GHSSweepTriggerMode = {
+    "FirstTrigger": 0,
+    "EveryTrigger": 1,
+    "StopTrigger": 2
+}
 
 GHSContinuousRecordingMode = {
     "Reserved": 0,
@@ -207,6 +228,11 @@ GHSTriggerMode = {
     "QualifierDual": 7,
 }
 
+GHSTriggerArmState = {
+    "Disarmed": 0,
+    "Armed": 1
+}
+
 GHSDirection = {"RisingEdge": 0, "FallingEdge": 1}
 
 GHSTimerCounterMode = {
@@ -248,6 +274,16 @@ GHSDigitalOutMode = {
     "Acquiring": 2,
     "Trigger": 3,
     "Alarm": 4,
+}
+
+GHSConfigurationType = {
+    "Reserved": 0,
+    "User": 1,
+}
+
+GHSHWCompatibility = {
+    "Incompatible": 0,
+    "Compatible": 1,
 }
 
 
