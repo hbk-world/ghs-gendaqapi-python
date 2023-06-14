@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Channel &mdash; GEN DAQ API - Python Driver 1.1 documentation</title>
@@ -11,10 +11,11 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -27,11 +28,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> GEN DAQ API - Python Driver
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            GEN DAQ API - Python Driver
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -68,9 +73,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="ghspyapi.html">API Functions</a> &raquo;</li>
-      <li>Channel</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="ghspyapi.html">API Functions</a></li>
+      <li class="breadcrumb-item active">Channel</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/channel.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -81,10 +86,10 @@
            <div itemprop="articleBody">
              
   <section id="channel">
-<h1>Channel<a class="headerlink" href="#channel" title="Permalink to this headline"></a></h1>
+<h1>Channel<a class="headerlink" href="#channel" title="Permalink to this heading"></a></h1>
 <p>Channel related API functions.</p>
 <section id="modules">
-<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this headline"></a></h2>
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="channelanalog.html">Analog</a></li>
@@ -93,7 +98,7 @@
 </div>
 </section>
 <section id="functions">
-<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline"></a></h2>
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this heading"></a></h2>
 <dl class="py method">
 <dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_get_channel_type">
 <span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_get_channel_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_get_channel_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_get_channel_type" title="Permalink to this definition"></a></dt>
@@ -101,13 +106,13 @@
 <p><em>Read - This method can be called by multiple connected clients at same
 time.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 <li><p>GHSChannelType - Type of the channel</p></li>
@@ -119,19 +124,20 @@ time.</em></p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_get_channel_name">
-<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_get_channel_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_get_channel_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_get_channel_name" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_get_channel_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_get_channel_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_get_channel_name" title="Permalink to this definition"></a></dt>
 <dd><p>Determine the name of a channel.</p>
 <p><em>The channel name is UTF-8 encoded</em></p>
 <p><em>Read - This method can be called by multiple connected clients at same
 time.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
-<li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
+<li><p><strong>channel_index</strong> – The one-based index of the specified channel type</p></li>
+<li><p><strong>channel_type</strong> – The specific channel type</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 <li><p>channel_name - The name of the channel</p></li>
@@ -143,21 +149,22 @@ time.</em></p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_set_channel_name">
-<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_set_channel_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_set_channel_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_set_channel_name" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_set_channel_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_set_channel_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_set_channel_name" title="Permalink to this definition"></a></dt>
 <dd><p>Set the name for a channel.</p>
 <p><em>The channel name is UTF-8 encoded</em></p>
 <p><em>ReadWrite - This method will only process requests from the
 connected client with the most privileges order (Privileges
 order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
-<li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
+<li><p><strong>channel_index</strong> – The one-based index of the specified channel type</p></li>
+<li><p><strong>channel_type</strong> – The specific channel type</p></li>
 <li><p><strong>channel_name</strong> – The name of the channel</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 </ul>
@@ -168,18 +175,19 @@ order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_get_channel_storage_enabled">
-<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_get_channel_storage_enabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_get_channel_storage_enabled"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_get_channel_storage_enabled" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_get_channel_storage_enabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_get_channel_storage_enabled"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_get_channel_storage_enabled" title="Permalink to this definition"></a></dt>
 <dd><p>Determine if storage is enabled or disabled for a channel.</p>
 <p><em>Read - This method can be called by multiple connected clients at same
 time.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
-<li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
+<li><p><strong>channel_index</strong> – The one-based index of the channel</p></li>
+<li><p><strong>channel_type</strong> – The specific channel type</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 <li><p>GHSEnableDisable - The storage enabled status for the channel</p></li>
@@ -191,21 +199,22 @@ time.</em></p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_set_channel_storage_enabled">
-<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_set_channel_storage_enabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_set_channel_storage_enabled"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_set_channel_storage_enabled" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_set_channel_storage_enabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_set_channel_storage_enabled"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_set_channel_storage_enabled" title="Permalink to this definition"></a></dt>
 <dd><p>Enable or disable storage for a channel.</p>
 <p><em>The system needs to be idle before calling this function.</em></p>
 <p><em>ReadWrite - This method will only process requests from the
 connected client with the most privileges order (Privileges
 order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
-<li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
+<li><p><strong>channel_index</strong> – The one-based index of the channel</p></li>
+<li><p><strong>channel_type</strong> – The specific channel type</p></li>
 <li><p><strong>enabled</strong> – The desired storage enabled status for the channel</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 </ul>
@@ -216,22 +225,48 @@ order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_cmd_zeroing">
-<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_cmd_zeroing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ezeroing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_cmd_zeroing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_cmd_zeroing" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_cmd_zeroing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ezeroing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_cmd_zeroing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_cmd_zeroing" title="Permalink to this definition"></a></dt>
 <dd><p>Perform zeroing in a channel.</p>
 <p><em>The system needs to be idle before calling this function.</em></p>
 <p><em>Read - This method can be called by multiple connected clients at same
 time.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
-<li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
+<li><p><strong>channel_index</strong> – The one-based index of the channel</p></li>
+<li><p><strong>channel_type</strong> – The specific channel type</p></li>
 <li><p><strong>ezeroing</strong> – Zero / Unzero the specific channel</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_get_available_span_list">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_get_available_span_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_get_available_span_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_get_available_span_list" title="Permalink to this definition"></a></dt>
+<dd><p>Get the list of available spans from channel capabilities.</p>
+<p><em>The system needs to be in preview or in acquisition before calling this function.</em></p>
+<p><em>Read - This method can be called by multiple connected clients at same
+time.</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
+<li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>GHSReturnValue - API return values</p></li>
+<li><p>NumberOfSelections - The number of available span selections.</p></li>
+<li><p>Values - An array containing the available selection values.</p></li>
 </ul>
 </p>
 </dd>

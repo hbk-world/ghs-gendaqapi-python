@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Manage recordings &mdash; GEN DAQ API - Python Driver 1.1 documentation</title>
@@ -11,10 +11,11 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -27,11 +28,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> GEN DAQ API - Python Driver
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            GEN DAQ API - Python Driver
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -45,7 +50,17 @@
 <li class="toctree-l3"><a class="reference internal" href="connections.html">Connections</a></li>
 <li class="toctree-l3"><a class="reference internal" href="acquisition.html">Acquisition control</a></li>
 <li class="toctree-l3"><a class="reference internal" href="mainframe.html">Mainframe</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Manage recordings</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Manage recordings</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_get_storage_location"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_storage_location()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_set_storage_location"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_set_storage_location()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_get_recording_name"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_recording_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_set_recording_name"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_set_recording_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_delete_last_recording"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_delete_last_recording()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_delete_all_recordings"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_delete_all_recordings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_get_high_low_rate_storage_enabled"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_high_low_rate_storage_enabled()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_set_high_low_rate_storage_enabled"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_set_high_low_rate_storage_enabled()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="managemainframe.html">Manage mainframe settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="recorder.html">Recorder</a></li>
 </ul>
@@ -69,9 +84,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="ghspyapi.html">API Functions</a> &raquo;</li>
-      <li>Manage recordings</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="ghspyapi.html">API Functions</a></li>
+      <li class="breadcrumb-item active">Manage recordings</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/managerecording.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -82,14 +97,14 @@
            <div itemprop="articleBody">
              
   <section id="manage-recordings">
-<h1>Manage recordings<a class="headerlink" href="#manage-recordings" title="Permalink to this headline"></a></h1>
+<h1>Manage recordings<a class="headerlink" href="#manage-recordings" title="Permalink to this heading"></a></h1>
 <p>Recording management related API functions.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_get_storage_location">
 <span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_get_storage_location</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_get_storage_location"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_get_storage_location" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieve the storage location.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p>GHSReturnValue - API return status</p></li>
 <li><p>GHSStorageLocation - The storage location</p></li>
@@ -105,10 +120,10 @@
 <dd><p>Set the storage location.</p>
 <p><em>The system needs to be idle before calling this function.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>storage_location</strong> – The desired storage location.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return status</p></li>
 </ul>
@@ -124,7 +139,7 @@
 last recording file.</p>
 <p><em>The recording base name parameter is UTF-8 encoded.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p>GHSReturnValue - API return status</p></li>
 <li><p>recording_base_name - The base name of the recording file</p></li>
@@ -143,13 +158,13 @@ recording file.</p>
 <p><em>The system needs to be idle before calling this function.
 The recording base name parameter must be UTF-8 encoded.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>recording_name</strong> – The desired base name of the recording file</p></li>
 <li><p><strong>recording_index</strong> – The desired index of the recording file</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return status</p></li>
 </ul>
@@ -165,7 +180,7 @@ The recording base name parameter must be UTF-8 encoded.</em></p>
 storage.</p>
 <p><em>Recordings are deleted asynchronously.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p>GHSReturnValue - API return status</p></li>
 </ul>
@@ -180,7 +195,7 @@ storage.</p>
 <dd><p>Deletes all recordings from local mainframe storage.</p>
 <p><em>Recordings are deleted asynchronously.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p>GHSReturnValue - API return status</p></li>
 </ul>
@@ -195,13 +210,13 @@ storage.</p>
 <dd><p>Retrieve storage enabled status of high and low rate data
 for the specified recording data source.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>source</strong> – The recording data source</p></li>
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return status</p></li>
 <li><p>GHSEnableDisable - Flag to indicate if high rate data is stored</p></li>
@@ -218,7 +233,7 @@ for the specified recording data source.</p>
 <dd><p>Enable/disable storage of high and low rate data for the
 specified recording data source.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>source</strong> – The recording data source</p></li>
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
@@ -226,7 +241,7 @@ specified recording data source.</p>
 <li><p><strong>low_rate_enabled</strong> – Enable/disable storage of low rate data.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return status</p></li>
 </ul>

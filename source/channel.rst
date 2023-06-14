@@ -22,6 +22,7 @@ Functions
 .. automethod:: ghsapi.ghsapi.GHS.ghs_get_channel_storage_enabled
 .. automethod:: ghsapi.ghsapi.GHS.ghs_set_channel_storage_enabled
 .. automethod:: ghsapi.ghsapi.GHS.ghs_cmd_zeroing
+.. automethod:: ghsapi.ghsapi.GHS.ghs_get_available_span_list
 
 **Accepted values:**
 

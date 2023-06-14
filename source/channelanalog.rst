@@ -24,6 +24,7 @@ Analog channel related API functions.
 .. automethod:: ghsapi.ghsapi.GHS.ghs_set_auto_range
 .. automethod:: ghsapi.ghsapi.GHS.ghs_cmd_auto_range_now
 .. automethod:: ghsapi.ghsapi.GHS.ghs_get_channel_cal_info
+.. automethod:: ghsapi.ghsapi.GHS.ghs_get_channel_physical_name
 
 **Accepted values:**
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Timer/Counter &mdash; GEN DAQ API - Python Driver 1.1 documentation</title>
@@ -11,14 +11,15 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Release Notes" href="releasenotes.html" />
+    <link rel="next" title="Formulas" href="formulas.html" />
     <link rel="prev" title="Analog" href="channelanalog.html" /> 
 </head>
 
@@ -27,11 +28,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> GEN DAQ API - Python Driver
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            GEN DAQ API - Python Driver
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -68,10 +73,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="ghspyapi.html">API Functions</a> &raquo;</li>
-          <li><a href="channel.html">Channel</a> &raquo;</li>
-      <li>Timer/Counter</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="ghspyapi.html">API Functions</a></li>
+          <li class="breadcrumb-item"><a href="channel.html">Channel</a></li>
+      <li class="breadcrumb-item active">Timer/Counter</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/channeltimer.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -82,7 +87,7 @@
            <div itemprop="articleBody">
              
   <section id="timer-counter">
-<h1>Timer/Counter<a class="headerlink" href="#timer-counter" title="Permalink to this headline"></a></h1>
+<h1>Timer/Counter<a class="headerlink" href="#timer-counter" title="Permalink to this heading"></a></h1>
 <p>Timer/Counter channel related API functions.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_get_timer_counter_gate_time">
@@ -91,13 +96,13 @@
 <p><em>Read - This method can be called by multiple connected clients at same
 time.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 <li><p>gate_time - The gate time in seconds</p></li>
@@ -119,14 +124,14 @@ supported gate time.</p>
 connected client with the most privileges order (Privileges
 order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
 <li><p><strong>gate_time</strong> – The desired gate time in seconds.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 </ul>
@@ -142,13 +147,13 @@ order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <p><em>Read - This method can be called by multiple connected clients at same
 time.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 <li><p>GHSTimerCounterMode - The timer/counter mode</p></li>
@@ -169,14 +174,14 @@ timer/counter mode remains unchanged.</em></p>
 connected client with the most privileges order (Privileges
 order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
 <li><p><strong>mode</strong> – The desired timer/counter mode. Default is RPMUniDirectional.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 </ul>
@@ -192,17 +197,17 @@ order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <p><em>Read - This method can be called by multiple connected clients at same
 time.</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
-<li><p>lower_value - The lower range value.</p></li>
-<li><p>upper_value - The upper range value.</p></li>
+<li><p>LowerValue - The lower range value.</p></li>
+<li><p>UpperValue - The upper range value.</p></li>
 </ul>
 </p>
 </dd>
@@ -221,7 +226,7 @@ nearest possible values.</em></p>
 connected client with the most privileges order (Privileges
 order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>slot_id</strong> – The slot containing the recorder</p></li>
 <li><p><strong>channel_index</strong> – The zero-based index of the channel</p></li>
@@ -229,7 +234,180 @@ order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
 <li><p><strong>upper_value</strong> – The desired upper range value.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>GHSReturnValue - API return values</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_get_timer_counter_technical_units">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_get_timer_counter_technical_units</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_get_timer_counter_technical_units"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_get_timer_counter_technical_units" title="Permalink to this definition"></a></dt>
+<dd><p>Determine the technical units, unit multiplier and unit offset for a timer counter channel.</p>
+<p>The units parameter is UTF-8 encoded.
+The memory allocated for the returned string must be freed after use using &#64;ref GHSFree().</p>
+<p><em>Read - This method can be called by multiple connected clients at same
+time.</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>con_handle</strong> – A unique identifier per mainframe connection.</p></li>
+<li><p><strong>slot_id</strong> – The slot containing the recorder to get number of</p></li>
+<li><p><strong>for</strong> (<em>channels</em>) – </p></li>
+<li><p><strong>channel_index</strong> – The zero-based index of the channel to determine</p></li>
+<li><p><strong>for.</strong> (<em>the type</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>GHSReturnValue - API return values</p></li>
+<li><p>UnitType: The desired technical units (e.g. ‘V’ for Volt or ‘Hz’ for Hertz).</p></li>
+<li><p>Multiplier: The desired technical units multiplier value.</p></li>
+<li><p>Offset: The desired technical units offset value.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_set_timer_counter_technical_units">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_set_timer_counter_technical_units</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiplier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_set_timer_counter_technical_units"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_set_timer_counter_technical_units" title="Permalink to this definition"></a></dt>
+<dd><p>Set the technical units, unit multiplier and unit offset for a timer counter channel.</p>
+<p>The units parameter is UTF-8 encoded.</p>
+<p><em>ReadWrite - This method will only process requests from the
+connected client with the most privileges order (Privileges
+order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>con_handle</strong> – A unique identifier per mainframe connection.</p></li>
+<li><p><strong>slot_id</strong> – The slot containing the recorder to get number of</p></li>
+<li><p><strong>for</strong> (<em>channels</em>) – </p></li>
+<li><p><strong>channel_index</strong> – The zero-based index of the channel to determine</p></li>
+<li><p><strong>for.</strong> (<em>the type</em>) – </p></li>
+<li><p><strong>unit_type</strong> – The desired technical units (e.g. ‘V’ for Volt or ‘Hz’ for Hertz).</p></li>
+<li><p><strong>multiplier</strong> – The desired technical units multiplier value.</p></li>
+<li><p><strong>offset</strong> – The desired technical units offset value.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>GHSReturnValue - API return values</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_get_timer_counter_min_pulse_width">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_get_timer_counter_min_pulse_width</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_get_timer_counter_min_pulse_width"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_get_timer_counter_min_pulse_width" title="Permalink to this definition"></a></dt>
+<dd><p>Determine the minimum pulse width of a timer/counter channel.</p>
+<p><em>Read - This method can be called by multiple connected clients at same
+time.</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>con_handle</strong> – A unique identifier per mainframe connection.</p></li>
+<li><p><strong>slot_id</strong> – The slot containing the recorder to get number of</p></li>
+<li><p><strong>for</strong> (<em>channels</em>) – </p></li>
+<li><p><strong>channel_index</strong> – The zero-based index of the channel to determine</p></li>
+<li><p><strong>for.</strong> (<em>the type</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>GHSReturnValue - API return values</p></li>
+<li><p>MinimumPulseWidth: The minimum pulse width &#64;ref GHSTimerCounterDeBouncerFilterTime.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_set_timer_counter_min_pulse_width">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_set_timer_counter_min_pulse_width</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_pulse_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_set_timer_counter_min_pulse_width"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_set_timer_counter_min_pulse_width" title="Permalink to this definition"></a></dt>
+<dd><p>Set the minimum pulse width for a timer/counter channel.</p>
+<p>The system needs to be idle before calling this function.
+If the specified timer/counter mode is not supported by the recorder,
+the timer/counter mode remains unchanged.</p>
+<p><em>ReadWrite - This method will only process requests from the
+connected client with the most privileges order (Privileges
+order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>con_handle</strong> – A unique identifier per mainframe connection.</p></li>
+<li><p><strong>slot_id</strong> – The slot containing the recorder to get number of</p></li>
+<li><p><strong>for</strong> (<em>channels</em>) – </p></li>
+<li><p><strong>channel_index</strong> – The zero-based index of the channel to determine</p></li>
+<li><p><strong>for.</strong> (<em>the type</em>) – </p></li>
+<li><p><strong>min_pulse_width</strong> – The minimum pulse width &#64;ref GHSTimerCounterDeBouncerFilterTime.</p></li>
+<li><p><strong>GHSTimerCounterDeBouncerFilterTime_01.</strong> (<em>Default is</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>GHSReturnValue - API return values</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_get_timer_counter_pulses_per_rotation">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_get_timer_counter_pulses_per_rotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_get_timer_counter_pulses_per_rotation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_get_timer_counter_pulses_per_rotation" title="Permalink to this definition"></a></dt>
+<dd><p>Determine the gate time for a timer/counter channel.</p>
+<p><em>Read - This method can be called by multiple connected clients at same
+time.</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>con_handle</strong> – A unique identifier per mainframe connection.</p></li>
+<li><p><strong>slot_id</strong> – The slot containing the recorder to get number of</p></li>
+<li><p><strong>for</strong> (<em>channels</em>) – </p></li>
+<li><p><strong>channel_index</strong> – The zero-based index of the channel to determine</p></li>
+<li><p><strong>for.</strong> (<em>the type</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>GHSReturnValue - API return values</p></li>
+<li><p>PulsesPerRotation: The pulses per rotation.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_set_timer_counter_pulses_per_rotation">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_set_timer_counter_pulses_per_rotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pulses_per_rot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_set_timer_counter_pulses_per_rotation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_set_timer_counter_pulses_per_rotation" title="Permalink to this definition"></a></dt>
+<dd><p>Set the pulses per rotation for a timer/counter channel.</p>
+<p>The system needs to be idle before calling this function.
+If the specified timer/counter mode is not supported by the recorder,
+the timer/counter mode remains unchanged.</p>
+<p><em>ReadWrite - This method will only process requests from the
+connected client with the most privileges order (Privileges
+order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>con_handle</strong> – A unique identifier per mainframe connection.</p></li>
+<li><p><strong>slot_id</strong> – The slot containing the recorder to get number of</p></li>
+<li><p><strong>for</strong> (<em>channels</em>) – </p></li>
+<li><p><strong>channel_index</strong> – The zero-based index of the channel to determine</p></li>
+<li><p><strong>for.</strong> (<em>the type</em>) – </p></li>
+<li><p><strong>pulses_per_rot</strong> – The desired pulses per rotation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p>GHSReturnValue - API return values</p></li>
 </ul>
@@ -250,7 +428,7 @@ order: 1- Perception, 2- GenDaq, 3- Other)</em></p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="channelanalog.html" class="btn btn-neutral float-left" title="Analog" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="releasenotes.html" class="btn btn-neutral float-right" title="Release Notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="formulas.html" class="btn btn-neutral float-right" title="Formulas" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

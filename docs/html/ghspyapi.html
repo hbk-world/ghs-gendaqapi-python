@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>API Functions &mdash; GEN DAQ API - Python Driver 1.1 documentation</title>
@@ -11,10 +11,11 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -27,11 +28,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> GEN DAQ API - Python Driver
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            GEN DAQ API - Python Driver
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -47,6 +52,7 @@
 <li class="toctree-l2"><a class="reference internal" href="managemainframe.html">Manage mainframe settings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="recorder.html">Recorder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="channel.html">Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="formulas.html">Formulas</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release Notes</a></li>
@@ -66,8 +72,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>API Functions</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API Functions</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/ghspyapi.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -78,19 +84,79 @@
            <div itemprop="articleBody">
              
   <section id="api-functions">
-<h1>API Functions<a class="headerlink" href="#api-functions" title="Permalink to this headline"></a></h1>
+<h1>API Functions<a class="headerlink" href="#api-functions" title="Permalink to this heading"></a></h1>
 <p>All available API functions:</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="connections.html">Connections</a></li>
-<li class="toctree-l1"><a class="reference internal" href="acquisition.html">Acquisition control</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mainframe.html">Mainframe</a></li>
-<li class="toctree-l1"><a class="reference internal" href="managerecording.html">Manage recordings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="managemainframe.html">Manage mainframe settings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recorder.html">Recorder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="connections.html">Connections</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#ghsapi.ghsapi.GHS.ghs_connect"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_connect()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#ghsapi.ghsapi.GHS.ghs_disconnect"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_disconnect()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#ghsapi.ghsapi.GHS.ghs_get_client_api_version"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_client_api_version()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#ghsapi.ghsapi.GHS.ghs_get_current_access"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_current_access()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="acquisition.html">Acquisition control</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="acquisition.html#ghsapi.ghsapi.GHS.ghs_start_preview"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_start_preview()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="acquisition.html#ghsapi.ghsapi.GHS.ghs_stop_preview"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_stop_preview()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="acquisition.html#ghsapi.ghsapi.GHS.ghs_start_recording"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_start_recording()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="acquisition.html#ghsapi.ghsapi.GHS.ghs_pause_recording"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_pause_recording()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="acquisition.html#ghsapi.ghsapi.GHS.ghs_resume_recording"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_resume_recording()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="acquisition.html#ghsapi.ghsapi.GHS.ghs_stop_recording"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_stop_recording()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="acquisition.html#ghsapi.ghsapi.GHS.ghs_trigger"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_trigger()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="acquisition.html#ghsapi.ghsapi.GHS.ghs_get_acquisition_state"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_acquisition_state()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="acquisition.html#ghsapi.ghsapi.GHS.ghs_get_acquisition_time"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_acquisition_time()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="acquisition.html#ghsapi.ghsapi.GHS.ghs_get_acquisition_start_time"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_acquisition_start_time()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mainframe.html">Mainframe</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mainframe.html#ghsapi.ghsapi.GHS.ghs_identify"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_identify()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mainframe.html#ghsapi.ghsapi.GHS.ghs_get_disk_space"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_disk_space()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mainframe.html#ghsapi.ghsapi.GHS.ghs_get_sync_status"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_sync_status()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mainframe.html#ghsapi.ghsapi.GHS.ghs_get_slot_count"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_slot_count()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mainframe.html#ghsapi.ghsapi.GHS.ghs_get_user_mode"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_user_mode()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mainframe.html#ghsapi.ghsapi.GHS.ghs_set_user_mode"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_set_user_mode()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mainframe.html#ghsapi.ghsapi.GHS.ghs_get_mainframe_info"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_mainframe_info()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="managerecording.html">Manage recordings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="managerecording.html#ghsapi.ghsapi.GHS.ghs_get_storage_location"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_storage_location()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="managerecording.html#ghsapi.ghsapi.GHS.ghs_set_storage_location"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_set_storage_location()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="managerecording.html#ghsapi.ghsapi.GHS.ghs_get_recording_name"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_recording_name()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="managerecording.html#ghsapi.ghsapi.GHS.ghs_set_recording_name"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_set_recording_name()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="managerecording.html#ghsapi.ghsapi.GHS.ghs_delete_last_recording"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_delete_last_recording()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="managerecording.html#ghsapi.ghsapi.GHS.ghs_delete_all_recordings"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_delete_all_recordings()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="managerecording.html#ghsapi.ghsapi.GHS.ghs_get_high_low_rate_storage_enabled"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_high_low_rate_storage_enabled()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="managerecording.html#ghsapi.ghsapi.GHS.ghs_set_high_low_rate_storage_enabled"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_set_high_low_rate_storage_enabled()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="managemainframe.html">Manage mainframe settings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="managemainframe.html#ghsapi.ghsapi.GHS.ghs_get_current_settings"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_current_settings()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="managemainframe.html#ghsapi.ghsapi.GHS.ghs_set_current_settings"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_set_current_settings()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="managemainframe.html#ghsapi.ghsapi.GHS.ghs_persist_current_settings"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_persist_current_settings()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="managemainframe.html#ghsapi.ghsapi.GHS.ghs_apply_persisted_settings"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_apply_persisted_settings()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="recorder.html">Recorder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="recorder.html#ghsapi.ghsapi.GHS.ghs_get_recorder_info"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_recorder_info()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="recorder.html#ghsapi.ghsapi.GHS.ghs_get_recorder_enabled"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_recorder_enabled()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="recorder.html#ghsapi.ghsapi.GHS.ghs_set_recorder_enabled"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_set_recorder_enabled()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="recorder.html#ghsapi.ghsapi.GHS.ghs_get_channel_count"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_channel_count()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="recorder.html#ghsapi.ghsapi.GHS.ghs_get_sample_rate"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_sample_rate()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="recorder.html#ghsapi.ghsapi.GHS.ghs_set_sample_rate"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_set_sample_rate()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="recorder.html#ghsapi.ghsapi.GHS.ghs_get_digital_output"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_digital_output()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="recorder.html#ghsapi.ghsapi.GHS.ghs_set_digital_output"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_set_digital_output()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="channel.html">Channel</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="channel.html#modules">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="channel.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="formulas.html">Formulas</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="formulas.html#ghsapi.ghsapi.GHS.ghs_get_number_of_scalars"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_number_of_scalars()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="formulas.html#ghsapi.ghsapi.GHS.ghs_get_scalar_info"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_scalar_info()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="formulas.html#ghsapi.ghsapi.GHS.ghs_get_scalar_value"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_scalar_value()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="formulas.html#ghsapi.ghsapi.GHS.ghs_set_scalar_value"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_set_scalar_value()</span></code></a></li>
 </ul>
 </li>
 </ul>
