@@ -10,10 +10,11 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -24,11 +25,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> GEN DAQ API - Python Driver
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            GEN DAQ API - Python Driver
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -54,8 +59,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Index</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Index</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -120,6 +125,10 @@
 </li>
       <li><a href="channelanalog.html#ghsapi.ghsapi.GHS.ghs_get_excitation">ghs_get_excitation() (ghsapi.ghsapi.GHS method)</a>
 </li>
+      <li><a href="fieldbus.html#ghsapi.ghsapi.GHS.ghs_get_fieldbus_data_count">ghs_get_fieldbus_data_count() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="fieldbus.html#ghsapi.ghsapi.GHS.ghs_get_fieldbus_data_name_and_unit">ghs_get_fieldbus_data_name_and_unit() (ghsapi.ghsapi.GHS method)</a>
+</li>
       <li><a href="channelanalog.html#ghsapi.ghsapi.GHS.ghs_get_filter_type_and_frequency">ghs_get_filter_type_and_frequency() (ghsapi.ghsapi.GHS method)</a>
 </li>
       <li><a href="managerecording.html#ghsapi.ghsapi.GHS.ghs_get_high_low_rate_storage_enabled">ghs_get_high_low_rate_storage_enabled() (ghsapi.ghsapi.GHS method)</a>
@@ -146,12 +155,12 @@
 </li>
       <li><a href="mainframe.html#ghsapi.ghsapi.GHS.ghs_get_sync_status">ghs_get_sync_status() (ghsapi.ghsapi.GHS method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="channelanalog.html#ghsapi.ghsapi.GHS.ghs_get_technical_units">ghs_get_technical_units() (ghsapi.ghsapi.GHS method)</a>
 </li>
       <li><a href="channeltimer.html#ghsapi.ghsapi.GHS.ghs_get_timer_counter_gate_time">ghs_get_timer_counter_gate_time() (ghsapi.ghsapi.GHS method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="channeltimer.html#ghsapi.ghsapi.GHS.ghs_get_timer_counter_mode">ghs_get_timer_counter_mode() (ghsapi.ghsapi.GHS method)</a>
 </li>
       <li><a href="channeltimer.html#ghsapi.ghsapi.GHS.ghs_get_timer_counter_range">ghs_get_timer_counter_range() (ghsapi.ghsapi.GHS method)</a>
@@ -162,9 +171,17 @@
 </li>
       <li><a href="mainframe.html#ghsapi.ghsapi.GHS.ghs_identify">ghs_identify() (ghsapi.ghsapi.GHS method)</a>
 </li>
+      <li><a href="fieldbus.html#ghsapi.ghsapi.GHS.ghs_initiate_fieldbus_data_transfer">ghs_initiate_fieldbus_data_transfer() (ghsapi.ghsapi.GHS method)</a>
+</li>
       <li><a href="acquisition.html#ghsapi.ghsapi.GHS.ghs_pause_recording">ghs_pause_recording() (ghsapi.ghsapi.GHS method)</a>
 </li>
       <li><a href="managemainframe.html#ghsapi.ghsapi.GHS.ghs_persist_current_settings">ghs_persist_current_settings() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="fieldbus.html#ghsapi.ghsapi.GHS.ghs_read_next_snapshot">ghs_read_next_snapshot() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="fieldbus.html#ghsapi.ghsapi.GHS.ghs_receive_fieldbus_data">ghs_receive_fieldbus_data() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="fieldbus.html#ghsapi.ghsapi.GHS.ghs_request_fieldbus_snapshot">ghs_request_fieldbus_snapshot() (ghsapi.ghsapi.GHS method)</a>
 </li>
       <li><a href="acquisition.html#ghsapi.ghsapi.GHS.ghs_resume_recording">ghs_resume_recording() (ghsapi.ghsapi.GHS method)</a>
 </li>
@@ -215,6 +232,8 @@
       <li><a href="acquisition.html#ghsapi.ghsapi.GHS.ghs_start_preview">ghs_start_preview() (ghsapi.ghsapi.GHS method)</a>
 </li>
       <li><a href="acquisition.html#ghsapi.ghsapi.GHS.ghs_start_recording">ghs_start_recording() (ghsapi.ghsapi.GHS method)</a>
+</li>
+      <li><a href="fieldbus.html#ghsapi.ghsapi.GHS.ghs_stop_fieldbus_data_transfer">ghs_stop_fieldbus_data_transfer() (ghsapi.ghsapi.GHS method)</a>
 </li>
       <li><a href="acquisition.html#ghsapi.ghsapi.GHS.ghs_stop_preview">ghs_stop_preview() (ghsapi.ghsapi.GHS method)</a>
 </li>

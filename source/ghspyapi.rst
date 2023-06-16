@@ -13,3 +13,4 @@ All available API functions:
    managemainframe
    recorder
    channel
+   fieldbus

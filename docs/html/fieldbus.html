@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FieldBus &mdash; GEN DAQ API - Python Driver 1.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Release Notes" href="releasenotes.html" />
+    <link rel="prev" title="Timer/Counter" href="channeltimer.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            GEN DAQ API - Python Driver
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="ghspyapi.html">API Functions</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="connections.html">Connections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="acquisition.html">Acquisition control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mainframe.html">Mainframe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="managerecording.html">Manage recordings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="managemainframe.html">Manage mainframe settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="recorder.html">Recorder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="channel.html">Channel</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">FieldBus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_get_fieldbus_data_count"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_fieldbus_data_count()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_get_fieldbus_data_name_and_unit"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_get_fieldbus_data_name_and_unit()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_initiate_fieldbus_data_transfer"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_initiate_fieldbus_data_transfer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_stop_fieldbus_data_transfer"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_stop_fieldbus_data_transfer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_receive_fieldbus_data"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_receive_fieldbus_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_read_next_snapshot"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_read_next_snapshot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ghsapi.ghsapi.GHS.ghs_request_fieldbus_snapshot"><code class="docutils literal notranslate"><span class="pre">GHS.ghs_request_fieldbus_snapshot()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remarks.html">Remarks</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">GEN DAQ API - Python Driver</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="ghspyapi.html">API Functions</a></li>
+      <li class="breadcrumb-item active">FieldBus</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/fieldbus.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="fieldbus">
+<h1>FieldBus<a class="headerlink" href="#fieldbus" title="Permalink to this heading"></a></h1>
+<p>FieldBus related API functions.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_get_fieldbus_data_count">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_get_fieldbus_data_count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_get_fieldbus_data_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_get_fieldbus_data_count" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the number of data that are configured to be sent through the field bus, excluding the timestamp.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - API return values</p></li>
+<li><p>data_count - The number of data that are selected to be published, excluding timestamp.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_get_fieldbus_data_name_and_unit">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_get_fieldbus_data_name_and_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_get_fieldbus_data_name_and_unit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_get_fieldbus_data_name_and_unit" title="Permalink to this definition"></a></dt>
+<dd><p><em>Gets the name of specific field bus data value, by giving the index of the data value.
+The number of data values can be retrieved by GHSGetFieldBusDataCount().</em></p>
+<p><em>In case of no formulas (or reserved values acquisition state and latency) published,
+an error code is returned: GHSReturnValue_FieldBusError_NoFormulasDeployed.</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_index</strong> – Zero-based index of the data value.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>GHSReturnValue - API return values</p></li>
+<li><p>data_name - Name of the data value.</p></li>
+<li><p>data_unit - Unit of the data value.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_initiate_fieldbus_data_transfer">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_initiate_fieldbus_data_transfer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_initiate_fieldbus_data_transfer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_initiate_fieldbus_data_transfer" title="Permalink to this definition"></a></dt>
+<dd><p><em>Opens a new connection for the field bus data, and waits for client
+to connect. Once the client connects, if the acquisition state is
+active, data is sent to the client. Otherwise nothing is sent.</em></p>
+<p><em>If no formulas are present then you get error code back:GHSReturnValue_FieldBusError_NotConfigured</em></p>
+<p><em>If the field bus is already initiated then an error code is returned:
+GHSReturnValue_FieldBusError_FieldBusEnabled.</em></p>
+<p><em>To change the update rate the field bus needs to be stoped and inititated again with a new update rate.</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>update_rate</strong> – (in Hz) The update rate should be a part of the list</p></li>
+<li><p><strong>rates</strong> (<em>containing the supported update</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>GHSReturnValue - API return values</p></li>
+<li><p>update_rate - If the update rate selected by the user is not supported, the mainframe will adjust the update rate based on a minimum distance from the supported rates and returns back to the client.</p></li>
+<li><p>data_count - The number of published data on the setup. Timestamp is not included in this count.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_stop_fieldbus_data_transfer">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_stop_fieldbus_data_transfer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_stop_fieldbus_data_transfer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_stop_fieldbus_data_transfer" title="Permalink to this definition"></a></dt>
+<dd><p><em>Closes the socket dedicated for the field bus data and stops transfering data.
+The ring buffer allocated for the transfer data is deleted.</em></p>
+<p><em>Field bus data transfer must have been initiated before calling this function</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - API return values</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_receive_fieldbus_data">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_receive_fieldbus_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_receive_fieldbus_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_receive_fieldbus_data" title="Permalink to this definition"></a></dt>
+<dd><p>Used to retrieve the FieldBus data from the new socket connection and write on the buffer.</p>
+<p><em>Can be used in a thread and if so, mutual exclusion should be used with GHSStopFieldBusDataTransfer.</em></p>
+<p><em>This function should be used in a loop if continuous delivery of Async Data is desired.</em></p>
+<p><em>Field bus data transfer must have been initiated before calling this function.</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - API return values</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_read_next_snapshot">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_read_next_snapshot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">call_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_read_next_snapshot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_read_next_snapshot" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the next snapshot in the buffer.</p>
+<p><em>The timestamp is grid aligned - as specified by the ‘updateRate’ argument
+of the GHSInitiateFieldBusDataTransfer() method.</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>call_type</strong> – flag to control the receiving of FieldBus data:
+<em>If set to GHS_BlockingCall it blocks while waiting for new FieldBus data.
+*If set to GHS_NonBlockingCall then returns last FieldBus data when no new data available.
+*GHS_BlockingCall is the preferred value as this results in the lowest CPU load
+and highest data troughput.</em></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>GHSReturnValue - API return values</p></li>
+<li><p>Timestamp - timestamp of the FieldBus data relative to start of acquisition GHSGetAcquisitionStartTime()</p></li>
+<li><p>Values - the values published on the FieldBus.</p></li>
+<li><p>Overrun - is one if overrun happened in the buffer, zero if not.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghsapi.ghsapi.GHS.ghs_request_fieldbus_snapshot">
+<span class="sig-prename descclassname"><span class="pre">GHS.</span></span><span class="sig-name descname"><span class="pre">ghs_request_fieldbus_snapshot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataCount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghsapi/ghsapi.html#GHS.ghs_request_fieldbus_snapshot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghsapi.ghsapi.GHS.ghs_request_fieldbus_snapshot" title="Permalink to this definition"></a></dt>
+<dd><p><em>Request a single snapshot of the field bus data.
+In this case the timestamp received is not grid aligned.</em></p>
+<p><em>If the system is not acquiring the method returns an error code:GHSReturnValue_SystemNotRecording</em></p>
+<p><em>In case of no formulas you get the error return code back:GHSReturnValue_FieldBusError_NotConfigured</em></p>
+<p><em>If the field bus is already enabled then this method is not allowed.
+An error return code is returned:FieldBusError_UnavailableFunctionality.</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>GHSReturnValue - API return values</p></li>
+<li><p>timestamp - Timestamp of the FieldBus data relative to start of acquisition (not grid aligned) GHSGetAcquisitionStartTime</p></li>
+<li><p>data_count - Actual number of elements(formulas) in the data parameter. If number of elements allocated by the customer are less than the actual formulas number, then we return an error code.</p></li>
+<li><p>data - Array of floats that contains the data</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="channeltimer.html" class="btn btn-neutral float-left" title="Timer/Counter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="releasenotes.html" class="btn btn-neutral float-right" title="Release Notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Hottinger Bruel and Kjaer Benelux B.V..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

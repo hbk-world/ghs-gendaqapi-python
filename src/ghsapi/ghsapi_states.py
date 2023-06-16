@@ -257,6 +257,11 @@ GHSDigitalOutMode = {
     "Alarm": 4,
 }
 
+GHSFunctionCallType = {
+    "NonBlockingCall": 0,
+    "BlockingCall": 1,
+}
+
 
 def to_string(value: int, ghs_dict: dict) -> str:
     """Get status key by value from dictionary."""

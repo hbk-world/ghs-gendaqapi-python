@@ -31,9 +31,6 @@ from struct import pack, unpack
 from . import json_rpc
 from .ghsapi_states import RETURN_KEY, GHSReturnValue
 
-MAX_CONNECTIONS = 30
-
-
 class ConnectionHandler:
     """A unique identifier per mainframe connection.
 
@@ -46,6 +43,8 @@ class ConnectionHandler:
         sock: Socket object
         ip_address: Mainframe ip address
     """
+
+    MAX_CONNECTIONS = 30
 
     connection_count = 0
     api_version_header = 1195638785
@@ -78,7 +77,7 @@ class ConnectionHandler:
 
         if not ip_address or not port_num:
             return GHSReturnValue["NullPtrArgument"]
-        if self.get_num_of_connections() > MAX_CONNECTIONS:
+        if self.get_num_of_connections() > self.MAX_CONNECTIONS:
             return GHSReturnValue["ConnectionFailed"]
 
         try:

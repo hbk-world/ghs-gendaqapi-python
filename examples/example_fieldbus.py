@@ -57,22 +57,12 @@ def main():
         sys.exit()
     print(f"GHSConnect - Return Status: {return_var}")
 
-    # Open a new connection for the field bus data
-    (
-        return_var,
-        update_rate,
-        data_count,
-    ) = gen.ghs_initiate_fieldbus_data_transfer(update_rate)
+    # Stop preview mode
+    return_var = gen.ghs_stop_preview()
     if return_var != "OK":
-        print(
-            f"Failed on GHSInitiateFieldBusDataTransfer. Return Status: {return_var}"
-        )
-        sys.exit()
-    print(
-        f"GHSInitiateFieldBusDataTransfer - Return Status: {return_var}\
-        \nUpdate rate : {update_rate}\
-        Data count: {data_count}"
-    )
+        print(f"Failed on GHSStopPreview. Return Status: {return_var}")
+        # sys.exit()
+    print(f"GHSStopPreview - Return Status: {return_var}")
 
     # Closes the socket dedicated for the field bus data and stops transfering data.
     return_var = gen.ghs_stop_fieldbus_data_transfer()
@@ -80,7 +70,7 @@ def main():
         print(
             f"Failed on GHSStopFieldBusDataTransfer. Return Status: {return_var}"
         )
-        sys.exit()
+        # sys.exit()
     print(f"GHSStopFieldBusDataTransfer - Return Status: {return_var}")
 
     # Gets the number of data that are configured to be sent through the field bus
@@ -105,9 +95,9 @@ def main():
         ) = gen.ghs_get_fieldbus_data_name_and_unit(data_index)
         if return_var != "OK":
             print(
-                f"Failed on GHSGetFieldBusDataNameAndUnit for index {data_index + 1}. Return Status: {return_var}"
+                f"Failed on GHSGetFieldBusDataNameAndUnit for index {data_index}. Return Status: {return_var}"
             )
-            sys.exit()
+            # sys.exit()
         print(
             f"GHSGetFieldBusDataNameAndUnit - Return Status: {return_var}\
             \nData index : {data_index}\
@@ -129,7 +119,7 @@ def main():
         time_stamp,
         data_count,
         data,
-    ) = gen.ghs_request_fieldbus_snapshot()
+    ) = gen.ghs_request_fieldbus_snapshot(data_count)
     if return_var != "OK":
         print(
             f"Failed on GHSRequestFieldBusSnapshot. Return Status: {return_var}"
@@ -141,6 +131,61 @@ def main():
         \nData count : {data_count}\
         Data: {data}"
     )
+
+    # Open a new connection for the field bus data
+    (
+        return_var,
+        update_rate,
+        data_count,
+    ) = gen.ghs_initiate_fieldbus_data_transfer(update_rate)
+    if return_var != "OK":
+        print(
+            f"Failed on GHSInitiateFieldBusDataTransfer. Return Status: {return_var}"
+        )
+        sys.exit()
+    print(
+        f"GHSInitiateFieldBusDataTransfer - Return Status: {return_var}\
+        \nUpdate rate : {update_rate}\
+        Data count: {data_count}"
+    )
+
+    # Used to retrieve the FieldBus data from the new socket connection and write on the buffer
+    count = 0
+    number_reads = 5
+    while count < number_reads:
+        return_var = gen.ghs_receive_fieldbus_data()
+        if return_var != "OK":
+            print(
+                f"Failed on GHSReceiveFieldBusData. Return Status: {return_var}"
+            )
+            sys.exit()
+        print(f"GHSReceiveFieldBusData - Return Status: {return_var}")
+
+        # Retrieves the next snapshot in the buffer.
+        (
+            return_var,
+            time_stamp,
+            values,
+            overrun,
+        ) = gen.ghs_read_next_snapshot("BlockingCall")
+        if return_var != "OK":
+            print(
+                f"Failed on GHSReadNextSnapshot. Return Status: {return_var}"
+            )
+            sys.exit()
+        print(
+            f"GHSReadNextSnapshot - Return Status: {return_var} \t Timestamp: {time_stamp} \t Values: {values} \t Overrun: {overrun}"
+        )
+        count += 1
+
+    # Closes the socket dedicated for the field bus data and stops transfering data.
+    return_var = gen.ghs_stop_fieldbus_data_transfer()
+    if return_var != "OK":
+        print(
+            f"Failed on GHSStopFieldBusDataTransfer. Return Status: {return_var}"
+        )
+        sys.exit()
+    print(f"GHSStopFieldBusDataTransfer - Return Status: {return_var}")
 
     # Stop preview mode
     return_var = gen.ghs_stop_preview()

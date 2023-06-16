@@ -34,13 +34,13 @@ parentdir = os.path.dirname(currentdir)
 
 sys.path.append(parentdir)
 
-from src.ghsapi import fieldbus_ring_buffer
+from src.ghsapi import fieldbus_ringbuffer
 
 
 def main():
     """Code example to use ring buffer class"""
 
-    ring_buffer = fieldbus_ring_buffer.FieldBusRingBuffer(5, 2)
+    ring_buffer = fieldbus_ringbuffer.FieldBusRingBuffer(5, 2)
     print(f"Ring buffer current size {ring_buffer.ring_buffer_size()}")
     print(
         f"Is ring buffer empty? {'no' if ring_buffer.ring_buffer_size() else 'yes'}"
