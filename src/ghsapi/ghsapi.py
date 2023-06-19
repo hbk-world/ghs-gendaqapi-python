@@ -165,6 +165,20 @@ class GHS:
 
         return _acquisition.start_recording(self._con_handle)
 
+    def ghs_start_recording_without_sync_check(self) -> str:
+        """Starts a recording on local storage without checking synchronization status.
+
+        *The system needs to be idle before calling this function. Note
+        that the connected mainframe will generate a recording name.
+        This command can be executed only successfully when the local
+        storage is set.*
+
+        Returns:
+            * GHSReturnValue - Start recording status.
+        """
+
+        return _acquisition.start_recording_without_synch_check(self._con_handle)
+
     def ghs_start_recording_in_pause(
         self,
         ignore_sync
@@ -279,7 +293,7 @@ class GHS:
 
     # Mainframe APIs
 
-    def ghs_identify(self, identity_flag: bool) -> str:
+    def ghs_identify(self, enabled: str | int) -> str:
         """Enable or disable the identification sound of the connected
         mainframe.
 
@@ -290,7 +304,7 @@ class GHS:
             * GHSReturnValue - Identify API status.
         """
 
-        return _mainframe.identity(self._con_handle, identity_flag)
+        return _mainframe.identify(self._con_handle, enabled)
 
     def ghs_get_disk_space(self) -> tuple[str, float | None, float | None]:
         """Get total and available mainframe internal disk space.

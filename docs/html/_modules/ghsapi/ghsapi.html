@@ -238,6 +238,20 @@
 
         <span class="k">return</span> <span class="n">_acquisition</span><span class="o">.</span><span class="n">start_recording</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span></div>
 
+    <span class="k">def</span> <span class="nf">ghs_start_recording_without_sync_check</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Starts a recording on local storage without checking synchronization status.</span>
+
+<span class="sd">        *The system needs to be idle before calling this function. Note</span>
+<span class="sd">        that the connected mainframe will generate a recording name.</span>
+<span class="sd">        This command can be executed only successfully when the local</span>
+<span class="sd">        storage is set.*</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            * GHSReturnValue - Start recording status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">_acquisition</span><span class="o">.</span><span class="n">start_recording_without_synch_check</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">)</span>
+
 <div class="viewcode-block" id="GHS.ghs_start_recording_in_pause"><a class="viewcode-back" href="../../acquisition.html#ghsapi.ghsapi.GHS.ghs_start_recording_in_pause">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_start_recording_in_pause</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">ignore_sync</span>
@@ -352,7 +366,7 @@
 
     <span class="c1"># Mainframe APIs</span>
 
-<div class="viewcode-block" id="GHS.ghs_identify"><a class="viewcode-back" href="../../mainframe.html#ghsapi.ghsapi.GHS.ghs_identify">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_identify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity_flag</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="GHS.ghs_identify"><a class="viewcode-back" href="../../mainframe.html#ghsapi.ghsapi.GHS.ghs_identify">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_identify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Enable or disable the identification sound of the connected</span>
 <span class="sd">        mainframe.</span>
 
@@ -363,7 +377,7 @@
 <span class="sd">            * GHSReturnValue - Identify API status.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">return</span> <span class="n">_mainframe</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">identity_flag</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">_mainframe</span><span class="o">.</span><span class="n">identify</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_con_handle</span><span class="p">,</span> <span class="n">enabled</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="GHS.ghs_get_disk_space"><a class="viewcode-back" href="../../mainframe.html#ghsapi.ghsapi.GHS.ghs_get_disk_space">[docs]</a>    <span class="k">def</span> <span class="nf">ghs_get_disk_space</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get total and available mainframe internal disk space.</span>

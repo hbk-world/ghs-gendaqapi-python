@@ -120,13 +120,13 @@ def main():
     )
 
     # Enable & diable identify
-    return_var = gen.ghs_identify(True)
+    return_var = gen.ghs_identify("Enable")
     if return_var != "OK":
         print(f"Failed on GHSIdentify Enable. Return Status: {return_var}")
         sys.exit()
     print(f"GHSIdentify Enable - Return Status: {return_var}")
     time.sleep(2)
-    return_var = gen.ghs_identify(False)
+    return_var = gen.ghs_identify("Disable")
     if return_var != "OK":
         print(f"Failed on GHSIdentify Disable. Return Status: {return_var}")
         sys.exit()

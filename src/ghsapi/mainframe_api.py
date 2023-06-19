@@ -30,6 +30,7 @@ from .ghsapi_states import (
     GHSReturnValue,
     GHSSyncStatus,
     GHSUserMode,
+    GHSEnableDisable,
     from_string,
     to_string,
 )
@@ -222,7 +223,7 @@ def set_user_mode(con_handle: ConnectionHandler, user_mode: str | int) -> str:
     return to_string(response_json[RETURN_KEY], GHSReturnValue)
 
 
-def identity(con_handle: ConnectionHandler, identity_flag: bool) -> str:
+def identify(con_handle: ConnectionHandler, enabled: str | int) -> str:
     """Interface to enable or disable the identification sound of the
     connected mainframe.
 
@@ -234,10 +235,24 @@ def identity(con_handle: ConnectionHandler, identity_flag: bool) -> str:
        String value representing request status.
     """
 
-    identity_dict = {"Identify": 1} if identity_flag else {"Identify": 0}
+    if not enabled:
+        return "NullPtrArgument"
+
+    if (isinstance(enabled, str) and enabled in GHSEnableDisable):
+        enabled = from_string(enabled, GHSEnableDisable)
+
+    elif (isinstance(enabled, int) and enabled in GHSEnableDisable.values()):
+        pass
+
+    else:
+        return "InvalidDataType"
+
+    identify_dict = {
+        "Identify": enabled
+    }
 
     response_json = con_handle.send_request_wait_response(
-        "Identify", identity_dict
+        "Identify", identify_dict
     )
 
     return to_string(response_json[RETURN_KEY], GHSReturnValue)

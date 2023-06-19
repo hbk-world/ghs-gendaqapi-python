@@ -143,7 +143,7 @@ def main():
         sys.exit()
     print(f"GHSStopRecording - Return Status: {return_var}")
 
-    # Start recording.
+    # Start recording in Pause mode.
     # Note: the mainframe should be configured to store recordings
     # on its local disk.
     # Execution of this command can be influenced by Perception setting "Suspend storage at start of recording"
@@ -163,6 +163,22 @@ def main():
         GHSAcquisitionState: {state}\
         TriggerCount: {count}"
     )
+
+    # Stop recording
+    return_var = gen.ghs_stop_recording()
+    if return_var != "OK":
+        print(f"Failed on GHSStopRecording. Return Status: {return_var}")
+        sys.exit()
+    print(f"GHSStopRecording - Return Status: {return_var}")
+
+    # Start recording without checking synchronization status.
+    # Note: the mainframe should be configured to store recordings
+    # on its local disk.
+    return_var = gen.ghs_start_recording_without_sync_check()
+    if return_var != "OK":
+        print(f"Failed on GHSStartRecordingWithoutSyncCheck. Return Status: {return_var}")
+        sys.exit()
+    print(f"GHSStartRecordingWithoutSyncCheck - Return Status: {return_var}")
 
     # Stop recording
     return_var = gen.ghs_stop_recording()

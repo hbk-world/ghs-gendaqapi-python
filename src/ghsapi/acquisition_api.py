@@ -75,9 +75,35 @@ def start_recording(con_handle: ConnectionHandler) -> str:
         String value representing request status.
     """
 
+    recording_dict = {
+        "IgnoreSync": 0
+    }
+
     response_json = con_handle.send_request_wait_response(
-        "StartRecording", None
+        "StartRecording", recording_dict
     )
+
+    return to_string(response_json[RETURN_KEY], GHSReturnValue)
+
+
+def start_recording_without_synch_check(con_handle: ConnectionHandler) -> str:
+    """Interface to start recording on local storage without checking synchronization status.
+
+    Args:
+        con_handle: A unique identifier per mainframe connection.
+
+    Returns:
+        String value representing request status.
+    """
+
+    recording_dict = {
+        "IgnoreSync": 1
+    }
+
+    response_json = con_handle.send_request_wait_response(
+        "StartRecording", recording_dict
+    )
+
     return to_string(response_json[RETURN_KEY], GHSReturnValue)
 
 
@@ -114,6 +140,7 @@ def start_recording_in_pause(
     response_json = con_handle.send_request_wait_response(
         "StartRecording", recording_in_pause_dict
     )
+
     return to_string(response_json[RETURN_KEY], GHSReturnValue)
 
 
